@@ -24,7 +24,7 @@ public class LoginController {
         this.javaMailSender = javaMailSender;
         this.loginService = loginService;
         log.info("login={}",loginService);
-        log.info("javaMailsender={}",javaMailSender);
+
 
     }
 
@@ -51,6 +51,7 @@ public class LoginController {
     @GetMapping("/checkid")
     public String checkId(@RequestParam("email")String email){
         mailSend(email);
+        System.out.println("email = " + email);
         return "login/findid";
     }
 
