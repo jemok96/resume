@@ -29,7 +29,7 @@ public class LoginController {
     @GetMapping("/login")
     public String login() {
 
-        return "login";
+        return "login/login";
     }
 
     @PostMapping("/login")
@@ -40,17 +40,11 @@ public class LoginController {
         LoginUserDTO loginUserDTO = loginService.checkUser(userid);
         System.out.println("loginUserDTO = " + loginUserDTO);
 
-        return "login";
+        return "login/login";
 
     }
 
-    @GetMapping("/checkid")
-    public String checkId(@RequestParam("email") String email) {
-        log.info("email = {}", email);
-        MailService mail = new MailService();
-        mail.sendMail();
-        return "/login";
-    }
+
 
 
 
