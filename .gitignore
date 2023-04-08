@@ -25,7 +25,8 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-
+email.properties
+application.properties
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
