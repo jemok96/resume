@@ -2,12 +2,23 @@ package com.resume.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+
+
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@ToString
 public class LoginUserDTO {
+    @NotBlank(message = "아이디를 입력하세요")
     private String userid;
+    @NotBlank(message = "비밀번호를 입력하세요")
     private String password;
+
+    @Override
+    public String toString() {
+        return "LoginUserDTO{" +
+                "userid='" + userid + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
