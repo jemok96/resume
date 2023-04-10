@@ -61,7 +61,7 @@ public class EmailConfig {
         mailSender.setPort(port);
         mailSender.setJavaMailProperties(properties);
         mailSender.setDefaultEncoding(encoding);
-        System.out.println("password = " + password);
+
         return mailSender;
     }
 }
