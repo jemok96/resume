@@ -2,9 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.resume.dao.LoginDAO">
-    <select id="checkUser" parameterType="String" resultType="LoginUserDTO">
+    <select id="checkUser" parameterType="LoginUserDTO" resultType="LoginUserDTO">
         select userid, password from user
-        where userid = #{userid}
+        where userid = #{userid} and password=#{password}
+    </select>
+
+    <select id="checkEmail" parameterType="EmailCheckDTO" resultType="EmailCheckDTO">
+        select name,email from user
+        where name = #{name} and email = #{email}
     </select>
 </mapper>

@@ -25,7 +25,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.0'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
-    implementation 'org.springframework:spring-context-support:6.0.6'
 
 
     compileOnly 'org.projectlombok:lombok'
