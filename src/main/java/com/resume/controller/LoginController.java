@@ -6,6 +6,7 @@ import com.resume.dto.EmailCheckDTO;
 import com.resume.dto.LoginUserDTO;
 import com.resume.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Random;
 
 
@@ -38,17 +41,20 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginCheck(@Validated @ModelAttribute("user") LoginUserDTO user, BindingResult bindingResult, Model model) {
+    public String loginCheck(@Validated @ModelAttribute("user") LoginUserDTO user, BindingResult bindingResult,
+                             Model model, HttpServletRequest request) {
 
 
         if (bindingResult.hasErrors()) {
-            log.info("error={}", bindingResult);
             return "login/login";
         }
+
         Boolean status = loginService.checkUser(user);
         model.addAttribute("user", user);
         if (status) {
-            return "login";
+            HttpSession session = request.getSession();
+            session.setAttribute("userSession",user.getUserid());
+            return "main/main";
         } else {
             model.addAttribute("status", true);
             return "login/login";
