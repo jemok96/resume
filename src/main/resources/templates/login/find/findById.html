@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script
+            src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+            crossorigin="anonymous"
+    ></script>
+</head>
+
+<style>
+
+    @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+    
+    body {
+        background: #f6f5f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-family: 'Montserrat', sans-serif;
+        height: 100vh;
+        margin: -20px 0 50px;
+    }
+    .email__container{
+        width: 70%;
+    }
+    .container {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+        0 10px 10px rgba(0,0,0,0.22);
+        position: relative;
+        overflow: hidden;
+        width: 768px;
+        max-width: 100%;
+        min-height: 480px;
+    }
+    .email{
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        height: 50%;
+        width: 100%;
+        margin-left: 30px;
+        margin-top: 50px;
+    }
+    .email__title, .email__text, .email__column{
+        margin-bottom: 20px;
+    }
+    .email__text{
+        font-size: 12px;
+    }
+    .email__column{
+        display: flex;
+        width: 100%;
+    }
+    .email__email,.userName,  .hidden:nth-child(1){
+        width: 20%;
+    }
+    .email-input, .user-input, .check-input ,.checkNum, .hidden{
+        width: 33%;
+    }
+    .field-error{
+        font-size: 12px;
+        border-color: #dc3545;
+        color: #dc3545;
+        display: flex;
+        margin-left: 110px;
+    }
+
+</style>
+
+<body>
+
+<div class="container" id="container">
+    <div class="email">
+        <div class="email__title">본인확인 이메일로 인증</div>
+        <div class="email__text">본인확인 이메일 주소와 입력한 이메일 주소가 같아야 인증번호를 받을 수 있습니다.</div>
+        <div class ="email__container">
+            <form th:action="@{/checkid}" th:method="POST" th:object="${email}">
+                <div class="email__column">
+                    <div class="userName">이름</div>
+                    <div class="user-input" ><input type="text" name="name" placeholder="name" th:field="*{name}"></div>
+                </div>
+                <div class="field-error message-error" th:errors="*{name}"></div>
+                <div class="email__column">
+                    <div class="email__email">이메일 주소</div>
+                    <div class="email-input"><input type="email" name="email" placeholder="email" th:field="*{email}"> </div>
+                    <div class="check-input"> <input type="submit" value="인증번호 받기"></div>
+                </div>
+                <div class="field-error email__column" th:errors="*{email}"></div>
+            </form>
+            <div class="email__column">
+                <div class="hidden"></div>
+                <div class="checkNum"><input type="text" placeholder="인증번호 입력" name="checkNum" id="userInput"></div>
+                <div  class="checkNumSend"><input type="submit" value="확인" id="check"></div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    const ranNum = [[${ranNum}]];
+    $("#check").on("click",function (){
+        let userInput = $("#userInput").val();
+        if (ranNum == userInput){
+            alert("인증성공");
+            location.href="/findSuccess";
+        }else{
+            alert("다시 입력해주세요");
+        }
+    })
+
+
+</script>
+
+</body>
+</html>

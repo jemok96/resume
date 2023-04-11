@@ -14,6 +14,9 @@ public class LoginUserDTO {
     @NotBlank(message = "비밀번호를 입력하세요")
     private String password;
 
+    public LoginUserDTO() {
+    }
+
     @Override
     public String toString() {
         return "LoginUserDTO{" +

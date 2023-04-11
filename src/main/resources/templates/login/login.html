@@ -288,14 +288,17 @@ signInButton.addEventListener('click', () => {
         <form th:action="@{login}" th:method="POST" th:object="${user}">
             <h1>Sign in</h1>
 
-            <input type="text" placeholder="Id" name="userid"/>
+            <input type="text" placeholder="Id" th:field="*{userid}"/>
             <div class="field-error" th:errors="*{userid}"></div>
-            <input type="password" placeholder="Password" name="password" />
+            <input type="password" placeholder="Password" th:field="*{password}"/>
             <div class="field-error" th:errors="*{password}"></div>
-            <div th:class="status-size" th:if="${param.status}" th:text="| 아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.|">
+            <div th:class="status-size" th:if="${status}" th:text="| 아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.|">
             </div>
 
-            <a href="/findid">비밀번호를 잊으셨나요?</a>
+            <div>
+            <a th:href="@{/findById}">아이디 찾기</a>
+            <a href="/">비밀번호 찾기</a>
+            </div>
             <button>로그인</button>
         </form>
     </div>

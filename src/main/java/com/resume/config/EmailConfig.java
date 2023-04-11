@@ -16,7 +16,6 @@ import java.util.Properties;
 public class EmailConfig {
 
     public EmailConfig(){
-        log.info("\"EmailConfig.java constructor called");
     }
     @Value("${spring.mail.transport.protocol}")
     private String protocol;
