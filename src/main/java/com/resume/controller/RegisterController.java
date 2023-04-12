@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class RegisterController {
 
         log.info(result + "결과");
 
-        return "main/main";
+        return "login/login";
 
     }
 
@@ -55,6 +56,15 @@ public class RegisterController {
 
         return map;
     }
+
+
+    @GetMapping("/main")
+    public String mainPage(){
+        System.out.println("sex = " );
+        return "main/main";
+
+    }
+
 
 
 }

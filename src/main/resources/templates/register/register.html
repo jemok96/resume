@@ -229,7 +229,7 @@ select option {
 
 
 <script>
-
+  var idcheck = 0 ;
   function check() {
 
     var phoneNum = $("#phone").val();
@@ -275,7 +275,13 @@ select option {
       alert('핸드폰 번호를 확인 해주세요');
       return false;
     }
-  return;
+  if(idcheck == 0){
+    alert('아이디 중복확인을 해주세요')
+    return false;
+  }else{
+    alert('회원가입이 완료되었습니다.')
+    return;
+  }
 
   }
   $(function() {
@@ -314,7 +320,7 @@ select option {
             $("#userid").addClass("has-error")
             $("#userid").removeClass("has-success")
             $("#userid").focus();
-
+            idcheck =0;
 
           } else {
             alert("사용가능한 아이디입니다.");
@@ -323,7 +329,7 @@ select option {
             $("#userid").removeClass("has-error")
             $("#password").focus();
             //아이디가 중복하지 않으면  idck = 1
-            idck = 1;
+            idcheck = 1;
 
           }
         },
@@ -399,7 +405,7 @@ select option {
     </div>
 
     <div style="text-align: center">
-    <button type="input" class="btn btn-outline-warning" >가입완료</button>
+    <button type="input" class="btn btn-outline-warning" onsubmit="return check(); " >가입완료</button>
     </div>
   </form>
 </div>
