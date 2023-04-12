@@ -54,7 +54,7 @@ public class LoginController {
         if (status) {
             HttpSession session = request.getSession();
             session.setAttribute("userSession",user.getUserid());
-            return "main/main";
+            return "redirect:/main";
         } else {
             model.addAttribute("status", true);
             return "login/login";
@@ -100,6 +100,9 @@ public class LoginController {
 
 
 
+
+
+
     private void mailSend(String email,String randomNum) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(email);
@@ -123,3 +126,5 @@ public class LoginController {
         return resultNum;
     }
 }
+
+
