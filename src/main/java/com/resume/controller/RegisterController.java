@@ -66,6 +66,7 @@ public class RegisterController {
 
     //로그인 후 메인 페이지 이동
     @GetMapping("/main")
+
     public ModelAndView mainPage(HttpSession session , ModelAndView mv ){
 
         String sessionid = (String) session.getAttribute("userSession");
@@ -76,6 +77,7 @@ public class RegisterController {
         mv.setViewName("main/main");
 
         return mv;
+
 
     }
 

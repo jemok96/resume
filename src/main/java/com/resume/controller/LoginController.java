@@ -61,6 +61,13 @@ public class LoginController {
         }
 
     }
+    @GetMapping("/logout")
+    public String logOut(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        session.invalidate();
+
+        return "redirect:/resume";
+    }
 
     @GetMapping("/findById")
     public String findId(Model model) {
@@ -90,6 +97,7 @@ public class LoginController {
 
         return "login/find/findsuccess";
     }
+
 
 
 
