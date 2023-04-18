@@ -49,6 +49,15 @@
             color: #fff;
             transform: translateY(-7px);
         }
+        .resume-section,.container-fluid{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .social-icons{
+            display: flex;
+            justify-content: start;
+        }
 
     </style>
     <div style="text-align: right ;margin-top: 40px ">
@@ -80,13 +89,12 @@
             <section class="resume-section" id="about">
                 <div class="resume-section-content">
                     <h2 class="mb-0" th:text="${userinfo.getName()}">
-
                         <span class="text-primary" ></span>
                     </h2>
-                    <div><b>PhoneNumber</b> </div><div class="subheading mb-5" th:text="${userinfo.getPhone()}">
-                    </div>
+                    <div><b>PhoneNumber</b> </div> <div class="subheading mb-5" th:text="${userinfo.getPhone()}"></div>
                     <div ><b>Email</b></div> <div class="subheading mb-5" th:text="${userinfo.getEmail()}"></div></div>
-                    <p class="lead mb-5">자기소개</p>
+                    <div><p class="lead mb-5">자기소개</p></div>
+
                     <div class="social-icons">
                         <a class="social-icon" href="#!"><i class="fab fa-linkedin-in"></i></a>
                         <a class="social-icon" href="#!"><i class="fab fa-github"></i></a>
@@ -202,6 +210,7 @@
             
 
         </div>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../js/scripts.js"></script>
     </body>
