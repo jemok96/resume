@@ -64,22 +64,7 @@ public class RegisterController {
     }
 
 
-    //로그인 후 메인 페이지 이동
-    @GetMapping("/main")
 
-    public ModelAndView mainPage(HttpSession session , ModelAndView mv ){
-
-        String sessionid = (String) session.getAttribute("userSession");
-        RegisterDTO userinfo = null;
-
-        userinfo =  registerService.userInfo(sessionid);
-        mv.addObject("userinfo" ,userinfo );
-        mv.setViewName("main/main");
-
-        return mv;
-
-
-    }
 
 
 
