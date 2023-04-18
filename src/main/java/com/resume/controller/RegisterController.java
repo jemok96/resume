@@ -12,7 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -27,12 +30,14 @@ public class RegisterController {
         this.registerService = registerService;
     }
 
+    //회원가입 페이지 이동
     @GetMapping("/register")
     public String signup(){
 
         return "register/register";
     }
 
+    //회원가입 저장
     @PostMapping("/register/save")
     public String signupsave( @ModelAttribute("user") RegisterDTO user, BindingResult bindingResult,
                              RedirectAttributes redirectAttributes, ModelAndView mv) {
@@ -44,6 +49,7 @@ public class RegisterController {
 
     }
 
+    //회원가입 시 아이디 중복 확인
     @PostMapping("register/check")
     @ResponseBody
     public Map<Object, Object> idcheck(@RequestBody String userid) {
@@ -58,10 +64,20 @@ public class RegisterController {
     }
 
 
+    //로그인 후 메인 페이지 이동
     @GetMapping("/main")
-    public String mainPage(){
 
-        return "main/main";
+    public ModelAndView mainPage(HttpSession session , ModelAndView mv ){
+
+        String sessionid = (String) session.getAttribute("userSession");
+        RegisterDTO userinfo = null;
+
+        userinfo =  registerService.userInfo(sessionid);
+        mv.addObject("userinfo" ,userinfo );
+        mv.setViewName("main/main");
+
+        return mv;
+
 
     }
 

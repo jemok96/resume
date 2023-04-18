@@ -19,4 +19,10 @@
         userid = #{userid}
     </select>
 
+    <select id="userInfo" parameterType="String" resultType="RegisterDTO">
+        select name, email,birth ,gender ,phone  from user where userid = #{sessionid}
+    </select>
+
+
+
 </mapper>
