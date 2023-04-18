@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -63,9 +64,10 @@ public class LoginController {
     }
     @GetMapping("/logout")
     public String logOut(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        session.invalidate();
-
+        HttpSession session = request.getSession(false);
+        if(session!=null){
+            session.invalidate();
+        }
         return "redirect:/resume";
     }
 
