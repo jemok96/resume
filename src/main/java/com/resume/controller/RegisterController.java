@@ -60,7 +60,7 @@ public class RegisterController {
 
     @GetMapping("/main")
     public String mainPage(){
-        System.out.println("sex = " );
+
         return "main/main";
 
     }
