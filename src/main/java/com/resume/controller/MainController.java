@@ -32,8 +32,12 @@ public class MainController {
         UserInfoDTO usersubinfo = null;
 
         userinfo =  mainService.userInfo(sessionid);
+        usersubinfo = mainService.usersubinfo(sessionid);
+
+        log.info("user sub " + usersubinfo.toString());
 
         mv.addObject("userinfo" ,userinfo );
+        mv.addObject("usersubinfo" ,usersubinfo );
         mv.setViewName("main/main");
 
         return mv;

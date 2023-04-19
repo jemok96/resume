@@ -6,8 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserInfoDTO {
-    private Integer infono;
-
     private String userid;
 
     private String introduction;
@@ -15,4 +13,14 @@ public class UserInfoDTO {
     private String giturl;
 
     private String blogurl;
+
+    @Override
+    public String toString() {
+        return "UserInfoDTO{" +
+                "userid='" + userid + '\'' +
+                ", introduction='" + introduction + '\'' +
+                ", giturl='" + giturl + '\'' +
+                ", blogurl='" + blogurl + '\'' +
+                '}';
+    }
 }

@@ -11,6 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
         <link href="../css/main.css" rel="stylesheet" />
+
     </head>
 
     <style>
@@ -60,6 +61,9 @@
         }
 
     </style>
+    <script src = "http://code.jquery.com/jquery-latest.js"></script>
+
+
     <div style="text-align: right ;margin-top: 40px ">
             <button class="button">마이페이지</button>
             <button class="button">로그아웃</button>
@@ -86,22 +90,40 @@
         <!-- Page Content-->
         <div class="container-fluid p-0">
             <!-- About-->
-            <section class="resume-section" id="about">
-                <div class="resume-section-content">
-                    <h2 class="mb-0" th:text="${userinfo.getName()}">
-                        <span class="text-primary" ></span>
-                    </h2>
-                    <div><b>PhoneNumber</b> </div> <div class="subheading mb-5" th:text="${userinfo.getPhone()}"></div>
-                    <div ><b>Email</b></div> <div class="subheading mb-5" th:text="${userinfo.getEmail()}"></div></div>
+                <section class="resume-section" id="about">
+                    <div class="resume-section-content">
+                        <h2 class="mb-0" th:text="${userinfo.getName()}">
+                            <span class="text-primary" ></span>
+                        </h2>
+                        <div><b>PhoneNumber</b> </div> <div class="subheading mb-5" th:text="${userinfo.getPhone()}"></div>
+                        <div ><b>Email</b></div> <div class="subheading mb-5" th:text="${userinfo.getEmail()}"></div></div>
+                    <div class="lead mb-5">
+                        <button type="button" onclick="infoupdate()" class="btn btn-outline-warning">수정</button></div>
+                    <th:block th:if="${usersubinfo.introduction == null}">
+                        <div><p class="lead mb-5"><a>간단한 자기소개를 등록해주세요</a></p></div>
+                    </th:block>
+                    <th:block th:if="${usersubinfo.introduction != null}">
+                        <div><p class="lead mb-5"><a >${userinfo.introduction}</a></p></div>
+                    </th:block>
 
-                    <div><p class="lead mb-5"><a>간단한 자기소개를 등록해주세요</a></ㅁ></a></p></div>
 
-                    <div class="social-icons">
-                        <a class="social-icon" href="#!"><i class="fab fa-blog"></i></a>
-                        <a class="social-icon" href="#!"><i class="fab fa-github"></i></a>
+                        <div class="social-icons">
+                            <th:block th:if="${usersubinfo.blogurl == null}">
+                            <a class="social-icon" href="#!"><i class="fab fa-blogger-b"></i></a>
+                            </th:block>
+                            <th:block th:if="${usersubinfo.blogurl != null}">
+                                <a class="social-icon" th:href="@{${usersubinfo.blogurl}}"><i class="fab fa-blogger-b"></i></a>
+                            </th:block>
+                            <th:block th:if="${usersubinfo.giturl == null}">
+                            <a class="social-icon" href="#!"><i class="fab fa-github"></i></a>
+                            </th:block>
+                            <th:block th:if="${usersubinfo.giturl != null}">
+                                <a class="social-icon" th:href="@{${usersubinfo.giturl}}"><i class="fab fa-github"></i></a>
+                            </th:block>
+                        </div>
 
-                    </div>
-                </div>
+
+
             </section>
             <hr class="m-0" />
             <!-- Experience-->
