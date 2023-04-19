@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Resume - Start Bootstrap Theme</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link href="../css/main.css" rel="stylesheet" />
+</head>
+
+<style>
+    @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400);
+
+    input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+        color: #aca49c;
+        font-size: 0.875em;
+    }
+
+    input:focus::-webkit-input-placeholder, textarea:focus::-webkit-input-placeholder {
+        color: #bbb5af;
+    }
+
+    input::-moz-placeholder, textarea::-moz-placeholder {
+        color: #aca49c;
+        font-size: 0.875em;
+    }
+
+    input:focus::-moz-placeholder, textarea:focus::-moz-placeholder {
+        color: #bbb5af;
+    }
+
+    input::placeholder, textarea::placeholder {
+        color: #aca49c;
+        font-size: 0.875em;
+    }
+
+    input:focus::placeholder, textarea::focus:placeholder {
+        color: #bbb5af;
+    }
+
+    input::-ms-placeholder, textarea::-ms-placeholder {
+        color: #aca49c;
+        font-size: 0.875em;
+    }
+
+    input:focus::-ms-placeholder, textarea:focus::-ms-placeholder {
+        color: #bbb5af;
+    }
+
+    /* on hover placeholder */
+
+    input:hover::-webkit-input-placeholder, textarea:hover::-webkit-input-placeholder {
+        color: #e2dedb;
+        font-size: 0.875em;
+    }
+
+    input:hover:focus::-webkit-input-placeholder, textarea:hover:focus::-webkit-input-placeholder {
+        color: #cbc6c1;
+    }
+
+    input:hover::-moz-placeholder, textarea:hover::-moz-placeholder {
+        color: #e2dedb;
+        font-size: 0.875em;
+    }
+
+    input:hover:focus::-moz-placeholder, textarea:hover:focus::-moz-placeholder {
+        color: #cbc6c1;
+    }
+
+    input:hover::placeholder, textarea:hover::placeholder {
+        color: #e2dedb;
+        font-size: 0.875em;
+    }
+
+    input:hover:focus::placeholder, textarea:hover:focus::placeholder {
+        color: #cbc6c1;
+    }
+
+    input:hover::placeholder, textarea:hover::placeholder {
+        color: #e2dedb;
+        font-size: 0.875em;
+    }
+
+    input:hover:focus::-ms-placeholder, textarea:hover::focus:-ms-placeholder {
+        color: #cbc6c1;
+    }
+
+    body {
+        font-family: 'Lato', sans-serif;
+        background: #e2e0db00;
+        color: #b3aca7;
+    }
+
+    header {
+        position: relative;
+        margin: 100px 0 25px 0;
+        font-size: 2.3em;
+        text-align: center;
+        letter-spacing: 7px;
+    }
+
+    #form {
+        position: relative;
+        width: 500px;
+        margin: 50px auto 100px auto;
+    }
+
+    input {
+        font-family: 'Lato', sans-serif;
+        font-size: 0.875em;
+        width: 470px;
+        height: 50px;
+        padding: 0px 15px 0px 15px;
+
+        background: transparent;
+        outline: none;
+        color: #726659;
+
+        border: solid 1px #b3aca7;
+        border-bottom: none;
+
+        transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+    }
+
+    input:hover {
+        background: #b3aca7;
+        color: #e2dedb;
+    }
+
+    textarea {
+        width: 470px;
+        max-width: 470px;
+        height: 110px;
+        max-height: 110px;
+        padding: 15px;
+
+        background: transparent;
+        outline: none;
+
+        color: #726659;
+        font-family: 'Lato', sans-serif;
+        font-size: 0.875em;
+
+        border: solid 1px #b3aca7;
+
+        transition: all 0.3s ease-in-out;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+    }
+
+    textarea:hover {
+        background: #b3aca7;
+        color: #e2dedb;
+    }
+
+    #submit {
+        width: 470px;
+
+        padding: 0;
+        margin: -5px 0px 0px 0px;
+
+        font-family: 'Lato', sans-serif;
+        font-size: 0.875em;
+        color: #b3aca7;
+
+        outline:none;
+        cursor: pointer;
+
+        border: solid 1px #b3aca7;
+        border-top: none;
+    }
+
+    #submit:hover {
+        color: #e2dedb;
+    }
+
+</style>
+
+
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">Clarence Taylor</span>
+        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpg" alt="..." /></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">인적사항</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">경력기술서</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">스킬</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/resume">자기소개서</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">프로젝트</a></li>
+        </ul>
+    </div>
+</nav>
+<!-- Page Content-->
+<header>간단 자기소개 수정</header>
+
+<form id="form" class="topBefore">
+
+    <input id="name" type="text" placeholder="blog url">
+    <input id="email" type="text" placeholder="git url">
+    <textarea id="message" type="text" placeholder="간단한 자기소개를 작성해주세요"></textarea>
+    <input id="submit" type="submit" value="GO!">
+
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/scripts.js"></script>
+</body>
+</html>
