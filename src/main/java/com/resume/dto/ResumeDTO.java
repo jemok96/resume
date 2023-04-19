@@ -19,16 +19,16 @@ public class ResumeDTO {
     @Size(max = 2000,message = "최대2000자입니다.")
     private String contents;
     private Date regdate;
-    private Date update;
+    private Date up_date;
 
     @Builder
-    public ResumeDTO(Integer resumeno, String userid,String title ,String contents, Date regdate, Date update) {
+    public ResumeDTO(Integer resumeno, String userid,String title ,String contents, Date regdate, Date up_date) {
         this.resumeno = resumeno;
         this.userid = userid;
         this.title = title;
         this.contents = contents;
         this.regdate = regdate;
-        this.update = update;
+        this.up_date = up_date;
     }
 
     public ResumeDTO() {
@@ -42,7 +42,7 @@ public class ResumeDTO {
                 ", title='" + title + '\'' +
                 ", contents='" + contents + '\'' +
                 ", regdate=" + regdate +
-                ", update=" + update +
+                ", update=" + up_date +
                 '}';
     }
 }
