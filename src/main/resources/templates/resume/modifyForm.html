@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Resume </title>
-    <link href="../css/main.css" rel="stylesheet" />
+    <link th:href="@{/css/main.css}" rel="stylesheet" />
     <script
             src="https://code.jquery.com/jquery-3.6.4.min.js"
             integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
@@ -127,48 +127,49 @@
     </div>
 
 </div>
-<form th:action="@{/resume/add}" th:method="POST" th:object="${resume}">
-<div class="resume-form">
-    <div class="checker_spell">
-        <div>
-            <input th:field="*{title}" name="title" class="title-text" type="text" placeholder="제목을 입력해주세요"/ >
-            <div th:errors="*{title}" th:class="title-error"></div>
-        </div>
-        <div>
+
+<form th:href="@{/resume/modify/{rno}(rno=${resume.resumeno})}" th:method="POST" th:object="${resume}">
+    <div class="resume-form">
+        <div class="checker_spell">
+            <div>
+                <input th:field="*{title}" name="title" class="title-text" type="text" placeholder="제목을 입력해주세요"/ >
+                <div hidden th:errors="*{title}" th:class="title-error"></div>
+            </div>
+            <div>
           <textarea th:field="*{contents}"
-                  name="contents"
-                  id="character_counter_content"
-                  cols="70"
-                  rows="22"
-                  class="checker_input"
-                  placeholder="내용을 입력해주세요."
+                    name="contents"
+                    id="character_counter_content"
+                    cols="70"
+                    rows="22"
+                    class="checker_input"
+                    placeholder="내용을 입력해주세요."
           ></textarea>
-            <div th:errors="*{contents}" th:class="contents-error"></div>
-        </div>
-    </div>
-
-    <div class="summary">
-        <div class="summary__column">
-            <div class="summary__text">
-                <p>
-                    <span>공백 포함</span><strong class="letter" id="current_msglen">00</strong><span>자</span><strong class="byte" id="current_msg_byte">00</strong><span>byte</span>
-                </p>
-            </div>
-            <div class="summary__text">
-                <p>
-                <span>공백 제외</span><strong class="letter" id="current_msglen_except_blank">00</strong><span>자</span><strong class="byte" id="current_msg_byte_except_blank">0</strong><span>byte</span>
-                </p>
+                <div th:errors="*{contents}" th:class="contents-error"></div>
             </div>
         </div>
-        <div class="summary__column">
-            <div class="btn-sub"><input id="btn-add" type="submit" value="저장"></div>
 
+        <div class="summary">
+            <div class="summary__column">
+                <div class="summary__text">
+                    <p>
+                        <span>공백 포함</span><strong class="letter" id="current_msglen">00</strong><span>자</span><strong class="byte" id="current_msg_byte">00</strong><span>byte</span>
+                    </p>
+                </div>
+                <div class="summary__text">
+                    <p>
+                        <span>공백 제외</span><strong class="letter" id="current_msglen_except_blank">00</strong><span>자</span><strong class="byte" id="current_msg_byte_except_blank">0</strong><span>byte</span>
+                    </p>
+                </div>
+            </div>
+            <div class="summary__column">
+                <div class="btn-sub"><input id="btn-add" type="submit" value="수정"></div>
+
+            </div>
         </div>
     </div>
-</div>
 </form>
 
-<script src="../js/checkByte.js"></script>
+<script th:src="@{/js/checkByte.js}"></script>
 <script>
     if(document.getElementsByClassName('title-error').length){
         alert("제목을 입력하세요");

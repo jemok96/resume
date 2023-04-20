@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,29 +23,51 @@ public class ResumeController {
 
     @GetMapping("/resume")
     public String main(@SessionAttribute(value = "userSession" ,required = false)String session, Model model){
-        model.addAttribute("userId",session);
-
         if(session !=null){
-            List<ResumeDTO> dto = service.findResumeById(session);
-            model.addAttribute("resume",dto);
+            model.addAttribute("resume",service.findResumeById(session));
         }
         return "resume/mainForm";
     }
     @GetMapping("/resume/add")
-    public String mainAddForm(){
+    public String mainAddForm(Model model){
+        model.addAttribute("resume",new ResumeDTO());
         return "resume/addForm";
     }
     @PostMapping("/resume/add")
     public String addCheck(@Validated @ModelAttribute("resume")ResumeDTO dto,
-                           BindingResult bindingResult,@SessionAttribute(value = "userSession" ,required = false)String userid){
+                           BindingResult bindingResult,@SessionAttribute(value = "userSession" ,required = false)String userid,
+                           Model model){
         if(bindingResult.hasErrors()){
             log.info("errors={}",bindingResult);
+            return "resume/addForm";
         }
         ResumeDTO userInput = ResumeDTO.builder()
                         .userid(userid)
-                                .title(dto.getTitle())
-                                        .contents(dto.getContents()).build();
+                        .title(dto.getTitle())
+                        .contents(dto.getContents()).build();
         service.insertResume(userInput);
+        model.addAttribute("resume",dto);
         return "redirect:/resume";
+    }
+    @GetMapping("/resume/modify/{rno}")
+    public String modifyResume(@PathVariable Integer rno,Model model){
+        log.info("rno={}",rno);
+        model.addAttribute("resume",service.selectByNo(rno));
+        return "resume/modifyForm";
+    }
+    @PostMapping("/resume/modify/{rno}")
+    public String modifyCheck(@Validated @ModelAttribute("resume")ResumeDTO dto, BindingResult bindingResult,
+            @PathVariable Integer rno,Model model,@SessionAttribute(value = "userSession",required = true)String user){
+        if(bindingResult.hasErrors()){
+            return "resume/modifyForm";
+        }
+        log.info("dto={}, user={}",dto,user);
+        ResumeDTO resume = ResumeDTO.builder()
+                        .title(dto.getTitle())
+                        .contents(dto.getContents())
+                        .resumeno(rno)
+                        .userid(user).build();
+        service.updateResume(resume);
+        return "resume/modifyForm";
     }
 }

@@ -9,7 +9,13 @@ import java.util.List;
 @Repository
 @Mapper
 public interface ResumeDAO {
-    int insertResume(ResumeDTO resumeDTO);
+    int insertResume(ResumeDTO dto);
     List<ResumeDTO> findResumeById(String userid);
     void deleteAll();
+    int deleteOne();
+    int updateResume(ResumeDTO dto);
+    ResumeDTO selectByNo(Integer rno);
+
+
+    ResumeDTO testCode(ResumeDTO dto);
 }
