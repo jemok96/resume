@@ -62,7 +62,12 @@
 
     </style>
     <script src = "http://code.jquery.com/jquery-latest.js"></script>
+    <script>
+        function infoupdate(){
+            location.href= "/main/infoupdate"
+        }
 
+    </script>
 
     <div style="text-align: right ;margin-top: 40px ">
             <button class="button">마이페이지</button>
@@ -103,7 +108,7 @@
                         <div><p class="lead mb-5"><a>간단한 자기소개를 등록해주세요</a></p></div>
                     </th:block>
                     <th:block th:if="${usersubinfo.introduction != null}">
-                        <div><p class="lead mb-5"><a >${userinfo.introduction}</a></p></div>
+                        <div><p class="lead mb-5"><a th:text="${usersubinfo.getIntroduction()}"></a></p></div>
                     </th:block>
 
 
