@@ -44,6 +44,39 @@ public class ResumeTest {
         Assertions.assertThat(dto).isNotNull();
 
     }
+    @Test
+    @DisplayName("Update 테스트 유저 이름 일치")
+    void updateSameUserId() throws Exception{
+        ResumeDTO dto = ResumeDTO.builder()
+                .userid("rudnf9605")
+                .title("Insert Test")
+                .contents("Junit Insert Test")
+                .build();
+        Assertions.assertThat(service.insertResume(dto) ==1);
+        ResumeDTO resumeDTO = service.testCode(dto);
+
+        ResumeDTO dto2 = ResumeDTO.builder()
+                        .resumeno(resumeDTO.getResumeno())
+                        .userid(resumeDTO.getUserid())
+                        .title("Update Test")
+                        .contents("Junit Update Test")
+                        .build();
+        Assertions.assertThat(service.updateResume(dto2) ==0);
+
+
+    }
+    @Test
+    void test() throws Exception{
+        ResumeDTO dto = ResumeDTO.builder()
+                .resumeno(29)
+                .userid("rudnf9605")
+                .title("Update Test")
+                .contents("Junit Update Test")
+                .build();
+        service.updateResume(dto);
+
+
+    }
 
 
 }

@@ -9,11 +9,29 @@
         values(#{userid},#{title},#{contents})
     </insert>
     <select id="findResumeById" parameterType="String" resultType="ResumeDTO">
-        select title,contents,regdate,up_date
+        select title,contents,regdate,up_date,resumeno
         from resume
         where userid = #{userid}
     </select>
     <delete id="deleteAll">
         delete from resume;
     </delete>
+
+    <select id="selectByNo" parameterType="Integer" resultType="ResumeDTO">
+        select title,contents,resumeno
+        from resume
+        where resumeno = #{rno}
+    </select>
+    <update id="updateResume" parameterType="ResumeDTO">
+        update  resume
+        set title = #{title}, contents = #{contents}
+        where resumeno = #{resumeno} and
+        userid = #{userid}
+    </update>
+
+    <select id="testCode" parameterType="ResumeDTO" resultType="ResumeDTO">
+        select title,resumeno,contents,userid
+        from resume
+        where title=#{title} and contents=#{contents} and userid=#{userid}
+    </select>
 </mapper>

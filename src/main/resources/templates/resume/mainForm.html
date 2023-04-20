@@ -3,13 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <title>Resume - Start Bootstrap Theme</title>
-  <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
-  <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
-  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
+
+  <title>Resume</title>
   <link href="../css/main.css" rel="stylesheet" />
 </head>
 <style>
@@ -28,6 +23,7 @@
     align-items: center;
     height: 50px;
     border-bottom: 1px solid rgba(0,0,0,0.3);
+    margin-bottom: 20px;
   }
   .content__column{
     display: flex;
@@ -43,6 +39,39 @@
   .content__home , .content__name, .content__log{
     margin-right: 10px;
   }
+  .none-text{
+    font-size: 27px;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+  }
+  .text{
+    font-size: 25px;
+  }
+  .btn-add{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 100px;
+    margin-bottom: 20px;
+  }
+  .resume-contents{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin-left: 100px;
+  }
+  .content__column{
+    display: flex;
+    width: 100%;
+  }
+  .contents__input{
+    width: 500px;
+  }
+
+
+
 
 </style>
 <body id="page-top">
@@ -50,7 +79,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
       <span class="d-block d-lg-none">Clarence Taylor</span>
-      <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpg" alt="..." /></span>
+      <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="" alt="..." /></span>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -64,27 +93,33 @@
     </div>
   </nav>
   <div class="content-header">
-    <div class="content__column">자소서 작성하기</div>
-    <div class="content__column">
+    <div class="content__column text" >자소서 작성하기</div>
+    <div class="content__column ">
       <div class="content__home">Home</div>
-      <div class="content__name" th:if="${userId != null}" th:text="${userId}+|님|" >경제목님</div>
-      <a href="/login"><div class="content__name" th:if="${userId == null}" th:text="|로그인|" >login</div></a>
-      <a href="/logout"><div class="content__log"th:if="${userId !=null}" th:text="로그아웃">logout</div></a>
+      <div class="content__name" th:if="${session.userSession != null}" th:text="${session.userSession}+|님|" >경제목님</div>
+      <a href="/login"><div class="content__name" th:if="${session.userSession == null}" th:text="|로그인|" >login</div></a>
+      <a href="/logout"><div class="content__log"th:if="${session.userSession !=null}" th:text="로그아웃">logout</div></a>
     </div>
   </div>
 </div>
-<div th:if="${resume ==null}" th:text="|등록된 자기소개서가 없습니다.|"></div>
-<div><a href="/resume/add"><button>추가</button></a></div>
-<div th:if="${resume !=null}"  th:each="list: ${resume}">
-  <div th:text="${list.title}"></div>
-  <div th:text="${list.contents}"></div>
-  <div th:text="${list.regdate}"></div>
-  <div th:text="${list.up_date}"></div>
+
+
+<div class="none-text" th:if="${#lists.size(resume) == 0 }" th:text="|등록된 자기소개서가 없습니다 추가해주세요!|"></div>
+<div class="btn-add"><a href="/resume/add"><button type="button" class="btn btn-secondary">추가</button></a></div>
+
+<div class="resume-contents" th:if="${resume !=null}"  th:each="list: ${resume}">
+  <div class="contents__column">
+    <input class="contents__input" type="text" readonly th:value="${list.title}">
+    <a th:href="@{/resume/modify/{rno}(rno=${list.resumeno})}"><button type="button" class="btn btn-secondary">수정</button></a>
+  </div>
+  <div class="contents__column">
+    <textarea class="contents__textarea" cols="70" rows="12" th:text="${list.contents}" readonly></textarea>
+  </div>
 </div>
 
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../js/scripts.js"></script>
-
-
 </body>
 </html>
