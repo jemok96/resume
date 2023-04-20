@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -204,11 +205,10 @@
 <!-- Page Content-->
 <header>간단 자기소개 수정</header>
 
-<form id="form" class="topBefore">
-
-    <input id="name" type="text" placeholder="blog url">
-    <input id="email" type="text" placeholder="git url">
-    <textarea id="message" type="text" placeholder="간단한 자기소개를 작성해주세요"></textarea>
+<form id="form" class="topBefore" th:action="@{/main/infoupdate/save}" th:method="POST" th:object="${usersubinfo}">
+    <input id="name" name="blog" type="text" placeholder="blog url" th:field="*{blogurl}">
+    <input id="email" name ="git" type="text" placeholder="git url" th:field="*{giturl}">
+    <textarea id="message" name="intro" type="text" placeholder="간단한 자기소개를 작성해주세요" th:field="*{introduction}"></textarea>
     <input id="submit" type="submit" value="GO!">
 
 </form>

@@ -14,4 +14,13 @@
         select * from userInformation where userid = #{sessionid}
     </select>
 
+    <update id="infoupdate" parameterType="hashMap">
+        update userInformation set introduction =#{intro} , giturl =#{git} , blogurl =#{blog}
+        where userid=#{userid};
+    </update>
+
+    <insert id ="infoinsert" parameterType="String">
+        insert into userInformation values (#{sessionid} , null, null ,null)
+    </insert>
+
 </mapper>

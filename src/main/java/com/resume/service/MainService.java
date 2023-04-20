@@ -6,6 +6,8 @@ import com.resume.dto.UserInfoDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 @Slf4j
 public class MainService {
@@ -23,5 +25,13 @@ public class MainService {
 
     public UserInfoDTO usersubinfo(String sessionid) {
         return dao.usersubinfo(sessionid);
+    }
+
+    public void infoupdate(Map map) {
+         dao.infoupdate(map);
+    }
+
+    public void infoinsert(String sessionid) {
+         dao.infoinsert(sessionid);
     }
 }
