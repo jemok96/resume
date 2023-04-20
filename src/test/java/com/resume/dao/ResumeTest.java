@@ -61,22 +61,12 @@ public class ResumeTest {
                         .title("Update Test")
                         .contents("Junit Update Test")
                         .build();
-        Assertions.assertThat(service.updateResume(dto2) ==0);
-
-
+        service.updateResume(dto2);
+        ResumeDTO resumeDTO1 = service.testCode(dto2);
+        Assertions.assertThat(dto2.getTitle()).isSameAs("Update Test");
     }
-    @Test
-    void test() throws Exception{
-        ResumeDTO dto = ResumeDTO.builder()
-                .resumeno(29)
-                .userid("rudnf9605")
-                .title("Update Test")
-                .contents("Junit Update Test")
-                .build();
-        service.updateResume(dto);
 
 
-    }
 
 
 }
