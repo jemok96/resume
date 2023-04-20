@@ -13,12 +13,9 @@
         from resume
         where userid = #{userid}
     </select>
-    <delete id="deleteAll">
-        delete from resume;
-    </delete>
 
     <select id="selectByNo" parameterType="Integer" resultType="ResumeDTO">
-        select title,contents,resumeno
+        select title,contents,resumeno,userid
         from resume
         where resumeno = #{rno}
     </select>
@@ -34,4 +31,12 @@
         from resume
         where title=#{title} and contents=#{contents} and userid=#{userid}
     </select>
+
+    <delete id="deleteOne" parameterType="Integer">
+        delete from resume
+        where resumeno = #{resumneno}
+    </delete>
+    <delete id="deleteAll">
+        delete from resume;
+    </delete>
 </mapper>
