@@ -10,6 +10,8 @@
         select name, email,birth ,gender ,phone  from user where userid = #{sessionid}
     </select>
 
-
+    <select id="usersubinfo" parameterType="String" resultType="UserInfoDTO">
+        select * from userInformation where userid = #{sessionid}
+    </select>
 
 </mapper>
