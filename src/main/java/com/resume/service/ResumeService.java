@@ -28,8 +28,8 @@ public class ResumeService {
     public int updateResume(ResumeDTO dto){
         return dao.updateResume(dto);
     }
-    public int deleteOne(){
-        return dao.deleteOne();
+    public int deleteOne(Integer rno){
+        return dao.deleteOne(rno);
     }
     public ResumeDTO selectByNo(Integer rno){
         return dao.selectByNo(rno);

@@ -12,7 +12,7 @@ public interface ResumeDAO {
     int insertResume(ResumeDTO dto);
     List<ResumeDTO> findResumeById(String userid);
     void deleteAll();
-    int deleteOne();
+    int deleteOne(Integer rno);
     int updateResume(ResumeDTO dto);
     ResumeDTO selectByNo(Integer rno);
 

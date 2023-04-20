@@ -125,7 +125,7 @@
     </div>
 
 </div>
-
+<div th:if="${status =='ok'}" th:class="status-ok"></div>
 <form th:href="@{/resume/modify/{rno}(rno=${resume.resumeno})}" th:method="POST" th:object="${resume}">
     <div class="resume-form">
         <div class="checker_spell">
@@ -160,11 +160,12 @@
                 </div>
             </div>
             <div class="summary__column">
-                <div class="btn-sub"><input id="btn-add" type="submit" value="수정"></div>
+                <div class="btn-sub" th:if="${resume.userid == session.userSession}" ><input id="btn-add" type="submit" value="수정"></div>
 
             </div>
         </div>
     </div>
+
 </form>
 
 <script th:src="@{/js/checkByte.js}"></script>
@@ -174,6 +175,9 @@
     }
     if(document.getElementsByClassName('contents-error').length){
         alert("내용을 입력하세요");
+    }
+    if(document.getElementsByClassName('status-ok').length){
+        alert("수정 완료");
     }
 </script>
 </body>
