@@ -45,8 +45,9 @@ public class ResumeTest {
 
     }
     @Test
-    @DisplayName("Update 테스트 유저 이름 일치")
+    @DisplayName("CRUD TEST")
     void updateSameUserId() throws Exception{
+        //Insert
         ResumeDTO dto = ResumeDTO.builder()
                 .userid("rudnf9605")
                 .title("Insert Test")
@@ -55,28 +56,21 @@ public class ResumeTest {
         Assertions.assertThat(service.insertResume(dto) ==1);
         ResumeDTO resumeDTO = service.testCode(dto);
 
+        //update
         ResumeDTO dto2 = ResumeDTO.builder()
                         .resumeno(resumeDTO.getResumeno())
                         .userid(resumeDTO.getUserid())
                         .title("Update Test")
                         .contents("Junit Update Test")
                         .build();
-        Assertions.assertThat(service.updateResume(dto2) ==0);
-
-
+        service.updateResume(dto2);
+        ResumeDTO resumeDTO1 = service.testCode(dto2);
+        Assertions.assertThat(resumeDTO1.getTitle()).isEqualTo("Update Test");
+        //delete
+        Assertions.assertThat(service.deleteOne(resumeDTO1.getResumeno()) ==1);
     }
-    @Test
-    void test() throws Exception{
-        ResumeDTO dto = ResumeDTO.builder()
-                .resumeno(29)
-                .userid("rudnf9605")
-                .title("Update Test")
-                .contents("Junit Update Test")
-                .build();
-        service.updateResume(dto);
 
 
-    }
 
 
 }
