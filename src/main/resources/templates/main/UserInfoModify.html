@@ -206,8 +206,8 @@
 <header>간단 자기소개 수정</header>
 
 <form id="form" class="topBefore" th:action="@{/main/infoupdate/save}" th:method="POST" th:object="${usersubinfo}">
-    <input id="name" name="blog" type="text" placeholder="blog url" th:field="*{blogurl}">
-    <input id="email" name ="git" type="text" placeholder="git url" th:field="*{giturl}">
+    <input id="name" name="blog" type="text" placeholder="blog url id만 입력해주세요" th:field="*{blogurl}">
+    <input id="email" name ="git" type="text" placeholder="git url id만 입력해주세요" th:field="*{giturl}">
     <textarea id="message" name="intro" type="text" placeholder="간단한 자기소개를 작성해주세요" th:field="*{introduction}"></textarea>
     <input id="submit" type="submit" value="GO!">
 

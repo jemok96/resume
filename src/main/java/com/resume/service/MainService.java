@@ -1,6 +1,7 @@
 package com.resume.service;
 
 import com.resume.dao.MainDAO;
+import com.resume.dto.ExperienceDTO;
 import com.resume.dto.RegisterDTO;
 import com.resume.dto.UserInfoDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -33,5 +34,9 @@ public class MainService {
 
     public void infoinsert(String sessionid) {
          dao.infoinsert(sessionid);
+    }
+
+    public ExperienceDTO experienceinfo(String sessionid) {
+       return dao.experienceinfo(sessionid);
     }
 }

@@ -1,5 +1,6 @@
 package com.resume.dao;
 
+import com.resume.dto.ExperienceDTO;
 import com.resume.dto.RegisterDTO;
 import com.resume.dto.UserInfoDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,4 +18,6 @@ public interface MainDAO {
     void infoupdate(Map map);
 
     void infoinsert(String sessionid);
+
+    ExperienceDTO experienceinfo(String sessionid);
 }
