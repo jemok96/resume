@@ -13,6 +13,8 @@
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&family=Ubuntu:wght@500&display=swap"
             rel="stylesheet"
     />
+    <script src = "http://code.jquery.com/jquery-latest.js"></script>
+
 </head>
 <style>
     body {
@@ -25,7 +27,7 @@
     }
     .text {
         font-size: 28px;
-        font-style: Ubuntu;
+
     }
     .divider {
         position: relative;
@@ -67,7 +69,7 @@
         color: inherit;
     }
     .wrapped,
-    form {
+    .form {
         margin: 20px 0px 0px 300px;
     }
     .contents__userInput {
@@ -100,7 +102,7 @@
         justify-content: center;
         border: none;
     }
-    button {
+    input[type="submit"] {
         background-color: #40a1ff;
         border: none;
         width: 100px;
@@ -130,6 +132,12 @@
         </div>
         <div class="column">
             <a href="" class="center">
+                <span class="material-symbols-outlined size">face</span>
+                <span>이미지 수정</span>
+            </a>
+        </div>
+        <div class="column">
+            <a href="" class="center">
                 <span class="material-symbols-outlined size">sync_lock</span>
                 <span>비밀번호 변경</span>
             </a>
@@ -140,6 +148,7 @@
                 <span>회원탈퇴</span>
             </a>
         </div>
+
     </div>
 </div>
 
@@ -154,20 +163,63 @@
         </div>
     </div>
 </div>
-<form action="">
+
+<form class="form" id="form" onsubmit="return false">
     <div class="contents__userInput">
         <div class="column__userInput">
             <div class="text__">아이디</div>
-            <div class="user__">userId</div>
+            <div class="user__" th:text="${userId}">userId</div>
         </div>
         <div class="column__userInput">
             <div class="text__">비밀번호</div>
-            <div class="user__"><input type="password" /></div>
+            <div class="user__"><input type="password" id="userPw"/></div>
         </div>
     </div>
     <div class="column__userInput__flex">
-        <button type="button">확인</button>
+        <input type="submit" id="pwCheck" onclick="check()" >
     </div>
 </form>
+
+<script>
+    const user = '[[${userId}]]';
+    console.log(user);
+    function check() {
+
+        let userPw = $("#userPw").val();
+        console.log(userPw);
+        $.ajax({
+                async: true,
+                type: 'POST',
+                data: JSON.stringify({
+                    "password":userPw
+                }),
+                url: "profile/checkpw",
+                dataType: "json",
+                contentType: "application/json; charset=UTF-8",
+                success: function (data) {
+                    console.log(data);
+                    if (data == 200) {
+                        alert("비밀번호를 입력해주세요");
+
+                    }else if(data==1){
+                        alert("O.");
+                        let form = document.createElement('form');
+                        form.setAttribute("action",'/profile/'+user);
+                        form.setAttribute('method','post');
+                        document.body.appendChild(form);
+                        form.submit();
+                    }else{
+                        alert("X")
+                    }
+                },
+                error: function (error) {
+                    alert("error : " + error);
+                }
+            });
+    }
+
+
+
+</script>
 </body>
 </html>
