@@ -13,10 +13,12 @@
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&family=Ubuntu:wght@500&display=swap"
             rel="stylesheet"
     />
-    <script src = "http://code.jquery.com/jquery-latest.js"></script>
-
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
 </head>
 <style>
+    .margin {
+        margin: 40px 0px 10px 280px;
+    }
     body {
         margin: 0px;
     }
@@ -27,7 +29,6 @@
     }
     .text {
         font-size: 28px;
-
     }
     .divider {
         position: relative;
@@ -68,14 +69,51 @@
         text-decoration: none;
         color: inherit;
     }
+    .image-form {
+        display: flex;
+        align-items: center;
+        height: 250px;
+    }
+    .image-wrapped {
+        border: 1px solid black;
+        margin-right: 200px;
+    }
+    .image__column:first-child {
+        margin: 0px 40px 0px 20px;
+        padding: 0px 20px 0px 0px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        border-right: 1px solid black;
+    }
+    .image__column {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: space-around;
+    }
 
+    input[type="file"] {
+        display: none;
+    }
+    .image-btn {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        width: 43%;
+        margin: 5px;
+        padding: 5px;
+    }
+    img {
+        border-radius: 50%;
+        width: 70%;
+        height: 60%;
+    }
 </style>
 <body>
 <div class="header-user">
     <div class="header__column text">RESUME</div>
     <div class="header__column divider">|</div>
     <div class="header__column text">회원관리</div>
-
 </div>
 <div class="header-icon">
     <div class="flex">
@@ -101,21 +139,29 @@
         </div>
     </div>
 </div>
-<div>
-    <div>회원정보 수정</div>
-    <div>회원님의 정보를 수정 확인하실 수 있습니다.</div>
+<div class="margin">
+    <div>프로필 수정</div>
+    <div>회원님의 대표 프로필을 수정 하실 수 있습니다.</div>
+    <div class="image-wrapped">
+        <form th:action="@{/profile/{userId}(userId=${session.userSession})/modify }"  th:method="POST" class="image-form" enctype="multipart/form-data">
+            <div class="image__column">프로필 사진</div>
+            <div class="image__column">
+                <img src="si.png" alt="" />
+                <label for="file">
+                    <div class="image-btn">사진 변경</div>
+                </label>
+                <input type="file"
+                        name="file"
+                        id="file"
+                        accept="image/gif,image/jpeg,image/png"/>
+                <div class="image__column">
+                    <input type="submit" />
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
-<div th:if="${user != null}">
-    <div th:text="${user}"></div>
-</div>
-<div th:if="${user == null}">
-    <div th:text="${|권한이 없습니다.|}"></div>
-</div>
-
-<script>
-
-
-</script>
+<script></script>
 </body>
 </html>
