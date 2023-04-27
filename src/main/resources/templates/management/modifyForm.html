@@ -146,16 +146,16 @@
         <form th:action="@{/profile/{userId}(userId=${session.userSession})/modify }"  th:method="POST" class="image-form" enctype="multipart/form-data">
             <div class="image__column">프로필 사진</div>
             <div class="image__column">
-                <img src="si.png" alt="" />
+                <img th:src="${userImage.url}"/>
                 <label for="file">
                     <div class="image-btn">사진 변경</div>
                 </label>
                 <input type="file"
-                        name="file"
-                        id="file"
-                        accept="image/gif,image/jpeg,image/png"/>
+                       name="file"
+                       id="file"
+                       accept="image/gif,image/jpeg,image/png"/>
                 <div class="image__column">
-                    <input type="submit" />
+                    <input type="submit"  value="저장"/>
                 </div>
             </div>
         </form>

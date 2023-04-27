@@ -11,8 +11,8 @@ import java.util.Date;
 public class UserImageDTO {
     private Integer imageno;
     private String userid;
-    private String uuid;
-    private String path;
+    private String keyvalue;
+    private String url;
     private String realname;
     private Date regdate;
     private Date up_date;
@@ -21,14 +21,26 @@ public class UserImageDTO {
     public UserImageDTO() {}
 
     @Builder
-    public UserImageDTO(Integer imageno, String userid, String uuid, String path, String realname, Date regdate, Date up_date) {
+    public UserImageDTO(Integer imageno, String userid, String keyvalue, String url, String realname, Date regdate, Date up_date) {
         this.imageno = imageno;
         this.userid = userid;
-        this.uuid = uuid;
-        this.path = path;
+        this.keyvalue = keyvalue;
+        this.url = url;
         this.realname = realname;
         this.regdate = regdate;
         this.up_date = up_date;
     }
 
+    @Override
+    public String toString() {
+        return "UserImageDTO{" +
+                "imageno=" + imageno +
+                ", userid='" + userid + '\'' +
+                ", keyvalue='" + keyvalue + '\'' +
+                ", url='" + url + '\'' +
+                ", realname='" + realname + '\'' +
+                ", regdate=" + regdate +
+                ", up_date=" + up_date +
+                '}';
+    }
 }

@@ -1,32 +1,32 @@
 package com.resume.controller;
 
 import com.resume.dto.UserDTO;
-import com.resume.dto.UserImageDTO;
+import com.resume.dto.AwsS3;
 import com.resume.service.ManageMentService;
+import com.resume.service.S3UploadService;
+import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @Slf4j
 public class MemberManageController {
     private final ManageMentService service;
+    private final S3UploadService s3Upload;
+    private final UserImageService imageService;
 
-    public MemberManageController(ManageMentService service) {
+    public MemberManageController(ManageMentService service, S3UploadService s3Upload, UserImageService imageService) {
         this.service = service;
+        this.s3Upload = s3Upload;
+        this.imageService = imageService;
     }
 
     @GetMapping("/profile/{userId}")
@@ -38,6 +38,7 @@ public class MemberManageController {
     public String user(@PathVariable("userId") String userId,Model model,@SessionAttribute("userSession")
             String sessionId){
         model.addAttribute("user",service.findById(userId,sessionId));
+        model.addAttribute("userImage",imageService.findImageById(userId));
         return "management/modifyForm";
     }
     @PostMapping("/profile/checkpw")
@@ -54,12 +55,12 @@ public class MemberManageController {
                         .build());
     }
     @PostMapping("/profile/{userid}/modify")
-    public String userImageUpdate(@RequestParam MultipartFile file,Model model) throws IOException {
-        log.info("uploadFile={}",file);
+    public String userImageUpdate(@RequestParam MultipartFile file, Model model, RedirectAttributes attr, @PathVariable String userid) throws IOException {
 
-        File newFileName = new File(file.getOriginalFilename());
-        file.transferTo(newFileName);
-        return "management/modifyForm";
+        AwsS3 userImage = s3Upload.upload(file, "userImage");
+        imageService.updateImage(userImage);
+        attr.addFlashAttribute("status","OK");
+        return "redirect:/profile/{userid}";
     }
 
 

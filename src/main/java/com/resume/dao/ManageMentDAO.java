@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface ManageMentDAO {
     int checkPw(UserDTO dto);
     UserDTO findById(String id);
+
 }
