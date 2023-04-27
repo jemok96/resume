@@ -23,4 +23,8 @@
         insert into userInformation values (#{sessionid} , null, null ,null)
     </insert>
 
+    <select id="experienceinfo" parameterType="String" resultType="ExperienceDTO">
+        select * from experience where userid = #{sessionid}
+    </select>
+
 </mapper>

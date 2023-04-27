@@ -1,5 +1,6 @@
 package com.resume.controller;
 
+import com.resume.dto.ExperienceDTO;
 import com.resume.dto.RegisterDTO;
 import com.resume.dto.UserInfoDTO;
 import com.resume.service.MainService;
@@ -34,19 +35,23 @@ public class MainController {
         String sessionid = (String) session.getAttribute("userSession");
         RegisterDTO userinfo = null;
         UserInfoDTO usersubinfo = null;
+        ExperienceDTO experienceinfo = null;
 
+        //유저 개인정보
         userinfo =  mainService.userInfo(sessionid);
-        log.info(" 영번쨰 " );
         usersubinfo = mainService.usersubinfo(sessionid);
-        log.info(" 첫번쨰 " );
 
-        if(usersubinfo==null)
+        //유저 경력기술서
+        experienceinfo = mainService.experienceinfo(sessionid);
+
+        if(usersubinfo==null) {
             mainService.infoinsert(sessionid);
-        log.info(" 두번쨰 " );
-
+            usersubinfo = mainService.usersubinfo(sessionid);
+        }
 
         mv.addObject("userinfo" ,userinfo );
         mv.addObject("usersubinfo" ,usersubinfo);
+        mv.addObject("experienceinfo" ,experienceinfo);
         mv.setViewName("main/main");
 
         return mv;
@@ -81,6 +86,7 @@ public class MainController {
         String blog = request.getParameter("blogurl");
         String git = request.getParameter("giturl");
         String intro = request.getParameter("introduction");
+
 
         map.put("blog" , blog);
         map.put("git" , git);
