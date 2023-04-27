@@ -1,21 +1,68 @@
 package com.resume.controller;
 
+import com.resume.dto.UserDTO;
+import com.resume.dto.AwsS3;
+import com.resume.service.ManageMentService;
+import com.resume.service.S3UploadService;
+import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
 
 @Controller
 @Slf4j
 public class MemberManageController {
-    @GetMapping("/profile")
-    public String main(@SessionAttribute("userSession")String userId, Model model){
-        log.info("userId={}",userId);
-        model.addAttribute("userId",userId);
+    private final ManageMentService service;
+    private final S3UploadService s3Upload;
+    private final UserImageService imageService;
 
-        return "management/mainForm";
-
+    public MemberManageController(ManageMentService service, S3UploadService s3Upload, UserImageService imageService) {
+        this.service = service;
+        this.s3Upload = s3Upload;
+        this.imageService = imageService;
     }
+
+    @GetMapping("/profile/{userId}")
+    public String main(@PathVariable String userId,@SessionAttribute("userSession")String userSession, Model model){
+        model.addAttribute("userId",userSession);
+        return "management/mainForm";
+    }
+    @PostMapping("/profile/{userId}")
+    public String user(@PathVariable("userId") String userId,Model model,@SessionAttribute("userSession")
+            String sessionId){
+        model.addAttribute("user",service.findById(userId,sessionId));
+        model.addAttribute("userImage",imageService.findImageById(userId));
+        return "management/modifyForm";
+    }
+    @PostMapping("/profile/checkpw")
+    @ResponseBody
+    public Integer checkPw(@Validated @RequestBody UserDTO user, BindingResult bindingResult,@SessionAttribute("userSession")
+                           String userId){
+        if (bindingResult.hasErrors()){
+            return 200;
+        }
+        return service.checkPw(
+                UserDTO.builder().
+                        password(user.getPassword())
+                        .userid(userId)
+                        .build());
+    }
+    @PostMapping("/profile/{userid}/modify")
+    public String userImageUpdate(@RequestParam MultipartFile file, Model model, RedirectAttributes attr, @PathVariable String userid) throws IOException {
+
+        AwsS3 userImage = s3Upload.upload(file, "userImage");
+        imageService.updateImage(userImage);
+        attr.addFlashAttribute("status","OK");
+        return "redirect:/profile/{userid}";
+    }
+
+
+
 }

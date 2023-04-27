@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.resume.dao.ManageMentDAO">
+    <select id="checkPw" parameterType="UserDTO" resultType="int">
+        select count(*) from user
+        where userid= #{userid}
+        and password = #{password}
+    </select>
+
+    <select id="findById" parameterType="String" resultType="UserDTO">
+        select * from user
+        where userid= #{userid}
+    </select>
+</mapper>
+
