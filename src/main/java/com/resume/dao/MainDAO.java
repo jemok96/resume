@@ -20,4 +20,6 @@ public interface MainDAO {
     void infoinsert(String sessionid);
 
     ExperienceDTO experienceinfo(String sessionid);
+
+    void experienceAdd(ExperienceDTO experidto);
 }

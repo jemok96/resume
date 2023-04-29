@@ -27,4 +27,6 @@
         select * from experience where userid = #{sessionid}
     </select>
 
+
+
 </mapper>

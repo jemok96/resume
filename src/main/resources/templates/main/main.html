@@ -67,6 +67,10 @@
             location.href= "/main/infoupdate"
         }
 
+        function experienceAdd() {
+            location.href= "/main/experienceAdd"
+        }
+
     </script>
     <script th:inline="javascript">
         $(document).ready(function(){
@@ -74,7 +78,7 @@
             var usersubinfo = [[${usersubinfo}]];
             //article의 정보를 alert창으로 표시한다.
 
-            if(usersubinfo.giturl != null && ){
+            if(usersubinfo.giturl != null  ){
                 document.getElementById("git").href = "http://github.com/" + usersubinfo.giturl;
             }
             if(usersubinfo.giturl != null){
@@ -143,10 +147,10 @@
                 <div class="resume-section-content">
 
                     <h2 class="mb-5">경력 기술서</h2>
+                    <button type="button" style ="margin-left:975px; margin-bottom: 20px" onclick="experienceAdd()" class="btn btn-outline-secondary">추가</button>
                     <th:block th:if="${experienceinfo == null}">
                         <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                            <h3 class="mb-0">수정 버튼을 눌러 경력 기술서를 작성해주세요 !</h3>
-                            <button type="button" style ="margin-left:50px"class="btn btn-outline-warning">수정</button>
+                            <h3 class="mb-0">추가 버튼을 눌러 경력 기술서를 등록해주세요 !</h3>
                         </div>
                     </th:block>
                     <th:block th:if="${experienceinfo != null}">
@@ -157,6 +161,10 @@
                             <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
                         </div>
                         <div class="flex-shrink-0"><span class="text-primary">March 2013 - Present</span></div>
+                        <div class="flex-shrink-0">
+                            <button type="button" style ="margin-left:20px"class="btn btn-outline-warning">수정</button>
+                            <button type="button" style ="margin-left:10px"class="btn btn-outline-warning">삭제</button>
+                        </div>
                     </div>
                     </th:block>
                 </div>
