@@ -101,4 +101,23 @@ public class MainController {
 
         return "redirect:/main" ;
     }
+
+    @GetMapping("/main/experienceAdd")
+    public String experienceAdd(){
+
+        return "main/experienceAdd";
+    }
+
+    @PostMapping("/main/experienceAdd/save")
+    public String experienceAdd(HttpSession session , ExperienceDTO experidto) {
+
+        Map map = new HashMap();
+        String sessionid = (String) session.getAttribute("userSession");
+
+        experidto.setUserid(sessionid);
+
+        mainService.experienceAdd(experidto);
+
+        return "redirect:/main#experience" ;
+    }
 }

@@ -39,4 +39,8 @@ public class MainService {
     public ExperienceDTO experienceinfo(String sessionid) {
        return dao.experienceinfo(sessionid);
     }
+
+    public void experienceAdd(ExperienceDTO experidto) {
+        dao.experienceAdd(experidto);
+    }
 }
