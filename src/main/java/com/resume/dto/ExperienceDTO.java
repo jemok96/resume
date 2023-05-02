@@ -19,7 +19,7 @@ public class ExperienceDTO {
 
     private String end_dt;
 
-    private String experi_no;
+    private int experi_no;
 
     @Override
     public String toString() {

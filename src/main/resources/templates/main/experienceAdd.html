@@ -98,29 +98,29 @@
                 <tbody>
                 <tr>
                     <th scope="row">회사명</th>
-                    <td><input type="text" id="company" name="company"value="" /></td>
+                    <td><input type="text" id="company" name="company"value="" required/></td>
                 </tr>
                 <tr>
                     <th scope="row">직무명</th>
-                    <td><input type="text" id="job" name="job" value="" /></td>
+                    <td><input type="text" id="job" name="job" value="" required/></td>
                 </tr>
                 <tr>
                     <th scope="row">경력 날짜</th>
-                    <td><input type="date" id="start_dt" name ="start_dt"value="" /> ~
-                        <input type="date" id="end_dt" name="end_dt" value="" /></td>
+                    <td><input type="date" id="start_dt" name ="start_dt"value="" required/> ~
+                        <input type="date" id="end_dt" name="end_dt" value="" required/></td>
                 </tr>
                 <tr>
                     <th scope="row">내용</th>
-                    <td><textarea id="contents" name="end_dt" rows="5" cols="10"></textarea></td>
+                    <td><textarea id="contents" name="contents" rows="5" cols="10" required></textarea></td>
                 </tr>
                 </tbody>
 
             </table>
-
+            <div class="btn-wrap">
+                <input type="submit" id="btnRegist" class="btn" value="등록">
+            </div>
         </form>
-        <div class="btn-wrap">
-            <input type="button" id="btnRegist" class="btn" value="등록">
-        </div>
+
     </fieldset>
 </div>
 

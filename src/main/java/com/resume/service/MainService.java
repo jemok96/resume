@@ -7,6 +7,7 @@ import com.resume.dto.UserInfoDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -36,7 +37,7 @@ public class MainService {
          dao.infoinsert(sessionid);
     }
 
-    public ExperienceDTO experienceinfo(String sessionid) {
+    public List<ExperienceDTO> experienceinfo(String sessionid) {
        return dao.experienceinfo(sessionid);
     }
 
