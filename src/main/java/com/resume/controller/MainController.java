@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -35,7 +36,7 @@ public class MainController {
         String sessionid = (String) session.getAttribute("userSession");
         RegisterDTO userinfo = null;
         UserInfoDTO usersubinfo = null;
-        ExperienceDTO experienceinfo = null;
+        List<ExperienceDTO> experienceinfo = null;
 
         //유저 개인정보
         userinfo =  mainService.userInfo(sessionid);
@@ -116,7 +117,9 @@ public class MainController {
 
         experidto.setUserid(sessionid);
 
+        log.info("experidto11111" + experidto.toString());
         mainService.experienceAdd(experidto);
+
 
         return "redirect:/main#experience" ;
     }

@@ -27,6 +27,12 @@
         select * from experience where userid = #{sessionid}
     </select>
 
+    <insert id ="experienceAdd" parameterType="String">
+        insert into experience  (userid, job, company , contents , start_dt , end_dt)
+        values (#{userid} , #{job} , #{company} ,#{contents}, #{start_dt} ,#{end_dt} )
+    </insert>
+
+
 
 
 </mapper>

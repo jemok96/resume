@@ -143,7 +143,7 @@
             </section>
             <hr class="m-0" />
             <!-- Experience-->
-            <section class="resume-section" id="experience">
+            <section class="resume-section" id="experience" >
                 <div class="resume-section-content">
 
                     <h2 class="mb-5">경력 기술서</h2>
@@ -154,13 +154,15 @@
                         </div>
                     </th:block>
                     <th:block th:if="${experienceinfo != null}">
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5" th:each="experience : ${experienceinfo}">
                         <div class="flex-grow-1">
-                            <h3 class="mb-0">Senior Web Developer</h3>
-                            <div class="subheading mb-3">Intelitec Solutions</div>
-                            <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
+                            <h3 class="mb-0" th:text="${experience.company}"></h3>
+                            <div class="subheading mb-3" th:text="${experience.job}"></div>
+                            <p th:text="${experience.contents}"></p>
                         </div>
-                        <div class="flex-shrink-0"><span class="text-primary">March 2013 - Present</span></div>
+                        <div class="flex-shrink-0"><span class="text-primary" th:text="${experience.start_dt}"></span></div>
+                        <div class="flex-shrink-0"><span class="text-primary" > ~ </span></div>
+                        <div class="flex-shrink-0"><span class="text-primary" th:text="${experience.end_dt}"></span></div>
                         <div class="flex-shrink-0">
                             <button type="button" style ="margin-left:20px"class="btn btn-outline-warning">수정</button>
                             <button type="button" style ="margin-left:10px"class="btn btn-outline-warning">삭제</button>
