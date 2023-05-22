@@ -123,4 +123,23 @@ public class MainController {
 
         return "redirect:/main#experience" ;
     }
+
+    @PostMapping("/main/experienceChange")
+    public String experienceDelete(HttpServletRequest request) {
+
+
+        String action = request.getParameter("action");
+        String seqno1 = request.getParameter("seqno");
+
+        if(action.equals("delete")){
+            mainService.experienceDelete(seqno1);
+        }else{
+
+        }
+
+
+        return "redirect:/main#experience" ;
+    }
+
+
 }

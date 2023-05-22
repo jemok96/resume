@@ -23,4 +23,6 @@ public interface MainDAO {
     List<ExperienceDTO> experienceinfo(String sessionid);
 
     void experienceAdd(ExperienceDTO experidto);
+
+    void experienceDelete(String seqno1);
 }

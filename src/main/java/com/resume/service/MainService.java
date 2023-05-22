@@ -44,4 +44,8 @@ public class MainService {
     public void experienceAdd(ExperienceDTO experidto) {
         dao.experienceAdd(experidto);
     }
+
+    public void experienceDelete(String seqno1) {
+        dao.experienceDelete(seqno1);
+    }
 }

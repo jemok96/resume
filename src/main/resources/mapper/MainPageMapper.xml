@@ -32,7 +32,10 @@
         values (#{userid} , #{job} , #{company} ,#{contents}, #{start_dt} ,#{end_dt} )
     </insert>
 
+    <delete id="experienceDelete" parameterType="String">
+        delete from experience where experi_no = #{seqno1}
 
+    </delete>
 
 
 </mapper>
