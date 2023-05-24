@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Resume - Start Bootstrap Theme</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link href="../css/main.css" rel="stylesheet" />
+</head>
+
+<style>
+    * {
+        margin:0;
+        padding:0;
+        font-family:Verdana,sans-serif;
+        box-sizing:border-box;
+    }
+
+    body {color:#333;font-size:14px;}
+    #wrap {width:600px;}
+    /* table, ul */
+    table {width:100%;border:0; border-collapse:collapse;}
+    th,td {padding:8px 0;vertical-align:middle}
+    th {text-align:left;}
+    ul, li {margin:0;padding:0;list-style:none;}
+    /* input */
+    input[type=text] {display:inline-block;width:100%;height:32px;padding:0 10px;border:1px solid #ccc;font-size:14px;}
+    textarea {display:inline-block;width:100%;padding:10px;border:1px solid #ccc;font-size:14px;}
+    input[type=button],input[type=submit], button {border:0;font-size:14px;}
+    /* button */
+    .btn-wrap {margin:10px 0 0 0;text-align:right}
+    .btn {display:inline-block;padding:12px 20px;background-color:#333;color:#fff;text-align:center;line-height:1;}
+
+    .result {padding:15px;background-color:#eee;}
+    .result + .result {border-top:1px solid #ccc;}
+    .result ul {position:relative;overflow:hidden;}
+    .result li:nth-child(1),
+    .result li:nth-child(2) {float:right;color:#999;font-size:12px}
+    .result li:nth-child(1) {padding-left:8px}
+    .result li:nth-child(3) {font-weight:bold;}
+
+    fieldset {border:1px solid #ccc;padding:16px;}
+    legend {display:none}
+    .cont {overflow:hidden;height:27px;}
+    .commtIptBox {
+        display:flex;
+        display: -webkit-flex;
+        flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+        padding-top:20px;
+    }
+    .commtBox {flex:0 0 100%;font-size:12px;padding:10px 8px 0}
+    .contTxtBox {padding:10px 0 0;}
+    #btnCommt {display:block;flex:0 0 60px;height:32px;margin-left:8px;background:#666;color:#fff;line-height:1;}
+    #btnCommtInput {flex:1}
+    #btnCommtName {flex:0 0 100px;margin-right:8px}
+    .count {display:inline-block;margin-left:8px;font-style:normal;font-weight:bold;color:blue}
+</style>
+
+
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">Clarence Taylor</span>
+        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="assets/img/profile.jpg" alt="..." /></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">인적사항</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">경력기술서</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">스킬</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/resume">자기소개서</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">프로젝트</a></li>
+        </ul>
+    </div>
+</nav>
+<!-- Page Content-->
+
+<h2 style="margin-top:100px;margin-left:550px">경력 사항을 추가 해주세요 !!</h2>
+<div id="wrap" style="margin-top:200px;margin-left:600px">
+    <div id="resultWrap"></div>
+
+    <fieldset>
+        <legend>board</legend>
+        <form id="frm1" action="/main/experienceModify" method="post">
+
+            <table>
+                <caption></caption>
+                <colgroup>
+                    <col style="width:100px" />
+                    <col style="" />
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">회사명</th>
+                    <td><input type="text" id="company" name="company" th:value="${experienceinfo.getCompany()}" required/></td>
+                </tr>
+                <tr>
+                    <th scope="row">직무명</th>
+                    <td><input type="text" id="job" name="job" th:value="${experienceinfo.getJob()}" required/></td>
+                </tr>
+                <tr>
+                    <th scope="row">경력 날짜</th>
+                    <td><input type="date" id="start_dt" name ="start_dt" th:value="${experienceinfo.getStart_dt()}" required/> ~
+                        <input type="date" id="end_dt" name="end_dt" th:value="${experienceinfo.getEnd_dt()}" required/></td>
+                </tr>
+                <tr>
+                    <th scope="row">내용</th>
+                    <td><textarea id="contents" name="contents" rows="5" cols="10" th:text="${experienceinfo.getContents()}" required></textarea></td>
+                </tr>
+                </tbody>
+                <input type="hidden" name="experi_no" th:value="${experienceinfo.getExperi_no()}"/>
+
+            </table>
+            <div class="btn-wrap">
+                <input type="submit" id="btnRegist" class="btn" value="수정">
+            </div>
+        </form>
+
+    </fieldset>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/scripts.js"></script>
+</body>
+</html>

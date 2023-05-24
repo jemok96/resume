@@ -117,10 +117,48 @@ public class MainController {
 
         experidto.setUserid(sessionid);
 
-        log.info("experidto11111" + experidto.toString());
         mainService.experienceAdd(experidto);
 
 
         return "redirect:/main#experience" ;
     }
+
+    @PostMapping("/main/experienceChange")
+    public ModelAndView experienceDelete(HttpServletRequest request , ModelAndView mv) {
+
+
+        String action = request.getParameter("action");
+        String seqno1 = request.getParameter("seqno");
+
+        if(action.equals("delete")){
+            mainService.experienceDelete(seqno1);
+            mv.setViewName("redirect:/main#experience");
+            return mv;
+        }else{
+
+            ExperienceDTO experienceinfo = null;
+
+            experienceinfo = mainService.experienceInfo2(seqno1);
+
+            mv.addObject("experienceinfo" ,experienceinfo);
+            mv.setViewName("main/experienceModify");
+            return mv;
+        }
+
+
+
+    }
+
+    @PostMapping("/main/experienceModify")
+    public String experienceModify( ExperienceDTO experidto) {
+
+        log.info("성진 " + experidto);
+
+        mainService.experienceModify(experidto);
+
+
+        return "redirect:/main#experience" ;
+    }
+
+
 }

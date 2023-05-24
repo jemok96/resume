@@ -32,7 +32,22 @@
         values (#{userid} , #{job} , #{company} ,#{contents}, #{start_dt} ,#{end_dt} )
     </insert>
 
+    <delete id="experienceDelete" parameterType="String">
+        delete from experience where experi_no = #{seqno1}
 
+    </delete>
+
+    <select id="experienceInfo2" parameterType="String" resultType="ExperienceDTO">
+        select * from experience where experi_no = #{seqno1}
+    </select>
+
+    <update id="experienceModify" parameterType="String">
+        update experience
+         set job = #{job} , company = #{company} , contents = #{contents} ,
+        start_dt = #{start_dt} , end_dt =#{end_dt}
+        where experi_no = #{experi_no}
+
+    </update>
 
 
 </mapper>
