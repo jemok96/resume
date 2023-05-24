@@ -48,4 +48,12 @@ public class MainService {
     public void experienceDelete(String seqno1) {
         dao.experienceDelete(seqno1);
     }
+
+    public ExperienceDTO experienceInfo2(String seqno1) {
+        return dao.experienceInfo2(seqno1);
+    }
+
+    public void experienceModify(ExperienceDTO experidto) {
+         dao.experienceModify(experidto);
+    }
 }

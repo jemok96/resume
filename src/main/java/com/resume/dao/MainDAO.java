@@ -25,4 +25,8 @@ public interface MainDAO {
     void experienceAdd(ExperienceDTO experidto);
 
     void experienceDelete(String seqno1);
+
+    ExperienceDTO experienceInfo2(String seqno1);
+
+    void experienceModify(ExperienceDTO experidto);
 }

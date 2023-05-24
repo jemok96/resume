@@ -91,6 +91,14 @@
 
         });
 
+        function exDelete(){
+            if(confirm("정말 삭제 하시겠습니까?") == true){
+                alert("삭제")
+            }else{
+                return false;
+            }
+        }
+
     </script>
 
     <div style="text-align: right ;margin-top: 40px ">
@@ -158,7 +166,7 @@
                         </div>
                     </th:block>
                     <th:block th:if="${experienceinfo != null}">
-                        <form action="/main/experienceChange" method="post" th:each="experience : ${experienceinfo}">
+                        <form  action="/main/experienceChange" method="post" th:each="experience : ${experienceinfo}">
                             <div class="d-flex flex-column flex-md-row justify-content-between mb-5" >
                             <div class="flex-grow-1">
                               <h3 class="mb-0" th:text="${experience.company}"></h3>
@@ -170,7 +178,7 @@
                             <div class="flex-shrink-0"><span class="text-primary" th:text="${experience.end_dt}"></span></div>
                                 <div class="flex-shrink-0">
                             <button type="submit" style ="margin-left:20px"class="btn btn-outline-warning" name ="action" value ="update">수정</button>
-                            <button type="submit" style ="margin-left:10px"class="btn btn-outline-warning" name ="action" value ="delete" onclick="confirm('정말 삭제 하시겠습니까?')">삭제</button>
+                            <button type="submit" style ="margin-left:10px"class="btn btn-outline-warning" name ="action" value ="delete" onclick="return exDelete();" >삭제</button>
                         </div>
                     </div>
                             <input type="hidden" name="seqno" th:value="${experience.experi_no}"/>
