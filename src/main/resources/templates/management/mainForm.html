@@ -196,14 +196,14 @@
                         alert("비밀번호를 입력해주세요");
 
                     }else if(data==1){
-                        alert("O.");
+                        alert("성공~~~~");
                         let form = document.createElement('form');
                         form.setAttribute("action",'/profile/'+user);
                         form.setAttribute('method','post');
                         document.body.appendChild(form);
                         form.submit();
                     }else{
-                        alert("X")
+                        alert("비밀번호가 다릅니다.")
                     }
                 },
                 error: function (error) {

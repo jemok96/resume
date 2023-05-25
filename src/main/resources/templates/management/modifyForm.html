@@ -77,6 +77,7 @@
     .image-wrapped {
         border: 1px solid black;
         margin-right: 200px;
+        margin-top: 20px;
     }
     .image__column:first-child {
         margin: 0px 40px 0px 20px;
@@ -97,16 +98,24 @@
     input[type="file"] {
         display: none;
     }
+    input[type="submit"] {
+        border-radius: 3px;
+        height: 50px;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        background-color: #40a1ff;
+    }
     .image-btn {
         border: 1px solid rgba(0, 0, 0, 0.2);
         width: 43%;
-        margin: 5px;
+        margin: 5px 0px 5px 50px;
         padding: 5px;
     }
     img {
+        margin: 10px 0px 10px 0px;
         border-radius: 50%;
-        width: 70%;
-        height: 60%;
+        width: 200px;
+        height: 300px;
+        border: 1px solid black;s
     }
 </style>
 <body>
@@ -143,25 +152,45 @@
     <div>프로필 수정</div>
     <div>회원님의 대표 프로필을 수정 하실 수 있습니다.</div>
     <div class="image-wrapped">
-        <form th:action="@{/profile/{userId}(userId=${session.userSession})/modify }"  th:method="POST" class="image-form" enctype="multipart/form-data">
+        <form
+                th:action="@{/profile/{userId}(userId=${session.userSession})/modify }"
+                th:method="POST"
+                class="image-form"
+                enctype="multipart/form-data"
+        >
             <div class="image__column">프로필 사진</div>
             <div class="image__column">
-                <img th:src="${userImage.url}"/>
+                <img id="preview" th:src="${userImage.url}" />
                 <label for="file">
                     <div class="image-btn">사진 변경</div>
                 </label>
-                <input type="file"
-                       name="file"
-                       id="file"
-                       accept="image/gif,image/jpeg,image/png"/>
+                <input
+                        type="file"
+                        name="file"
+                        id="file"
+                        accept="image/gif,image/jpeg,image/png"
+                        onchange="readURL(this);"
+                />
                 <div class="image__column">
-                    <input type="submit"  value="저장"/>
+                    <input type="submit" value="저장" />
                 </div>
             </div>
         </form>
     </div>
 </div>
 
-<script></script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("preview").src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            document.getElementById("preview").src = "";
+        }
+    }
+</script>
 </body>
 </html>
