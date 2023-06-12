@@ -103,7 +103,7 @@
 
     <div style="text-align: right ;margin-top: 40px ">
         <a th:href="@{/profile/{userid}(userid=${session.userSession})}"><button class="button" id="mypage">마이페이지</button></a>
-        <button class="button">로그아웃</button>
+        <button class="button" id="logout">로그아웃</button>
     </div>
     
     <body id="page-top">
@@ -235,6 +235,10 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="../js/scripts.js"></script>
-
+        <script>
+            document.getElementById("logout").addEventListener("click", function () {
+                location.href = "/logout";
+            });
+        </script>
     </body>
 </html>

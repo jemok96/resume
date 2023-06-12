@@ -9,9 +9,15 @@
         and password = #{password}
     </select>
 
-    <select id="findById" parameterType="String" resultType="UserDTO">
-        select * from user
-        where userid= #{userid}
+    <select id="getPassword" parameterType="String" resultType="String">
+        select password from user
+        where userid=#{userid}
     </select>
+
+    <update id="changePw"  parameterType="hashMap">
+        update user
+        set password =#{password}
+        where userid=#{userid}
+    </update>
 </mapper>
 

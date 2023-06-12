@@ -17,7 +17,6 @@ public class LoginService {
 
     public Boolean checkUser(LoginUserDTO user) {
         LoginUserDTO findUser = dao.checkUser(user);
-        log.info("findUser = {}",findUser);
         if(findUser == null) {
             return false;
         }
