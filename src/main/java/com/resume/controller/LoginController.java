@@ -44,15 +44,11 @@ public class LoginController {
     @PostMapping("/login")
     public String loginCheck(@Validated @ModelAttribute("user") LoginUserDTO user, BindingResult bindingResult,
                              Model model, HttpServletRequest request) {
-
-
         if (bindingResult.hasErrors()) {
             return "login/login";
         }
-
-        Boolean status = loginService.checkUser(user);
         model.addAttribute("user", user);
-        if (status) {
+        if (loginService.checkUser(user)) {
             HttpSession session = request.getSession();
             session.setAttribute("userSession",user.getUserid());
             return "redirect:/main";

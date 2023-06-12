@@ -2,6 +2,7 @@ package com.resume.controller;
 
 import com.resume.dto.UserDTO;
 import com.resume.dto.AwsS3;
+import com.resume.dto.UserPwDTO;
 import com.resume.service.ManageMentService;
 import com.resume.service.S3UploadService;
 import com.resume.service.UserImageService;
@@ -37,32 +38,51 @@ public class MemberManageController {
     @PostMapping("/profile/{userId}")
     public String user(@PathVariable("userId") String userId,Model model,@SessionAttribute("userSession")
             String sessionId){
-        model.addAttribute("user",service.findById(userId,sessionId));
         model.addAttribute("userImage",imageService.findImageById(userId));
         return "management/modifyForm";
     }
     @PostMapping("/profile/checkpw")
     @ResponseBody
     public Integer checkPw(@Validated @RequestBody UserDTO user, BindingResult bindingResult,@SessionAttribute("userSession")
-                           String userId){
+                           String sessionId){
         if (bindingResult.hasErrors()){
             return 200;
         }
         return service.checkPw(
                 UserDTO.builder().
                         password(user.getPassword())
-                        .userid(userId)
+                        .userid(sessionId)
                         .build());
     }
     @PostMapping("/profile/{userid}/modify")
     public String userImageUpdate(@RequestParam MultipartFile file, Model model, RedirectAttributes attr, @PathVariable String userid) throws IOException {
 
+        //user image table 저장하고, 수정 할 경우 aws내에서도 삭제하고 다시 저장하는 로직으로 변경해야함 (Transactional)
         AwsS3 userImage = s3Upload.upload(file, "userImage");
         imageService.updateImage(userImage);
         attr.addFlashAttribute("status","OK");
         return "redirect:/profile/{userid}";
     }
+    @GetMapping("/profile/{userId}/modifypw")
+    public String modifyPassword(@PathVariable("userId") String userId,Model model,@SessionAttribute("userSession")String sessionId
+    ,RedirectAttributes attr){
+        log.info("userId={}",userId);
+        log.info("sessionId={}",sessionId);
+        if(!userId.equals(sessionId)){
+            attr.addFlashAttribute("status","NO");
+            return "redirect:/profile/{userId}";
+        }
+        return "management/modifyPasswordForm";
+    }
 
+    @PostMapping("/profile/{userId}/modifypw")
+    @ResponseBody
+    public int modifyPasswordCheck(@PathVariable("userId") String userId, Model model, @SessionAttribute("userSession")String sessionId,
+                                   @RequestBody UserPwDTO userPw){
+        int value = service.changePw(userPw,sessionId);
+        log.info("value={}",value);
+        return value;
+    }
 
 
 }
