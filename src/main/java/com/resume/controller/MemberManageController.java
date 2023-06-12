@@ -77,11 +77,13 @@ public class MemberManageController {
 
     @PostMapping("/profile/{userId}/modifypw")
     @ResponseBody
-    public int modifyPasswordCheck(@PathVariable("userId") String userId, Model model, @SessionAttribute("userSession")String sessionId,
-                                   @RequestBody UserPwDTO userPw){
-        int value = service.changePw(userPw,sessionId);
-        log.info("value={}",value);
-        return value;
+    public Integer modifyPasswordCheck(@PathVariable("userId") String userId, Model model, @SessionAttribute("userSession")String sessionId,
+                                       @Validated @RequestBody UserPwDTO userPw,BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return 400;
+        }
+
+        return service.changePw(userPw,sessionId);
     }
 
 

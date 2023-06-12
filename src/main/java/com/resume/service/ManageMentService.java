@@ -24,20 +24,21 @@ public class ManageMentService {
     public int changePw(UserPwDTO dto,String userId){
 
         //현재 비밀번호와 유저session id로 가져온 비밀번호가 다르면 에러
+        int value = 0;
         if(dto.getNowPassword().equals(getPassword(userId)) && dto.getNewPassword().equals(dto.getPasswordCheck()) ){
             Map map = new HashMap();
             map.put("password",dto.getPasswordCheck());
             map.put("userid",userId);
-            return dao.changePw(map);
+            value = dao.changePw(map);
         }
-        if(!dto.getNowPassword().equals(getPassword(userId))){
-            return 200;
+        else if(!dto.getNowPassword().equals(getPassword(userId))){
+            value= 200;
         }
         // 새 비밀번호와 새 비밀번호 확인이 다르면 에러
         else if(!dto.getNewPassword().equals(dto.getPasswordCheck())){
-            return 300;
+            value= 300;
         }
-        return 0;
+        return value;
 
 
     }
