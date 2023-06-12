@@ -43,7 +43,6 @@
         margin-right: 10px;
     }
     .header-icon {
-        border-top: 5px solid black;
         background-color: #40a1ff;
         height: 100px;
         display: flex;
@@ -76,7 +75,7 @@
         margin-top: 20px;
         margin-right: 300px;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        border-top: 3px solid black;
+        border-top: 3px solid #40a1ff;
     }
     .column__userInput {
         display: flex;
@@ -112,12 +111,21 @@
         color: white;
         cursor: pointer;
     }
+    #main-btn:hover {
+        font-size: 30px;
+        font-weight: 900;
+    }
+    .member {
+        margin-top: 5px;
+        font-size: 20px;
+        color: black;
+    }
 </style>
 <body>
 <div class="header-user">
-    <div class="header__column text">RESUME</div>
+    <div class="header__column text"  id="main-btn">RESUME</div>
     <div class="header__column divider">|</div>
-    <div class="header__column text">회원관리</div>
+    <div class="header__column text member">회원관리</div>
 
 </div>
 <div class="header-icon">
@@ -137,7 +145,7 @@
             </a>
         </div>
         <div class="column">
-            <a href="" class="center">
+            <a th:href="@{/profile/delete}" class="center">
                 <span class="material-symbols-outlined size">person_remove</span>
                 <span>회원탈퇴</span>
             </a>
@@ -215,6 +223,11 @@
             });
     }
 
+    document
+        .getElementById("main-btn")
+        .addEventListener("click", function () {
+            location.href = "/main";
+        });
 
 
 </script>

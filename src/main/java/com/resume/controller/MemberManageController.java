@@ -86,5 +86,10 @@ public class MemberManageController {
         return service.changePw(userPw,sessionId);
     }
 
+    @GetMapping("/profile/delete")
+    public String userDelete(){
+
+        return "management/deleteForm";
+    }
 
 }
