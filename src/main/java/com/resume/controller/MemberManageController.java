@@ -64,10 +64,9 @@ public class MemberManageController {
         return "redirect:/profile/{userid}";
     }
     @GetMapping("/profile/{userId}/modifypw")
-    public String modifyPassword(@PathVariable("userId") String userId,Model model,@SessionAttribute("userSession")String sessionId
+    public String modifyPassword(@PathVariable("userId") String userId,@SessionAttribute("userSession")String sessionId
     ,RedirectAttributes attr){
-        log.info("userId={}",userId);
-        log.info("sessionId={}",sessionId);
+
         if(!userId.equals(sessionId)){
             attr.addFlashAttribute("status","NO");
             return "redirect:/profile/{userId}";
@@ -77,7 +76,7 @@ public class MemberManageController {
 
     @PostMapping("/profile/{userId}/modifypw")
     @ResponseBody
-    public Integer modifyPasswordCheck(@PathVariable("userId") String userId, Model model, @SessionAttribute("userSession")String sessionId,
+    public Integer modifyPasswordCheck(@PathVariable("userId") String userId, @SessionAttribute("userSession")String sessionId,
                                        @Validated @RequestBody UserPwDTO userPw,BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return 400;
