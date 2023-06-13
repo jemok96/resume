@@ -4,10 +4,13 @@ import com.resume.dto.ExperienceDTO;
 import com.resume.dto.RegisterDTO;
 import com.resume.dto.UserInfoDTO;
 import com.resume.service.MainService;
+import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +25,10 @@ import java.util.Map;
 public class MainController {
 
     private final MainService mainService;
-
-    public MainController(MainService mainService) {
+    private final UserImageService imageService;
+    public MainController(MainService mainService, UserImageService imageService) {
         this.mainService = mainService;
+        this.imageService = imageService;
     }
 
 
@@ -53,6 +57,7 @@ public class MainController {
         mv.addObject("userinfo" ,userinfo );
         mv.addObject("usersubinfo" ,usersubinfo);
         mv.addObject("experienceinfo" ,experienceinfo);
+        mv.addObject("userImage",imageService.findImageById(sessionid));
         mv.setViewName("main/main");
 
         return mv;
@@ -68,7 +73,7 @@ public class MainController {
         usersubinfo = mainService.usersubinfo(sessionid);
 
         mv.addObject("usersubinfo" ,usersubinfo);
-
+        mv.addObject("userImage",imageService.findImageById(sessionid));
         mv.setViewName("main/UserInfoModify");
 
         return mv;
@@ -104,8 +109,8 @@ public class MainController {
     }
 
     @GetMapping("/main/experienceAdd")
-    public String experienceAdd(){
-
+    public String experienceAdd(@SessionAttribute("userSession")String sessionid, Model model){
+        model.addAttribute("userImage",imageService.findImageById(sessionid));
         return "main/experienceAdd";
     }
 
@@ -124,7 +129,7 @@ public class MainController {
     }
 
     @PostMapping("/main/experienceChange")
-    public ModelAndView experienceDelete(HttpServletRequest request , ModelAndView mv) {
+    public ModelAndView experienceDelete(HttpServletRequest request , ModelAndView mv,@SessionAttribute("userSession")String sessionId) {
 
 
         String action = request.getParameter("action");
@@ -141,6 +146,7 @@ public class MainController {
             experienceinfo = mainService.experienceInfo2(seqno1);
 
             mv.addObject("experienceinfo" ,experienceinfo);
+            mv.addObject("userImage",imageService.findImageById(sessionId));
             mv.setViewName("main/experienceModify");
             return mv;
         }
