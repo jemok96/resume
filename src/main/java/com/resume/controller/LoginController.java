@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,13 +44,13 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginCheck(@Validated @ModelAttribute("user") LoginUserDTO user, BindingResult bindingResult,
-                             Model model, HttpServletRequest request) {
+                             Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "login/login";
         }
         model.addAttribute("user", user);
         if (loginService.checkUser(user)) {
-            HttpSession session = request.getSession();
+
             session.setAttribute("userSession",user.getUserid());
             return "redirect:/main";
         } else {
@@ -76,6 +77,7 @@ public class LoginController {
     @PostMapping("/checkid")
     public String checkId(@Validated @ModelAttribute("email") EmailCheckDTO email, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()){
+            log.info("error={}",bindingResult);
             return "login/find/findById";
         }
         Boolean status = loginService.CheckEmail(email);
@@ -96,20 +98,8 @@ public class LoginController {
         return "login/find/findsuccess";
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private void mailSend(String email,String randomNum) {
+    @Async
+    public void mailSend(String email, String randomNum) { //private에서는 비동기 작동안함
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(email);
         simpleMailMessage.setSubject("이메일 인증");
