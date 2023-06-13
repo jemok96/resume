@@ -121,8 +121,11 @@
     <div class="content-header">
         <div class="content__column">자소서 작성하기</div>
         <div class="content__column">
-            <div class="content__home">Home</div>
-            <div class="content__name" th:if="${session.userSession != null}" th:text="${session.userSession}+|님|" >경제목님</div>
+            <div class="content__home"><a href="/main">Home</a></div>
+            <div class="content__name">
+                <a th:href="@{/profile/{userid}(userid=${session.userSession})}" th:if="${session.userSession != null}"
+                   th:text="${session.userSession}+|님|"></a>
+            </div>
             <a href="/login"><div class="content__name" th:if="${session.userSession == null}" th:text="|로그인|" >login</div></a>
             <a href="/logout"><div class="content__log"th:if="${session.userSession !=null}" th:text="로그아웃">logout</div></a>
         </div>
