@@ -279,6 +279,10 @@ signUpButton.addEventListener('click', () => {
 signInButton.addEventListener('click', () => {
     container.classList.remove("right-panel-active");
 });
+
+function signup(){
+    location.href= "/register"
+}
 </script>
 <body>
 <h2>나만의 이력서를 만들어 보세요!!</h2>
@@ -312,7 +316,7 @@ signInButton.addEventListener('click', () => {
             <div class="overlay-panel overlay-right">
                 <h1>Hello, Developer!</h1>
                 <p>개발자들의 전용 이력서 작성의 첫 걸음</p>
-                <button class="ghost" id="signUp">회원가입</button>
+                <button class="ghost" id="signUp" th:onclick="signup()">회원가입</button>
             </div>
         </div>
     </div>

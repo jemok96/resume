@@ -43,7 +43,8 @@ public class RegisterController {
                              RedirectAttributes redirectAttributes, ModelAndView mv) {
         int result = registerService.saveuser(user);
 
-        log.info(result + "결과");
+        registerService.saveImage(user.getUserid());
+
 
         return "login/login";
 
