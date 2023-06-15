@@ -29,4 +29,9 @@ public class RegisterService {
     public RegisterDTO userInfo(String sessionid) {
         return dao.userInfo(sessionid);
     }
+
+
+    public void saveImage(String userid) {
+        dao.saveImage(userid);
+    }
 }

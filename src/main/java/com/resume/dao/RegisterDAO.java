@@ -15,4 +15,7 @@ public interface RegisterDAO {
     int idcheck(String userid);
 
     RegisterDTO userInfo(String sessionid);
+
+
+    void saveImage(String userid);
 }
