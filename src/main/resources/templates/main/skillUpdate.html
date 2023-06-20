@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Resume - Start Bootstrap Theme</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <link href="../css/main.css" rel="stylesheet" />
+</head>
+
+<style>
+    .accordion {background-color:#eee;color:#444;cursor:pointer;width:100%;border:none;text-align:left;outline:none;font-size:15px;transition:.4s;padding:18px;}
+    .active,.accordion:hover {background-color:#ccc;}
+    .accordion:after { content: '\00276F'; /*❯*/
+        float: right;
+        margin-left: 5px;
+        transform: rotate(90deg);}
+    .active:after { content: "\00276F";
+        transform: rotate(270deg); }
+    .panel {background-color:#FFF;max-height:0;overflow:hidden;transition:max-height .2s ease-out;padding:0 18px;}
+
+
+
+    .p-hide { display: none }
+    .p-show { display: block }
+
+    .image-radio {
+        display: flex;
+        align-items: center;
+    }
+
+    .image-radio input[type="radio"] {
+        margin-left: 10px;
+    }
+</style>
+
+
+
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+        <span class="d-block d-lg-none">Clarence Taylor</span>
+        <span class="d-none d-lg-block"><img class="img-fluid img-profile rounded-circle mx-auto mb-2" th:src="${userImage.url}" /></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">인적사항</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">경력기술서</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">스킬</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/resume">자기소개서</a></li>
+            <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">프로젝트</a></li>
+        </ul>
+    </div>
+</nav>
+<script src = "http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    /* 방법1 */
+
+    $(document).ready(function(){
+
+        const acc = document.getElementsByClassName("accordion");
+        let i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                const panel = this.nextElementSibling;
+                if (panel.style.maxHeight){
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+
+    });
+
+
+</script>
+
+<div style="text-align: center ;margin-top: 100px" ; >
+<h3> 스킬 수정</h3>
+<p>본인이 사용할 수 있는 스킬을 등록하는 페이지입니다.</p>
+</div>
+    <button class="accordion">ProgrammingLanguage(언어)</button>
+<div class="panel">
+    <label>
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Backend/Apollo.png" alt="이미지 1">
+        <input type="radio" name="image" value="이미지1">
+    </label>
+
+    <label>
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Backend/Apollo.png" alt="이미지 2">
+        <input type="radio" name="image" value="이미지2">
+    </label>
+
+    <label>
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Backend/Apollo.png" alt="이미지 3">
+        <input type="radio" name="image" value="이미지3">
+    </label>
+
+    <label>
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Backend/Apollo.png" alt="이미지 4">
+        <input type="radio" name="image" value="이미지4">
+    </label>
+
+    <label>
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Backend/Apollo.png" alt="이미지 5">
+        <input type="radio" name="image" value="이미지5">
+    </label>
+
+
+</div>
+
+<button class="accordion">Backend(백엔드)</button>
+<div class="panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="accordion">Frontend(프론트엔드)</button>
+<div class="panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="accordion">Database(데이터베이스)</button>
+<div class="panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="accordion">Devops(데브옵스)</button>
+<div class="panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="accordion">Data(데이터)</button>
+<div class="panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="accordion">TestingTool(테스트툴)</button>
+<div class="panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+<button class="accordion">WoringTool(협업툴)</button>
+<div class="panel">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/scripts.js"></script>
+</body>
+</html>

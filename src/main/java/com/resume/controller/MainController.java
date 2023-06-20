@@ -166,5 +166,12 @@ public class MainController {
         return "redirect:/main#experience" ;
     }
 
+    @GetMapping("/main/skillUpdate")
+    public ModelAndView skillUpdate(@SessionAttribute("userSession")String sessionid , ModelAndView mv){
+        mv.addObject("userImage",imageService.findImageById(sessionid));
+        mv.setViewName("main/skillUpdate");
+        return mv;
+    }
+
 
 }
