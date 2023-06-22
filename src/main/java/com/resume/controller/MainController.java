@@ -172,6 +172,17 @@ public class MainController {
         mv.setViewName("main/skillUpdate");
         return mv;
     }
+    @PostMapping("/main/skillSave")
+    public String skillSave(HttpServletRequest request) {
+        String[] selectedImages = request.getParameterValues("image[]");
+
+        for(int i =0 ; i < selectedImages.length ; i++){
+            System.out.println(selectedImages[i]);
+        }
+
+
+        return "redirect:/main#experience";
+    }
 
 
 }
