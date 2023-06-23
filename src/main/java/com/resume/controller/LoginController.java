@@ -37,7 +37,11 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String login(Model model,@SessionAttribute(value = "userSession",required = false)String sessionid) {
+        log.info("session = {}",sessionid);
+        if(sessionid !=null){
+            return "redirect:/main";
+        }
         model.addAttribute("user", new LoginUserDTO());
         return "login/login";
     }

@@ -13,6 +13,6 @@ public class LoginConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**","/error","/login","/js/**",
-                        "/main","/register/**","/findById","/checkid");
+                        "/register/**","/findById","/checkid");
     }
 }
