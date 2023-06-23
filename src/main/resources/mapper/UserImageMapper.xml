@@ -11,7 +11,7 @@
     <update id="updateImage" parameterType="AwsS3" >
         update userimage
         set keyvalue =#{keyvalue}, url =#{url}
-        where userid='rudnf9605'
+        where userid=#{userId}
     </update>
 </mapper>
 <!--

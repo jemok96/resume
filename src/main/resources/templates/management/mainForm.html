@@ -184,10 +184,13 @@
 
 <script>
     const user = '[[${userId}]]';
-    const status ='[[${status}]]';
+    let status ='[[${status}]]';
 
     if(status==='NO'){
         alert("올바르지 않은 접근입니다.");
+    }
+    if(status=='OK'){
+        alert("이미지 변경 성공");
     }
     function check() {
 

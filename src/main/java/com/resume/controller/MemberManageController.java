@@ -59,6 +59,7 @@ public class MemberManageController {
 
         //user image table 저장하고, 수정 할 경우 aws내에서도 삭제하고 다시 저장하는 로직으로 변경해야함 (Transactional)
         AwsS3 userImage = s3Upload.upload(file, "userImage"); //
+        userImage.setUserId(userid);
         imageService.updateImage(userImage);
         attr.addFlashAttribute("status","OK");
         return "redirect:/profile/{userid}";
