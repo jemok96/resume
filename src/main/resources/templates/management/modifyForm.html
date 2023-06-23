@@ -172,7 +172,7 @@
     <div>회원님의 대표 프로필을 수정 하실 수 있습니다.</div>
     <div class="image-wrapped">
         <form
-                th:action="@{/profile/{userId}(userId=${session.userSession})/modify }"
+                th:action="@{/profile/{userid}/modify(userid=${session.userSession}) }"
                 th:method="POST"
                 class="image-form"
                 enctype="multipart/form-data"

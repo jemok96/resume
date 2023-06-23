@@ -42,6 +42,7 @@ public class ResumeController {
     public String addCheck(@Validated @ModelAttribute("resume")ResumeDTO dto,
                            BindingResult bindingResult,@SessionAttribute(value = "userSession" ,required = false)String userid,
                            Model model){
+        model.addAttribute("userImage",imageService.findImageById(userid));
         if(bindingResult.hasErrors()){
             return "resume/addForm";
         }
@@ -61,8 +62,9 @@ public class ResumeController {
     }
     @PostMapping("/resume/modify/{rno}")
     public String modifyCheck(@Validated @ModelAttribute("resume")ResumeDTO dto, BindingResult bindingResult,
-                              @PathVariable Integer rno, Model model, @SessionAttribute(value = "userSession",required = true)String user,
+                              @PathVariable Integer rno, Model model, @SessionAttribute(value = "userSession",required = true)String userId,
                               RedirectAttributes attr){
+        model.addAttribute("userImage",imageService.findImageById(userId));
         if(bindingResult.hasErrors()){
             return "resume/modifyForm";
         }
@@ -70,7 +72,7 @@ public class ResumeController {
                         .title(dto.getTitle())
                         .contents(dto.getContents())
                         .resumeno(rno)
-                        .userid(user).build();
+                        .userid(userId).build();
         service.updateResume(resume);
 
         attr.addFlashAttribute("status","ok");
