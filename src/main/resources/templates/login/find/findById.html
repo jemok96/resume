@@ -107,18 +107,29 @@
 
 
 <script>
-    const ranNum = [[${ranNum}]];
-    $("#check").on("click",function (){
+    $("#check").on("click", function (qualifiedName, value) {
         let userInput = $("#userInput").val();
-        if (ranNum == userInput){
-            alert("인증성공");
-            location.href="/findSuccess";
-        }else{
-            alert("다시 입력해주세요");
-        }
-    })
-
-
+        let email = $("#email").val();
+        console.log(email);
+        console.log(945059);
+        $.ajax({
+            type: "POST",
+            url: "/verify",
+            data: {
+                userInput:userInput},
+            success: function(response) {
+                if (response === 'success') {
+                    alert("인증 성공");
+                    location.href="/findSuccess/"+email;
+                } else {
+                    alert("다시 입력해주세요");
+                }
+            },
+            error: function() {
+                alert("오류가 발생하였습니다.");
+            }
+        });
+    });
 </script>
 
 </body>

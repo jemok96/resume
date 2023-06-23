@@ -14,13 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.nio.file.Files;
 import java.util.Random;
 
 
@@ -75,27 +73,40 @@ public class LoginController {
     }
 
     @PostMapping("/checkid")
-    public String checkId(@Validated @ModelAttribute("email") EmailCheckDTO email, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()){
-            log.info("error={}",bindingResult);
+    public String checkId(@Validated @ModelAttribute("email") EmailCheckDTO email, BindingResult bindingResult, Model model,
+                          HttpSession session) {
+        if (bindingResult.hasErrors()) {
+            log.info("error={}", bindingResult);
             return "login/find/findById";
         }
+
         Boolean status = loginService.CheckEmail(email);
-        model.addAttribute("email",email);
-        String ranNum = "0";
-        ranNum = createRandomNum();
-        model.addAttribute("ranNum",ranNum);
+        model.addAttribute("email", email);
+
         if (status) {
-            mailSend(email.getEmail(),ranNum);
-            return "login/find/findById";
+            String ranNum = createRandomNum();
+            session.setAttribute("ranNum",ranNum);
+            mailSend(email.getEmail(), ranNum);
         }
+
         return "login/find/findById";
     }
+    @PostMapping("/verify")
+    @ResponseBody
+    public String verifyRandomNum(@RequestParam String userInput,HttpSession session ){
+        String ranNum = (String) session.getAttribute("ranNum");
+        if(userInput.equals(ranNum)){
+            return "success";
+        }
+        return "fail";
 
-    @GetMapping("/findSuccess")
-    public String findByIdSuccess(){
 
-        return "login/find/findsuccess";
+    }
+    @GetMapping("/findSuccess/{email}")
+    public String findByIdSuccess(@PathVariable String email){
+        log.info("email={}",email);
+
+        return "login/find/findUserId";
     }
 
     @Async
@@ -110,16 +121,14 @@ public class LoginController {
 
     public String createRandomNum() {
         Random random = new Random();
-        int createNum = 0;
-        String ranNum = "";
+        StringBuilder resultNum = new StringBuilder();
         int letter = 6;
-        String resultNum = "";
         for (int i = 0; i < letter; i++) {
-            createNum = random.nextInt(9);
-            ranNum = Integer.toString(createNum);
-            resultNum += ranNum;
+            int createNum = random.nextInt(10);
+            resultNum.append(createNum);
         }
-        return resultNum;
+
+        return resultNum.toString();
     }
 }
 
