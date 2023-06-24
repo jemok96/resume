@@ -29,4 +29,10 @@ public interface MainDAO {
     ExperienceDTO experienceInfo2(String seqno1);
 
     void experienceModify(ExperienceDTO experidto);
+
+    void skillSave(Map map);
+
+    void skillDelete(Map map);
+
+    List<String> selectSkill(String sessionId);
 }

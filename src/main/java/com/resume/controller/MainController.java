@@ -8,9 +8,7 @@ import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -158,8 +156,6 @@ public class MainController {
     @PostMapping("/main/experienceModify")
     public String experienceModify( ExperienceDTO experidto) {
 
-        log.info("성진 " + experidto);
-
         mainService.experienceModify(experidto);
 
 
@@ -173,16 +169,44 @@ public class MainController {
         return mv;
     }
     @PostMapping("/main/skillSave")
-    public String skillSave(HttpServletRequest request) {
+    public String skillSave(HttpServletRequest request , @SessionAttribute("userSession")String sessionid) {
         String[] selectedImages = request.getParameterValues("image[]");
+        Map map = new HashMap();
+        map.put("userid" , sessionid);
+
+        mainService.skillDelete(map);
 
         for(int i =0 ; i < selectedImages.length ; i++){
-            System.out.println(selectedImages[i]);
+            String skillname = selectedImages[i];
+            String skillurl =
+                    "https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/" + selectedImages[i];
+            map.put("skillurl" , skillurl);
+            map.put("skillname" , skillname);
+            mainService.skillSave(map);
+
         }
 
 
         return "redirect:/main#experience";
     }
+
+    @GetMapping("/main/skillAjax")
+    @ResponseBody
+    public List<String>  handleSkillAjaxRequest(@RequestParam("sessionid") String sessionId) {
+
+
+
+        // 이 예시에서는 간단한 배열을 반환합니다.
+        List<String> response = mainService.selectSkill(sessionId);
+
+        for (int i = 0 ; i < response.size() ; i++){
+            System.out.println(response.get(i));
+        }
+
+        return response;
+    }
+
+
 
 
 }

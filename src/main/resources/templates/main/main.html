@@ -89,6 +89,25 @@
                 document.getElementById("blog").href = "http://blog.naver.com/" + usersubinfo.blogurl;
             }
 
+
+            var userId = document.getElementById('userid').getAttribute('value');
+            var url = 'main/skillAjax?sessionid=' + userId  ;
+
+            $.ajax({
+                url: url,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    // 서버로부터 받은 배열 형태의 결과를 사용합니다.
+                    console.log(response); // 배열 출력
+                    // 여기서부터 결과값을 활용하는 로직을 작성합니다.
+                },
+                error: function(xhr, status, error) {
+                    // 오류 처리 로직을 작성합니다.
+                    console.log(error);
+                }
+            });
+
         });
 
         function exDelete(){
@@ -98,6 +117,8 @@
                 return false;
             }
         }
+
+
 
     </script>
 
@@ -129,6 +150,7 @@
             <!-- About-->
                 <section class="resume-section" id="about">
                     <div class="resume-section-content">
+                        <input type="hidden" id ="userid" th:value="${userinfo.getUserid()}">
                         <h2 class="mb-0" th:text="${userinfo.getName()}">
                             <span class="text-primary" ></span>
                         </h2>
@@ -194,40 +216,52 @@
                 <div class="resume-section-content">
                     <h2 class="mb-5">Skills</h2>
                     <button type="button" style ="margin-left:975px; margin-bottom: 20px" onclick="skillUpdate()" class="btn btn-outline-secondary">수정</button>
-                    <div class="subheading mb-3">Programming Languages & Tools</div>
+                    <div class="subheading mb-3">ProgrammingLanguage</div>
                     <ul class="list-inline dev-icons">
-                        <li class="list-inline-item"><i class="fab fa-html5"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-css3-alt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-js-square"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-angular"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-react"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-node-js"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-sass"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-less"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-wordpress"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-gulp"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-grunt"></i></li>
-                        <li class="list-inline-item"><i class="fab fa-npm"></i></li>
+                        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/ProgrammingLang/cotlin.png" alt="ProgrammingLang/cotlin.png">
                     </ul>
-                    <div class="subheading mb-3">Workflow</div>
-                    <ul class="fa-ul mb-0">
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Mobile-First, Responsive Design
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Cross Browser Testing & Debugging
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Cross Functional Teams
-                        </li>
-                        <li>
-                            <span class="fa-li"><i class="fas fa-check"></i></span>
-                            Agile Development & Scrum
-                        </li>
+
+                    <div class="subheading mb-3">Backend</div>
+                    <ul class="list-inline dev-icons">
+                        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/ProgrammingLang/cotlin.png" alt="ProgrammingLang/cotlin.png">
                     </ul>
+
+
+                    <div class="subheading mb-3">Frontend</div>
+                    <ul class="list-inline dev-icons">
+                        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/ProgrammingLang/cotlin.png" alt="ProgrammingLang/cotlin.png">
+                    </ul>
+
+
+                    <div class="subheading mb-3">DataBase</div>
+                    <ul class="list-inline dev-icons">
+                        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/ProgrammingLang/cotlin.png" alt="ProgrammingLang/cotlin.png">
+                    </ul>
+
+
+                    <div class="subheading mb-3">Devops</div>
+                    <ul class="list-inline dev-icons">
+                        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/ProgrammingLang/cotlin.png" alt="ProgrammingLang/cotlin.png">
+                    </ul>
+
+
+                    <div class="subheading mb-3">Data</div>
+                    <ul class="list-inline dev-icons">
+                        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/ProgrammingLang/cotlin.png" alt="ProgrammingLang/cotlin.png">
+                    </ul>
+
+                    <div class="subheading mb-3">TestingTool</div>
+                    <ul class="list-inline dev-icons">
+                        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/ProgrammingLang/cotlin.png" alt="ProgrammingLang/cotlin.png">
+                    </ul>
+
+                    <div class="subheading mb-3">workingTool</div>
+                    <ul class="list-inline dev-icons">
+                        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/ProgrammingLang/cotlin.png" alt="ProgrammingLang/cotlin.png">
+                    </ul>
+
+
+
                 </div>
             </section>
             

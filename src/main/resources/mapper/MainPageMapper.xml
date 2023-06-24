@@ -7,7 +7,7 @@
 
 
     <select id="userInfo" parameterType="String" resultType="RegisterDTO">
-        select name, email,birth ,gender ,phone  from user where userid = #{sessionid}
+        select userid ,name, email,birth ,gender ,phone  from user where userid = #{sessionid}
     </select>
 
     <select id="usersubinfo" parameterType="String" resultType="UserInfoDTO">
@@ -48,6 +48,20 @@
         where experi_no = #{experi_no}
 
     </update>
+
+    <insert id ="skillSave" parameterType="hashMap">
+        insert into userSkills  (userid, skillname, url , updatedate )
+        values (#{userid} , #{skillname} , #{skillurl} ,now() )
+    </insert>
+
+    <delete id="skillDelete" parameterType="hashMap">
+        delete from userSkills where userid = #{userid}
+
+    </delete>
+
+    <select id="selectSkill" resultType="java.lang.String">
+        SELECT url FROM userSkills WHERE userid = #{sessionId}
+    </select>
 
 
 </mapper>
