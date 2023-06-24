@@ -56,4 +56,16 @@ public class MainService {
     public void experienceModify(ExperienceDTO experidto) {
          dao.experienceModify(experidto);
     }
+
+    public void skillSave(Map map) {
+        dao.skillSave(map);
+    }
+
+    public void skillDelete(Map map) {
+        dao.skillDelete(map);
+    }
+
+    public List<String> selectSkill(String sessionId) {
+        return dao.selectSkill(sessionId);
+    }
 }
