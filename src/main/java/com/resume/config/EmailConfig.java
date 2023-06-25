@@ -17,7 +17,6 @@ import java.util.concurrent.Executor;
 @Configuration
 @PropertySource("classpath:email.properties")
 @Slf4j
-@EnableAsync
 public class EmailConfig {
 
     public EmailConfig(){

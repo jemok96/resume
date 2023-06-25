@@ -2,11 +2,11 @@ package com.resume.controller;
 
 
 
+import com.resume.config.AsyncConfig;
 import com.resume.dto.EmailCheckDTO;
 import com.resume.dto.LoginUserDTO;
 import com.resume.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.nio.file.Files;
 import java.util.Random;
 
 
@@ -28,10 +27,13 @@ public class LoginController {
 
     private final JavaMailSender javaMailSender;
     private final LoginService loginService;
+    private final AsyncConfig config;
 
-    public LoginController(JavaMailSender javaMailSender, LoginService loginService) {
+
+    public LoginController(JavaMailSender javaMailSender, LoginService loginService, AsyncConfig config) {
         this.javaMailSender = javaMailSender;
         this.loginService = loginService;
+        this.config = config;
     }
 
     @GetMapping("/login")
@@ -85,8 +87,9 @@ public class LoginController {
 
         if (status) {
             String ranNum = createRandomNum();
+            session.setAttribute("email",email.getEmail());
             session.setAttribute("ranNum",ranNum);
-            mailSend(email.getEmail(), ranNum);
+            config.mailSend(email.getEmail(), ranNum);
         }
 
         return "login/find/findById";
@@ -102,21 +105,21 @@ public class LoginController {
 
 
     }
-    @GetMapping("/findSuccess/{email}")
-    public String findByIdSuccess(@PathVariable String email){
+    @GetMapping("/findSuccess")
+    public String findByIdSuccess(@SessionAttribute(value = "email",required = false) String email){
         log.info("email={}",email);
 
         return "login/find/findUserId";
     }
 
-    @Async
+    /*@Async
     public void mailSend(String email, String randomNum) { //private에서는 비동기 작동안함
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(email);
         simpleMailMessage.setSubject("이메일 인증");
         simpleMailMessage.setText(randomNum);
         javaMailSender.send(simpleMailMessage);
-    }
+    }*/
 
 
     public String createRandomNum() {
@@ -130,6 +133,7 @@ public class LoginController {
 
         return resultNum.toString();
     }
+
 }
 
 
