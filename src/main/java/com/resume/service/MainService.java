@@ -68,4 +68,8 @@ public class MainService {
     public List<String> selectSkill(String sessionId) {
         return dao.selectSkill(sessionId);
     }
+
+    public List<String> selectSkillname(String sessionid) {
+        return dao.selectSkillname(sessionid);
+    }
 }
