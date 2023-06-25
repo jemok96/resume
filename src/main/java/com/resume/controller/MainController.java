@@ -164,7 +164,13 @@ public class MainController {
 
     @GetMapping("/main/skillUpdate")
     public ModelAndView skillUpdate(@SessionAttribute("userSession")String sessionid , ModelAndView mv){
+
+
         mv.addObject("userImage",imageService.findImageById(sessionid));
+        List<String> skillnmarr = mainService.selectSkillname(sessionid);
+
+        mv.addObject("skillnmarr" ,skillnmarr );
+
         mv.setViewName("main/skillUpdate");
         return mv;
     }
@@ -187,7 +193,7 @@ public class MainController {
         }
 
 
-        return "redirect:/main#experience";
+        return "redirect:/main";
     }
 
     @GetMapping("/main/skillAjax")

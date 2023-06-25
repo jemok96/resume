@@ -35,4 +35,6 @@ public interface MainDAO {
     void skillDelete(Map map);
 
     List<String> selectSkill(String sessionId);
+
+    List<String> selectSkillname(String sessionid);
 }

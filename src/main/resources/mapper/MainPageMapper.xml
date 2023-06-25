@@ -63,5 +63,9 @@
         SELECT url FROM userSkills WHERE userid = #{sessionId}
     </select>
 
+    <select id="selectSkillname" resultType="java.lang.String">
+        SELECT skillname FROM userSkills WHERE userid = #{sessionId}
+    </select>
+
 
 </mapper>

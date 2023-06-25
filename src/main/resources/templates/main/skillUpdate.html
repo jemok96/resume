@@ -55,7 +55,7 @@
 
 
 <script src = "http://code.jquery.com/jquery-latest.js"></script>
-<script>
+<script th:inline="javascript">
 
 
     $(document).ready(function(){
@@ -90,12 +90,25 @@
 
         });
 
+        var skillnmarr = /*[[${skillnmarr}]]*/ [];
+        // skillnmarr 배열을 자바스크립트 변수로 할당하여 사용
+        console.log(skillnmarr); // skillnmarr 배열 확인
+
+        for (var j = 0; j < skillnmarr.length; j++) {
+            var value = skillnmarr[j];
+            var checkbox = document.querySelector('input[type="checkbox"][value="' + value + '"]');
+            if (checkbox) {
+                checkbox.checked = true;
+            }
+        }
+
     });
 
 
 
 
 </script>
+
 
 <div style="text-align: center ;margin-top: 100px" ; >
 <h3> 스킬 수정</h3>
@@ -190,8 +203,8 @@
         <input type="checkbox" name="image[]" value="Backend/AWS_SES.png">
     </label>
     <label class="image-checkbox">
-        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Backend/SWS_SQS.png" alt="Backend/SWS_SQS.png">
-        <input type="checkbox" name="image[]" value="Backend/SWS_SQS.png">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Backend/AWS_SQS.png" alt="Backend/AWS_SQS.png">
+        <input type="checkbox" name="image[]" value="Backend/AWS_SQS.png">
     </label>
     <label class="image-checkbox">
         <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Backend/Celery.png" alt="Backend/Celery.png">
@@ -274,23 +287,171 @@
         <input type="checkbox" name="image[]" value="Backend/WebRTC.png">
     </label>
 
-
-
+`
+`
 </div>
 
 <button class="accordion" >Frontend(프론트엔드)</button>
 <div class="panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/Angular.png" alt="Frontend/Angular.png">
+        <input type="checkbox" name="image[]" value="Frontend/Angular.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/Electron.png" alt="Frontend/Electron.png">
+        <input type="checkbox" name="image[]" value="Frontend/Electron.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/EmberJS.png" alt="Frontend/EmberJS.png">
+        <input type="checkbox" name="image[]" value="Frontend/EmberJS.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/Emotion.png" alt="Frontend/Emotion.png">
+        <input type="checkbox" name="image[]" value="Frontend/Emotion.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/GraphQL.png" alt="Frontend/GraphQL.png">
+        <input type="checkbox" name="image[]" value="Frontend/GraphQL.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/Mobx.png" alt="Frontend/Mobx.png">
+        <input type="checkbox" name="image[]" value="Frontend/Mobx.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/NextJS.png" alt="Frontend/NextJS.png">
+        <input type="checkbox" name="image[]" value="Frontend/NextJS.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/OpenGL.png" alt="Frontend/OpenGL.png">
+        <input type="checkbox" name="image[]" value="Frontend/OpenGL.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/React_Query.png" alt="Frontend/React_Query.png">
+        <input type="checkbox" name="image[]" value="Frontend/React_Query.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/ReactiveX.png" alt="Frontend/ReactiveX.png">
+        <input type="checkbox" name="image[]" value="Frontend/ReactiveX.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/reactJS.png" alt="Frontend/reactJS.png">
+        <input type="checkbox" name="image[]" value="Frontend/reactJS.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/Realy.png" alt="Frontend/Realy.png">
+        <input type="checkbox" name="image[]" value="Frontend/Realy.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/Recoil.png" alt="Frontend/Recoil.png">
+        <input type="checkbox" name="image[]" value="Frontend/Recoil.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/redux.png" alt="Frontend/redux.png">
+        <input type="checkbox" name="image[]" value="Frontend/redux.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/Storybook.png" alt="Frontend/Storybook.png">
+        <input type="checkbox" name="image[]" value="Frontend/Storybook.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/VueJS.png" alt="Frontend/VueJS.png">
+        <input type="checkbox" name="image[]" value="Frontend/VueJS.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/VueX.png" alt="Frontend/VueX.png">
+        <input type="checkbox" name="image[]" value="Frontend/VueX.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/Frontend/Zustand.png" alt="Frontend/Zustand.png">
+        <input type="checkbox" name="image[]" value="Frontend/Zustand.png">
+    </label>
+
 </div>
 
 <button class="accordion">Database(데이터베이스)</button>
 <div class="panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Appium.png" alt="TestingTool/Appium.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Appium.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Cypress.png" alt="TestingTool/Cypress.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Cypress.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Enzyme.png" alt="TestingTool/Enzyme.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Enzyme.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Jasmine.png" alt="TestingTool/Jasmine.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Jasmine.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Jest.png" alt="TestingTool/Jest.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Jest.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Junit.png" alt="TestingTool/Junit.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Junit.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Karma.png" alt="TestingTool/Karma.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Karma.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Locust.png" alt="TestingTool/Locust.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Locust.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Mocha.png" alt="TestingTool/Mocha.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Mocha.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Mockito.png" alt="TestingTool/Mockito.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Mockito.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/nGrinder.png" alt="TestingTool/nGrinder.png">
+        <input type="checkbox" name="image[]" value="TestingTool/nGrinder.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Playwright.png" alt="TestingTool/Playwright.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Playwright.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Puppeteer.png" alt="TestingTool/Puppeteer.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Puppeteer.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Rest-Assured.png" alt="TestingTool/Rest-Assured.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Rest-Assured.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Selenium.png" alt="TestingTool/Selenium.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Selenium.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Sinon.png" alt="TestingTool/Sinon.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Sinon.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/Sonarqube.png" alt="TestingTool/Sonarqube.png">
+        <input type="checkbox" name="image[]" value="TestingTool/Sonarqube.png">
+    </label>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/TestingLibrary.png" alt="TestingTool/TestingLibrary.png">
+        <input type="checkbox" name="image[]" value="TestingTool/TestingLibrary.png">
+    </label>
+
+
 </div>
 
 <button class="accordion">Devops(데브옵스)</button>
 <div class="panel">
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    <label class="image-checkbox">
+        <img src="https://s3.ap-northeast-2.amazonaws.com/resume.filesfolder/skillimage/TestingTool/TestingLibrary.png" alt="TestingTool/TestingLibrary.png">
+        <input type="checkbox" name="image[]" value="TestingTool/TestingLibrary.png">
+    </label>
 </div>
 
 <button class="accordion">Data(데이터)</button>
