@@ -5,6 +5,7 @@ package com.resume.controller;
 import com.resume.config.AsyncConfig;
 import com.resume.dto.EmailCheckDTO;
 import com.resume.dto.LoginUserDTO;
+import com.resume.dto.UserDTO;
 import com.resume.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
@@ -106,21 +107,12 @@ public class LoginController {
 
     }
     @GetMapping("/findSuccess")
-    public String findByIdSuccess(@SessionAttribute(value = "email",required = false) String email){
+    public String findByIdSuccess(@SessionAttribute(value = "email",required = false) String email,Model model){
         log.info("email={}",email);
-
+        log.info("{userId={}}",loginService.findIdByEmail(email));
+        model.addAttribute("user",loginService.findIdByEmail(email));
         return "login/find/findUserId";
     }
-
-    /*@Async
-    public void mailSend(String email, String randomNum) { //private에서는 비동기 작동안함
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo(email);
-        simpleMailMessage.setSubject("이메일 인증");
-        simpleMailMessage.setText(randomNum);
-        javaMailSender.send(simpleMailMessage);
-    }*/
-
 
     public String createRandomNum() {
         Random random = new Random();
