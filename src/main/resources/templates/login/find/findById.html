@@ -110,8 +110,6 @@
     $("#check").on("click", function (qualifiedName, value) {
         let userInput = $("#userInput").val();
         let email = $("#email").val();
-        console.log(email);
-        console.log(945059);
         $.ajax({
             type: "POST",
             url: "/verify",

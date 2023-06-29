@@ -13,4 +13,9 @@
         select name,email from user
         where name = #{name} and email = #{email}
     </select>
+
+    <select id="findIdByEmail" parameterType="String" resultType="UserDTO">
+        select userid,regdate  from user
+        where email =#{email};
+    </select>
 </mapper>

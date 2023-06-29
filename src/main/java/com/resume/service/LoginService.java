@@ -3,6 +3,7 @@ package com.resume.service;
 import com.resume.dao.LoginDAO;
 import com.resume.dto.EmailCheckDTO;
 import com.resume.dto.LoginUserDTO;
+import com.resume.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,6 @@ public class LoginService {
         return false;
 
     }
-
     public Boolean CheckEmail(EmailCheckDTO email){
         EmailCheckDTO emailCheckDTO = dao.checkEmail(email);
         if(emailCheckDTO != null)
@@ -34,6 +34,9 @@ public class LoginService {
         else
             return false;
 
+    }
+    public UserDTO findIdByEmail(String email){
+        return dao.findIdByEmail(email);
     }
 }
 
