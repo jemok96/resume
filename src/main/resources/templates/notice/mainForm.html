@@ -20,14 +20,6 @@
     body {
         height: 100%;
     }
-
-    .wrap {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .button {
         width: 140px;
         height: 45px;
@@ -81,6 +73,17 @@
         top: -2px;
         margin-right: 10px;
     }
+    .write {
+        position: relative;
+        top: 7px;
+        margin-left: 50px;
+    }
+    .notice__left {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-end;
+        margin-left: 10px;
+    }
 </style>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 
@@ -92,7 +95,6 @@
 </div>
 
 <body id="page-top">
-<!-- Navigation-->
 <nav
         class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top"
         id="sideNav"
@@ -149,7 +151,14 @@
 </div>
 
 <div class="notice__column">
-    <div class="notice__count">총1500개</div>
+    <div class="notice__left">
+        <div class="btn-write" th:if="${session.userSession =='admin'}">
+            <button type="button" class="btn btn-outline-secondary search write" id="write">
+                글쓰기
+            </button>
+        </div>
+        <div class="notice__count">총 <span>1500개</span></div>
+    </div>
     <div class="notice__search">
         <form action="">
             <div class="notice__right">
@@ -201,6 +210,9 @@
     document.getElementById("mypage").addEventListener("click", function () {
         location.href = "/mypage";
     });
+    document.getElementById("write").addEventListener("click",function (){
+        location.href = "/notice/write";
+    })
 </script>
 </body>
 </html>
