@@ -4,6 +4,9 @@ import com.resume.dao.NoticeDAO;
 import com.resume.dto.NoticeDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class NoticeService {
     private final NoticeDAO dao;
@@ -21,5 +24,12 @@ public class NoticeService {
     }
     public int selectNoticeOne(NoticeDTO dto){
         return dao.selectNoticeOne(dto);
+    }
+
+    public List<NoticeDTO> findAll(Map map){
+        return dao.findAll(map);
+    }
+    public int noticeCount() {
+        return dao.noticeCount();
     }
 }
