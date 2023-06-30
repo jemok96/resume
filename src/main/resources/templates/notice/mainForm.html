@@ -78,6 +78,10 @@
         top: 7px;
         margin-left: 50px;
     }
+    .handler__center {
+        display: flex;
+        justify-content: center;
+    }
     .notice__left {
         display: flex;
         flex-direction: row-reverse;
@@ -157,7 +161,7 @@
                 글쓰기
             </button>
         </div>
-        <div class="notice__count">총 <span>1500개</span></div>
+        <div class="notice__count">총 <span th:text="${count}">1500개</span>개</div>
     </div>
     <div class="notice__search">
         <form action="">
@@ -185,21 +189,43 @@
     <table class="table">
         <thead>
         <tr>
-            <th scope="col" width="10%">번호</th>
+            <th scope="col" width="10%">작성자</th>
             <th scope="col">제목</th>
             <th scope="col" width="20%">작성일</th>
             <th scope="col" width="10%">조회수</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>admin</td>
-            <td>2023-06-30</td>
-            <td class="hits-margin">0</td>
+        <tr th:each="notice : ${notice}">
+            <th scope="row" th:text="${notice.userid}">작성자</th>
+            <td th:text="${notice.title}">admin</td>
+            <td th:text="${#dates.format(notice.regdate,'YYYY-MM-dd HH:mm')}">2023-06-30</td>
+            <td class="hits-margin" th:text="${notice.hits}">0</td>
         </tr>
         </tbody>
     </table>
+</div>
+<div class="handler__center">
+    <nav aria-label="Page navigation example cetner">
+        <ul class="pagination">
+            <li class="page-item" th:if="${ph.showPrev}"><a
+                    class="page-link"
+                    th:href="@{/notice?page={page}&pageSize={pageSize}(page=${ph.beginPage-1},pageSize=${ph.pageSize})}"
+                    aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+            </a></li>
+            <li class="page-item"
+                th:each="idx,iterStat : ${#numbers.sequence(ph.beginPage,ph.endPage)}">
+                <a class="page-link"
+                   th:href="@{/notice?page={page}&pageSize={pageSize}(page=${idx},pageSize=${ph.pageSize})}"
+                   th:text="${idx}"></a>
+            </li>
+            <li class="page-item" th:if="${ph.showNext}"><a
+                    class="page-link"
+                    th:href="@{/notice?page={page}&pageSize={pageSize}(page=${ph.endPage+1},pageSize=${ph.pageSize})}"
+                    aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+            </a></li>
+        </ul>
+    </nav>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/scripts.js"></script>
