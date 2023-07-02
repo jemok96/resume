@@ -2,6 +2,7 @@ package com.resume.controller;
 
 import com.resume.dto.NoticeDTO;
 import com.resume.dto.PageHandler;
+import com.resume.dto.SearchCondition;
 import com.resume.service.NoticeService;
 import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,24 +28,26 @@ public class NoticeController {
     }
 
     @GetMapping("/notice")
-    public String NoticeMain(@SessionAttribute("userSession")String userId, Model model
-    , @RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer pageSize){
+    public String NoticeMain(@SessionAttribute(value = "userSession",required = false)String userId, Model model
+    ,  SearchCondition sc){
         model.addAttribute("userImage",imageService.findImageById(userId));
-        int totalCount = noticeService.noticeCount();
-        PageHandler pageHandler = new PageHandler(totalCount,page,pageSize);
-        Map<String, Integer> map = new HashMap();
-        map.put("offset", (page - 1) * pageSize);
-        map.put("pageSize", pageSize);
 
-        List<NoticeDTO> notice  = noticeService.findAll(map);
+         int totalCnt = noticeService.searchResultCnt(sc);
+        model.addAttribute("totalCnt", totalCnt);
 
+        PageHandler pageHandler = new PageHandler(totalCnt, sc);
+
+        List<NoticeDTO> notice = noticeService.searchSelectPage(sc);
+        log.info("pageHandler={}",pageHandler);
+        log.info("notice={}",notice);
+
+
+        model.addAttribute("notice", notice);
         model.addAttribute("ph", pageHandler);
-        model.addAttribute("page", page);
-        model.addAttribute("pageSize", pageSize);
-        model.addAttribute("count",totalCount);
-        model.addAttribute("notice",notice);
         return "notice/mainForm";
     }
+
+
     @GetMapping("/notice/write")
     public String NoticeWritePage(@SessionAttribute("userSession")String userId,Model model){
         model.addAttribute("userImage",imageService.findImageById(userId));

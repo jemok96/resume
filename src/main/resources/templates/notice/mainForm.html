@@ -78,9 +78,31 @@
         top: 7px;
         margin-left: 50px;
     }
-    .handler__center {
+    .paging {
+        color: black;
+        width: 100%;
+        align-items: center;
+    }
+    .paging-container {
+        width:100%;
+        height: 70px;
+        display: flex;
+        margin-top: 50px;
+        margin : auto;
+    }
+    .paging-item{
         display: flex;
         justify-content: center;
+    }a{
+             text-decoration: none;
+         }
+    span{
+        margin-right: 8px;
+    }
+    .paging-active {
+        background-color: rgb(216, 216, 216);
+        border-radius: 5px;
+        color: rgb(24, 24, 24);
     }
     .notice__left {
         display: flex;
@@ -161,23 +183,20 @@
                 글쓰기
             </button>
         </div>
-        <div class="notice__count">총 <span th:text="${count}">1500개</span>개</div>
+        <div class="notice__count">총 <span th:text="${totalCnt}">1500개</span>개</div>
     </div>
     <div class="notice__search">
-        <form action="">
+        <form action="/notice" method="GET">
             <div class="notice__right">
                 <div>
-                    <select
-                            class="form-select option"
-                            aria-label="Default select example"
-                    >
-                        <option value="title" selected>제목</option>
-                        <option value="content">내용</option>
+                    <select name="option" class="form-select option" aria-label="Default select example">
+                        <option value="T" th:selected="${ph.sc.option == 'T'}">제목</option>
+                        <option value="C" th:selected="${ph.sc.option == 'C'}">내용</option>
                     </select>
                 </div>
                 <div>
-                    <input type="text" class="input-text" />
-                    <button type="button" class="btn btn-outline-secondary search">
+                    <input type="text" class="input-text" name="keyword"/>
+                    <button type="submit" class="btn btn-outline-secondary search">
                         검색
                     </button>
                 </div>
@@ -196,37 +215,41 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="notice : ${notice}">
-            <th scope="row" th:text="${notice.userid}">작성자</th>
-            <td th:text="${notice.title}">admin</td>
-            <td th:text="${#dates.format(notice.regdate,'YYYY-MM-dd HH:mm')}">2023-06-30</td>
-            <td class="hits-margin" th:text="${notice.hits}">0</td>
+        <tr th:if="${notice == null or #lists.isEmpty(notice)}">
+            <td colspan="4">검색 결과가 없습니다.</td>
+        </tr>
+        <tr th:each="item : ${notice}" th:if="${item !=null}">
+            <th scope="row" th:text="${item.userid}">작성자</th>
+            <td><a th:href="@{/notice/{num}(num=${item.num})}" th:text="${item.title}">제목</a></td>
+            <td th:text="${#dates.format(item.regdate,'YYYY-MM-dd HH:mm')}">2023-06-30</td>
+            <td class="hits-margin" th:text="${item.hits}">조회수</td>
         </tr>
         </tbody>
     </table>
 </div>
-<div class="handler__center">
-    <nav aria-label="Page navigation example cetner">
-        <ul class="pagination">
-            <li class="page-item" th:if="${ph.showPrev}"><a
-                    class="page-link"
-                    th:href="@{/notice?page={page}&pageSize={pageSize}(page=${ph.beginPage-1},pageSize=${ph.pageSize})}"
-                    aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-            </a></li>
-            <li class="page-item"
-                th:each="idx,iterStat : ${#numbers.sequence(ph.beginPage,ph.endPage)}">
-                <a class="page-link"
-                   th:href="@{/notice?page={page}&pageSize={pageSize}(page=${idx},pageSize=${ph.pageSize})}"
-                   th:text="${idx}"></a>
-            </li>
-            <li class="page-item" th:if="${ph.showNext}"><a
-                    class="page-link"
-                    th:href="@{/notice?page={page}&pageSize={pageSize}(page=${ph.endPage+1},pageSize=${ph.pageSize})}"
-                    aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-            </a></li>
-        </ul>
-    </nav>
+<div class="paging-container">
+    <div class="paging">
+        <div th:if="${totalCnt==null || totalCnt==0}">
+            <div> 게시물이 없습니다. </div>
+        </div>
+        <div class="paging-item" th:if="${totalCnt!=null && totalCnt!=0}">
+            <div th:if="${ph.showPrev}">
+                <a class="page" th:href="@{/notice(page=${ph.sc.page-1}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}"><</a>
+
+            </div>
+            <span th:each="i : ${#numbers.sequence(ph.beginPage, ph.endPage)}">
+  <a th:class="${i == ph.sc.page} ? 'page paging-active' : 'page'" th:href="@{/notice(page=${i}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}" th:text="${i}"></a>
+                </span>
+        <div th:if="ph.showNext">
+            <a class="page" th:href="@{/notice(page=${ph.sc.page+1}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}">> </a>
+
+        </div>
+        </div>
+
+    </div>
 </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/scripts.js"></script>
 <script>
