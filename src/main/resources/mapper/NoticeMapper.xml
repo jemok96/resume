@@ -19,6 +19,7 @@
     </select>
     <select id="findAll" resultType="NoticeDTO" parameterType="map">
         select  userid,title,contents,regdate from notice
+        where title like CONCAT('%',#{value},'%')
         order by regdate desc
         LIMIT #{offset}, #{pageSize};
     </select>
@@ -26,6 +27,33 @@
         select num from notice
         where title=#{title}
         and contents=#{contents}
+    </select>
+
+    <sql id="searchCondition">
+        <choose>
+            <when test='option=="T"'>
+                AND title LIKE concat('%', #{keyword}, '%')
+            </when>
+            <when test='option=="C"'>
+                AND contents LIKE concat('%', #{keyword}, '%')
+            </when>
+        </choose>
+    </sql>
+
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="NoticeDTO">
+        SELECT num, userid,title, contents, hits, regdate
+        FROM  notice
+        WHERE true
+        <include refid="searchCondition"/>
+        ORDER BY regdate DESC, num DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+        SELECT count(*)
+        FROM  notice
+        WHERE true
+        <include refid="searchCondition"/>
     </select>
 </mapper>
 

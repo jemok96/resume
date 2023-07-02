@@ -2,6 +2,7 @@ package com.resume.service;
 
 import com.resume.dao.NoticeDAO;
 import com.resume.dto.NoticeDTO;
+import com.resume.dto.SearchCondition;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,5 +32,11 @@ public class NoticeService {
     }
     public int noticeCount() {
         return dao.noticeCount();
+    }
+    public int searchResultCnt(SearchCondition sc){
+        return dao.searchResultCnt(sc);
+    }
+    public List<NoticeDTO>searchSelectPage(SearchCondition sc){
+        return dao.searchSelectPage(sc);
     }
 }
