@@ -31,6 +31,9 @@
         height: 50px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     }
+    notice-text {
+        font-size: 30px;
+    }
     .content__column {
         display: flex;
         width: 50%;
@@ -47,9 +50,6 @@
     .content__log {
         margin-right: 17px;
         font-size: 20px;
-    }
-    notice-text {
-        font-size: 30px;
     }
     .resume-form {
         display: flex;
@@ -146,7 +146,7 @@
         </div>
     </nav>
     <div class="content-header">
-        <div class="content__column notice-text">공지사항 작성하기</div>
+        <div class="content__column notice-text">공지사항 수정하기</div>
         <div class="content__column">
             <div class="content__home"><a href="/main">Home</a></div>
             <div class="content__name">
@@ -177,7 +177,7 @@
         </div>
     </div>
 </div>
-<form th:action="@{/notice/write}" th:method="POST" th:object="${notice}">
+<form th:action="@{/notice/{num}/modify(num=${notice.num})}" th:method="POST" th:object="${notice}">
     <div class="resume-form">
         <div class="checker_spell">
             <div>
@@ -195,7 +195,7 @@
                     th:field="*{contents}"
                     placeholder="내용을 입력해주세요."
             ></textarea>
-                <div th:errors="*{contents}" th:class="title-error"></div>
+                <div th:errors="*{contents}" th:class="contents-error"></div>
             </div>
         </div>
 
@@ -210,12 +210,18 @@
 </form>
 
 <script>
-    if(document.getElementsByClassName('title-error').length){
-        alert("제목을 입력하세요");
-    }
-    if(document.getElementsByClassName('contents-error').length){
-        alert("내용을 입력하세요");
-    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var titleError = document.getElementsByClassName('title-error')[0];
+        var contentsError = document.getElementsByClassName('contents-error')[0];
+
+        if (titleError && titleError.textContent.trim() !== '') {
+            alert('제목을 입력하세요');
+        }
+        if (contentsError && contentsError.textContent.trim() !== '') {
+            alert('내용을 입력하세요');
+        }
+    });
 </script>
 </body>
 </html>

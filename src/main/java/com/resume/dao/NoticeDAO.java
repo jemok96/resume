@@ -13,9 +13,10 @@ import java.util.Map;
 public interface NoticeDAO {
     int saveNotice(NoticeDTO dto);
     int deleteNotice(int num);
-    int selectNoticeOne(NoticeDTO dto);
+    NoticeDTO findByNum(int num);
     List<NoticeDTO> findAll(Map map);
     int noticeCount();
     int searchResultCnt(SearchCondition sc);
     List<NoticeDTO> searchSelectPage(SearchCondition sc);
+    int updateNotice(NoticeDTO dto);
 }

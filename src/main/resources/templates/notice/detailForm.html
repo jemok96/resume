@@ -25,6 +25,9 @@
     a {
         text-decoration: none;
     }
+    notice-text {
+        font-size: 30px;
+    }
     .content-header {
         display: flex;
         align-items: center;
@@ -36,6 +39,7 @@
         width: 50%;
         margin-left: 20px;
         justify-content: flex-end;
+        font-size: 30px;
     }
     .content__column:nth-child(2) {
         display: flex;
@@ -48,26 +52,17 @@
         margin-right: 17px;
         font-size: 20px;
     }
-    notice-text {
-        font-size: 30px;
-    }
     .resume-form {
         display: flex;
         flex-direction: column;
         align-items: center;
         border: 1px solid rgba(0, 0, 0, 0.3);
-        margin: 50px 30px 0px 30px;
+        margin: 0px 30px 0px 30px;
+    }
+    .contents__text {
+        height: 90vh;
     }
     .checker_spell,
-    .summary {
-        width: 98%;
-        height: 98%;
-        border: none;
-    }
-    .summary {
-        display: flex;
-        justify-content: flex-end;
-    }
     textarea,
     input {
         border: none;
@@ -79,11 +74,20 @@
     input {
         margin-top: 10px;
     }
-    .btn-sub {
-        width: 15%;
+    input,
+    textarea {
+        outline: none;
+    }
+    .side {
         display: flex;
-        justify-content: end;
-        margin-bottom: 15px;
+        justify-content: flex-end;
+        margin: 30px 30px 0px 0px;
+    }
+    .side__column {
+        display: flex;
+    }
+    .margin{
+        margin: 40px 0px 30px 0px;
     }
 </style>
 <body id="page-top">
@@ -146,7 +150,7 @@
         </div>
     </nav>
     <div class="content-header">
-        <div class="content__column notice-text">공지사항 작성하기</div>
+        <div class="content__column notice-text">공지사항</div>
         <div class="content__column">
             <div class="content__home"><a href="/main">Home</a></div>
             <div class="content__name">
@@ -177,45 +181,60 @@
         </div>
     </div>
 </div>
-<form th:action="@{/notice/write}" th:method="POST" th:object="${notice}">
+<div th:if="${session.userSession == 'admin'}"> <!--설계 에러,, 관리자가 여러명일 수 있는데 아이디값으로 하는건 옳지 않음..user테이블에 권한정보를 부여해야할듯 -->
+<div class="side">
+    <div class="side__column">
+        <div class="modify">
+            <button type="submit" class="btn btn-outline-secondary" id="btn-modify">수정</button>
+        </div>
+        <div class="delete">
+            <button type="submit" class="btn btn-outline-secondary" id="btn-delete">삭제</button>
+        </div>
+    </div>
+</div>
+</div>
+<div th:if="${session.userSession != 'admin'}" class="margin">
+</div>
+<div>
     <div class="resume-form">
         <div class="checker_spell">
             <div>
-                <input name="title" class="title-text" type="text" th:field="*{title}"
-                       placeholder="제목을 입력해주세요" >
+                <input
+                        name="title"
+                        class="title-text"
+                        type="text"
+                        th:value="${notice.title}"
+                        readonly
+                />
             </div>
-            <div th:errors="*{title}" th:class="title-error"></div>
-            <div>
-            <textarea
-                    name="contents"
-                    id="character_counter_content"
-                    cols="70"
-                    rows="22"
-                    class="checker_input"
-                    th:field="*{contents}"
-                    placeholder="내용을 입력해주세요."
-            ></textarea>
-                <div th:errors="*{contents}" th:class="title-error"></div>
-            </div>
-        </div>
 
-        <div class="summary">
-            <div class="btn-sub">
-                <button type="submit" class="btn btn-outline-secondary" id="btn-add">
-                    저장
-                </button>
+            <div>
+            <div
+                    class="contents__text"
+                    name="contents"
+
+                    th:text="${notice.contents}"
+            ></div>
             </div>
         </div>
     </div>
-</form>
+</div>
 
 <script>
-    if(document.getElementsByClassName('title-error').length){
-        alert("제목을 입력하세요");
-    }
-    if(document.getElementsByClassName('contents-error').length){
-        alert("내용을 입력하세요");
-    }
+    num = [[${notice.num}]];
+    document.getElementById("btn-modify").addEventListener("click",function (){
+        location.href ="/notice/"+num+"/modify";
+    })
+    document.getElementById("btn-delete").addEventListener("click",function (){
+        const bool = confirm("삭제하시겠습니까?");
+        if(bool){
+            let form = document.createElement('form');
+            form.setAttribute("action",'/notice/'+num+'/delete');
+            form.setAttribute('method','post');
+            document.body.appendChild(form);
+            form.submit();
+        }
+    })
 </script>
 </body>
 </html>

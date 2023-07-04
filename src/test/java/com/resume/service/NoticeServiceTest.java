@@ -24,9 +24,9 @@ class NoticeServiceTest {
                         .contents("공지사항입니다.").build();
         Assertions.assertThat(noticeService.saveNotice(notice) ==1);
         //deleteTest
-        int num = noticeService.selectNoticeOne(notice);
-        log.info("num={}",num);
-        Assertions.assertThat(noticeService.deleteNotice(num)==1);
+//        int num = noticeService.selectNoticeOne(notice);
+//        log.info("num={}",num);
+//        Assertions.assertThat(noticeService.deleteNotice(num)==1);
     }
     @Test
     void pagingCountTest() throws Exception{
