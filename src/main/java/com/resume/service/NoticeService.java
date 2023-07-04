@@ -23,8 +23,8 @@ public class NoticeService {
     public int deleteNotice(int num){
         return dao.deleteNotice(num);
     }
-    public int selectNoticeOne(NoticeDTO dto){
-        return dao.selectNoticeOne(dto);
+    public NoticeDTO findByNum(int num){
+        return dao.findByNum(num);
     }
 
     public List<NoticeDTO> findAll(Map map){
@@ -39,4 +39,9 @@ public class NoticeService {
     public List<NoticeDTO>searchSelectPage(SearchCondition sc){
         return dao.searchSelectPage(sc);
     }
+
+    public int updateNotice(NoticeDTO dto){
+        return dao.updateNotice(dto);
+    }
+
 }

@@ -11,7 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +42,6 @@ public class NoticeController {
         PageHandler pageHandler = new PageHandler(totalCnt, sc);
 
         List<NoticeDTO> notice = noticeService.searchSelectPage(sc);
-        log.info("pageHandler={}",pageHandler);
-        log.info("notice={}",notice);
 
 
         model.addAttribute("notice", notice);
@@ -63,6 +65,42 @@ public class NoticeController {
         }
         notice.setUserid(userId);
         noticeService.saveNotice(notice);
+        return "redirect:/notice";
+    }
+    @GetMapping("/notice/{num}")
+    public String NoticeDetail(@PathVariable Integer num,@SessionAttribute("userSession")String userId, Model model){
+        model.addAttribute("notice",noticeService.findByNum(num));
+        model.addAttribute("userImage",imageService.findImageById(userId));
+        return "notice/detailForm";
+    }
+    @GetMapping("/notice/{num}/modify")
+    public String NoticeModifyMain(@PathVariable Integer num,@SessionAttribute("userSession")String userId, Model model){
+        model.addAttribute("notice",noticeService.findByNum(num));
+        model.addAttribute("userImage",imageService.findImageById(userId));
+        return "notice/modifyForm";
+    }
+    @PostMapping("/notice/{num}/modify")
+    public String NoticeModify(@PathVariable Integer num, @SessionAttribute("userSession")String userId, Model model
+    , @Validated NoticeDTO notice , BindingResult bindingResult, RedirectAttributes attr){
+        model.addAttribute("userImage",imageService.findImageById(userId));
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("notice",noticeService.findByNum(num));
+            return "notice/modifyForm";
+        }
+        log.info("notice={}",notice);
+        noticeService.updateNotice(NoticeDTO.builder().
+                num(num)
+                .title(notice.getTitle())
+                .contents(notice.getContents())
+                .up_date(new Date()).build());
+        attr.addFlashAttribute("statusModify","OK");
+        return "redirect:/notice";
+    }
+    @PostMapping("/notice/{num}/delete")
+    public String DeleteNotice(@PathVariable Integer num, @SessionAttribute("userSession")String userId,RedirectAttributes attr){
+        noticeService.deleteNotice(num);
+        attr.addFlashAttribute("statusDel","OK");
         return "redirect:/notice";
     }
 }
