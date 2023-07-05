@@ -12,4 +12,5 @@ public interface LoginDAO {
     LoginUserDTO checkUser(LoginUserDTO user);
     EmailCheckDTO checkEmail(EmailCheckDTO email);
     UserDTO findIdByEmail(String email);
+    String findPw(String userId);
 }

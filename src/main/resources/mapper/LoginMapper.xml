@@ -5,8 +5,12 @@
 
 <mapper namespace="com.resume.dao.LoginDAO">
     <select id="checkUser" parameterType="LoginUserDTO" resultType="LoginUserDTO">
-        select userid, password from user
-        where userid = #{userid} and password=#{password}
+        select userid from user
+        where userid = #{userid}
+    </select>
+    <select id="findPw" parameterType="String" resultType="String">
+        select password from user
+        where userid = #{userid}
     </select>
 
     <select id="checkEmail" parameterType="EmailCheckDTO" resultType="EmailCheckDTO">
