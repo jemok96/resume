@@ -1,7 +1,10 @@
 package com.resume.config;
+import lombok.extern.slf4j.Slf4j;
+import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.jasypt.util.password.BasicPasswordEncryptor;
 
 
+@Slf4j
 public class PasswordConfig {
 
     public static String encryptPassword(String password) {
@@ -13,6 +16,29 @@ public class PasswordConfig {
     public static boolean checkPassword(String password, String encryptedPassword) {
         BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
         return passwordEncryptor.checkPassword(password, encryptedPassword);
+    }
+    public static boolean checkUserPw(String userId, String pw,String encPw){
+        return checkMethod(pw, encPw);
+    }
+    public static boolean checkUserPw(String pw,String encPw){
+        return checkMethod(pw, encPw);
+    }
+
+    private static boolean checkMethod(String pw, String encPw) {
+        try {
+            boolean passwordMatch = PasswordConfig.checkPassword(pw, encPw);
+            log.info("pw={}", pw);
+            log.info("passwordMatch={}", passwordMatch);
+
+            if (passwordMatch) {
+                return true;
+            }
+        } catch (EncryptionOperationNotPossibleException ex) {
+            // 암호화된 비밀번호와 입력된 비밀번호가 일치하지 않는 경우
+            return false;
+        }
+
+        return false;
     }
 }
 
