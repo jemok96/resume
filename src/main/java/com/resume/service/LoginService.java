@@ -26,20 +26,7 @@ public class LoginService {
         String storedEncryptedPassword = findPw(userId); // 사용자가 입력한 아이디로 찾은 암호화값
 
         String pw = user.getPassword();// 사용자가 입력한 pw
-        try {
-            boolean passwordMatch = PasswordConfig.checkPassword(pw, storedEncryptedPassword);
-            log.info("pw={}", pw);
-            log.info("passwordMatch={}", passwordMatch);
-
-            if (passwordMatch) {
-                return true;
-            }
-        } catch (EncryptionOperationNotPossibleException ex) {
-            // 암호화된 비밀번호와 입력된 비밀번호가 일치하지 않는 경우
-            return false;
-        }
-
-        return false;
+        return PasswordConfig.checkUserPw(userId, pw, storedEncryptedPassword);
     }
 
 

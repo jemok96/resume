@@ -1,9 +1,12 @@
 package com.resume.service;
 
+import com.resume.config.PasswordConfig;
+import com.resume.dao.LoginDAO;
 import com.resume.dao.ManageMentDAO;
 import com.resume.dto.UserDTO;
 import com.resume.dto.UserPwDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -12,14 +15,18 @@ import java.util.Map;
 @Service
 @Slf4j
 public class ManageMentService {
-    private final ManageMentDAO dao;
+    private final ManageMentDAO manageMentDAO;
+    private final LoginDAO loginDAO;
 
-    public ManageMentService(ManageMentDAO dao) {
-        this.dao = dao;
+    public ManageMentService(ManageMentDAO dao, LoginDAO loginDAO) {
+        this.manageMentDAO = dao;
+        this.loginDAO = loginDAO;
     }
 
-    public int checkPw(UserDTO dto){
-        return dao.checkPw(dto);
+    public boolean checkPw(UserDTO dto){
+        String encPw = loginDAO.findPw(dto.getUserid());
+        String pw = dto.getPassword();
+        return PasswordConfig.checkUserPw(pw, encPw);
     }
     public int changePw(UserPwDTO dto,String userId){
 
@@ -29,7 +36,7 @@ public class ManageMentService {
             Map map = new HashMap();
             map.put("password",dto.getPasswordCheck());
             map.put("userid",userId);
-            value = dao.changePw(map);
+            value = manageMentDAO.changePw(map);
         }
         else if(!dto.getNowPassword().equals(getPassword(userId))){
             value= 200;
@@ -43,7 +50,7 @@ public class ManageMentService {
 
     }
     public String getPassword(String userId){
-        return dao.getPassword(userId);
+        return manageMentDAO.getPassword(userId);
 
     }
 

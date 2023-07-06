@@ -48,11 +48,13 @@ public class MemberManageController {
         if (bindingResult.hasErrors()){
             return 200;
         }
-        return service.checkPw(
+        boolean status =service.checkPw(
                 UserDTO.builder().
                         password(user.getPassword())
                         .userid(sessionId)
                         .build());
+        if(status)return 1;
+        else return 300;
     }
     @PostMapping("/profile/{userid}/modify")
     public String userImageUpdate(@RequestParam MultipartFile file, Model model, RedirectAttributes attr, @PathVariable String userid) throws IOException {
