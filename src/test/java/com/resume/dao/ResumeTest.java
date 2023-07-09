@@ -1,10 +1,9 @@
 package com.resume.dao;
 
-import com.resume.dto.ResumeDTO;
-import com.resume.service.ResumeService;
+import com.resume.dto.SelfIntroDTO;
+import com.resume.service.SelfIntroService;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.util.List;
 @SpringBootTest
 public class ResumeTest {
     @Autowired
-    private ResumeService service;
+    private SelfIntroService service;
 
 //    @AfterEach
     void delete(){
@@ -28,7 +27,7 @@ public class ResumeTest {
     void insertTest() throws Exception{
         log.info("service ={}",service);
 
-        ResumeDTO dto = ResumeDTO.builder()
+        SelfIntroDTO dto = SelfIntroDTO.builder()
                 .userid("rudnf9605")
                 .title("성격의 장단점1")
                 .contents("하이료오오오오오오1").build();
@@ -39,7 +38,7 @@ public class ResumeTest {
     @Test
     @DisplayName("아이디로 조회")
     void findResumeById() throws Exception{
-        List<ResumeDTO> dto = service.findResumeById("rudnf9605");
+        List<SelfIntroDTO> dto = service.findResumeById("rudnf9605");
         log.info("rudnf9605 dto ={}",dto);
         Assertions.assertThat(dto).isNotNull();
 
@@ -48,23 +47,23 @@ public class ResumeTest {
     @DisplayName("CRUD TEST")
     void updateSameUserId() throws Exception{
         //Insert
-        ResumeDTO dto = ResumeDTO.builder()
+        SelfIntroDTO dto = SelfIntroDTO.builder()
                 .userid("rudnf9605")
                 .title("Insert Test")
                 .contents("Junit Insert Test")
                 .build();
         Assertions.assertThat(service.insertResume(dto) ==1);
-        ResumeDTO resumeDTO = service.testCode(dto);
+        SelfIntroDTO resumeDTO = service.testCode(dto);
 
         //update
-        ResumeDTO dto2 = ResumeDTO.builder()
+        SelfIntroDTO dto2 = SelfIntroDTO.builder()
                         .resumeno(resumeDTO.getResumeno())
                         .userid(resumeDTO.getUserid())
                         .title("Update Test")
                         .contents("Junit Update Test")
                         .build();
         service.updateResume(dto2);
-        ResumeDTO resumeDTO1 = service.testCode(dto2);
+        SelfIntroDTO resumeDTO1 = service.testCode(dto2);
         Assertions.assertThat(resumeDTO1.getTitle()).isEqualTo("Update Test");
         //delete
         Assertions.assertThat(service.deleteOne(resumeDTO1.getResumeno()) ==1);

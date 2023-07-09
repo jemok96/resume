@@ -3,30 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.resume.dao.ResumeDAO">
-    <insert id="insertResume" parameterType="ResumeDTO">
+<mapper namespace="com.resume.dao.SelfIntroDAO">
+    <insert id="insertResume" parameterType="SelfIntroDTO">
         insert into resume(userid,title,contents)
         values(#{userid},#{title},#{contents})
     </insert>
-    <select id="findResumeById" parameterType="String" resultType="ResumeDTO">
+    <select id="findResumeById" parameterType="String" resultType="SelfIntroDTO">
         select title,contents,regdate,up_date,resumeno
         from resume
         where userid = #{userid}
     </select>
 
-    <select id="selectByNo" parameterType="Integer" resultType="ResumeDTO">
+    <select id="selectByNo" parameterType="Integer" resultType="SelfIntroDTO">
         select title,contents,resumeno,userid
         from resume
         where resumeno = #{rno}
     </select>
-    <update id="updateResume" parameterType="ResumeDTO">
+    <update id="updateResume" parameterType="SelfIntroDTO">
         update  resume
         set title = #{title}, contents = #{contents}
         where resumeno = #{resumeno} and
         userid = #{userid}
     </update>
 
-    <select id="testCode" parameterType="ResumeDTO" resultType="ResumeDTO">
+    <select id="testCode" parameterType="SelfIntroDTO" resultType="SelfIntroDTO">
         select title,resumeno,contents,userid
         from resume
         where title=#{title} and contents=#{contents} and userid=#{userid}

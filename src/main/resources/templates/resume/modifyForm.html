@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Resume </title>
+    <title>selfintroduction </title>
     <link th:href="@{/css/main.css}" rel="stylesheet" />
     <script
             src="https://code.jquery.com/jquery-3.6.4.min.js"
@@ -111,7 +111,7 @@
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/main">인적사항</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/main/#experience">경력기술서</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/main/#skills">스킬</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/resume"><span class="font">자기소개서</span></a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/selfintroduction"><span class="font">자기소개서</span></a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">프로젝트</a></li>
             </ul>
         </div>
@@ -121,7 +121,7 @@
         <div class="content__column">
             <div class="content__home"><a href="/main">Home</a></div>
             <div class="content__name">
-                <a th:href="@{/profile/{userid}(userid=${session.userSession})}" th:if="${session.userSession != null}"
+                <a th:href="@{/profiles/{userid}(userid=${session.userSession})}" th:if="${session.userSession != null}"
                    th:text="${session.userSession}+|님|"></a>
             </div>
             <a href="/login"><div class="content__name" th:if="${session.userSession == null}" th:text="|로그인|" >login</div></a>
@@ -131,7 +131,7 @@
 
 </div>
 <div th:if="${status =='ok'}" th:class="status-ok"></div>
-<form th:href="@{/resume/modify/{rno}(rno=${resume.resumeno})}" th:method="POST" th:object="${resume}">
+<form th:href="@{/selfintroduction/{rno}(rno=${resume.resumeno})}" th:object="${resume}">
     <div class="resume-form">
         <div class="checker_spell">
             <div>
@@ -141,7 +141,7 @@
             <div>
           <textarea th:field="*{contents}"
                     name="contents"
-                    id="character_counter_content"
+                    id="contents"
                     cols="70"
                     rows="22"
                     class="checker_input"
@@ -150,7 +150,7 @@
                 <div th:errors="*{contents}" th:class="contents-error"></div>
             </div>
         </div>
-
+        <input type="hidden" id="resumeno" name="rno" th:value="${resume.resumeno}">
         <div class="summary">
             <div class="summary__column">
                 <div class="summary__text">
@@ -165,8 +165,8 @@
                 </div>
             </div>
             <div class="summary__column">
-                <div class="btn-sub" th:if="${resume.userid == session.userSession}" ><input id="btn-add" type="submit" value="수정"></div>
-
+                <div class="btn-sub" th:if="${resume.userid == session.userSession}" >
+                    <button id="btn-add" type="submit" onsubmit="">수정</button>
             </div>
         </div>
     </div>
@@ -181,9 +181,50 @@
     if(document.getElementsByClassName('contents-error').length){
         alert("내용을 입력하세요");
     }
-    if(document.getElementsByClassName('status-ok').length){
-        alert("수정 완료");
-    }
+    $('#btn-add').click(function(e) {
+        e.preventDefault(); // 페이지 이동 방지
+        let userid = '[[${session.userSession}]]';
+        let title = $('#title').val();
+        let contents = $('#contents').val();
+
+        if (title.trim() === '' || contents.trim() === '') {
+            alert('제목과 내용을 입력하세요.');
+            return; // AJAX 요청 전송하지 않음
+        }
+
+        let form = $('#resumeForm');
+        let url = form.attr('action');
+        let jsonData = {
+            title: title,
+            contents: contents,
+            userid : userid,
+        };
+
+        $.ajax({
+            url: url,
+            type: 'PATCH',
+            dataType: 'json',
+            contentType: 'application/json; charset=UTF-8',
+            data: JSON.stringify(jsonData),
+            success: function(response) {
+                if(response ===200){
+                    alert('수정 완료');
+                }
+                else if(response ===400){
+                    alert("제목과 본문을 입력하세요");
+                }
+
+                // 페이지 리로드 또는 필요한 동작 수행
+            },
+            error: function(xhr, status, error) {
+                contents.log(xhr);
+                contents.log(status);
+                contents.log(error);
+                alert('오류 발생');
+            }
+        });
+    });
+
 </script>
 </body>
 </html>

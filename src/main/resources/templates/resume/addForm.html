@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Resume </title>
+    <title>selfintroduction </title>
     <link th:href="@{/css/main.css}" rel="stylesheet" />
     <script
             src="https://code.jquery.com/jquery-3.6.4.min.js"
@@ -115,7 +115,7 @@
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/main">인적사항</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/main/#experience">경력기술서</a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/main/#skills">스킬</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/resume"><span class="font">자기소개서</span></a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/selfintroduction"><span class="font">자기소개서</span></a></li>
                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">프로젝트</a></li>
             </ul>
         </div>
@@ -125,7 +125,7 @@
         <div class="content__column">
             <div class="content__home"><a href="/main">Home</a></div>
             <div class="content__name">
-                <a th:href="@{/profile/{userid}(userid=${session.userSession})}" th:if="${session.userSession != null}"
+                <a th:href="@{/profiles/{userid}(userid=${session.userSession})}" th:if="${session.userSession != null}"
                    th:text="${session.userSession}+|님|"></a>
             </div>
             <a href="/login"><div class="content__name" th:if="${session.userSession == null}" th:text="|로그인|" >login</div></a>
@@ -134,7 +134,7 @@
     </div>
 
 </div>
-<form th:action="@{/resume/add}" th:method="POST" th:object="${resume}">
+<form th:action="@{/selfintroduction}" th:method="POST" th:object="${resume}">
 <div class="resume-form">
     <div class="checker_spell">
         <div>

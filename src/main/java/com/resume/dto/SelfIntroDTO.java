@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class ResumeDTO {
+public class SelfIntroDTO {
     private Integer resumeno;
     private String userid;
     @NotBlank(message = "제목은 필수입니다.")
@@ -22,7 +22,7 @@ public class ResumeDTO {
     private Date up_date;
 
     @Builder
-    public ResumeDTO(Integer resumeno, String userid,String title ,String contents, Date regdate, Date up_date) {
+    public SelfIntroDTO(Integer resumeno, String userid, String title , String contents, Date regdate, Date up_date) {
         this.resumeno = resumeno;
         this.userid = userid;
         this.title = title;
@@ -31,7 +31,7 @@ public class ResumeDTO {
         this.up_date = up_date;
     }
 
-    public ResumeDTO() {
+    public SelfIntroDTO() {
     }
 
     @Override

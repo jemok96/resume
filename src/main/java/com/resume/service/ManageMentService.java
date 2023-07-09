@@ -23,26 +23,35 @@ public class ManageMentService {
         this.loginDAO = loginDAO;
     }
 
-    public boolean checkPw(UserDTO dto){
+    public Integer checkPw(UserDTO dto){
         String encPw = loginDAO.findPw(dto.getUserid());
         String pw = dto.getPassword();
-        return PasswordConfig.checkUserPw(pw, encPw);
+        boolean check = PasswordConfig.checkUserPw(pw, encPw);
+        if(check){
+            return 1;
+        }
+        return 400;
     }
     public int changePw(UserPwDTO dto,String userId){
-
-        //현재 비밀번호와 유저session id로 가져온 비밀번호가 다르면 에러
+        String newPassword = dto.getNewPassword();
+        String nowPassword = dto.getNowPassword(); //현재 비밀번호
+        String passwordCheck = dto.getPasswordCheck();
+        boolean check = PasswordConfig.checkUserPw(dto.getNowPassword(),loginDAO.findPw(userId));
+        log.info("check={}",check);
         int value = 0;
-        if(dto.getNowPassword().equals(getPassword(userId)) && dto.getNewPassword().equals(dto.getPasswordCheck()) ){
+        //입력한 pw값과 db에서조회한 값이 같고 변경할 비밀번호가 서로 같을 경우
+        if(check && newPassword.equals(passwordCheck) ){
             Map map = new HashMap();
             map.put("password",dto.getPasswordCheck());
             map.put("userid",userId);
             value = manageMentDAO.changePw(map);
         }
-        else if(!dto.getNowPassword().equals(getPassword(userId))){
+        // 현재 비밀번호가 다를 경우 
+        else if(!check){
             value= 200;
         }
-        // 새 비밀번호와 새 비밀번호 확인이 다르면 에러
-        else if(!dto.getNewPassword().equals(dto.getPasswordCheck())){
+        // 새 비밀번호와 새 비밀번호 확인이 다를경우
+        else if(!newPassword.equals(passwordCheck)){
             value= 300;
         }
         return value;

@@ -131,7 +131,7 @@
 <div class="header-icon">
     <div class="flex">
         <div class="column">
-            <a th:href="@{/profile/{userid}(userid=${session.userSession})}" class="center">
+            <a th:href="@{/profiles/{userid}(userid=${session.userSession})}" class="center">
             <span class="material-symbols-outlined size">
               manage_accounts
             </span>
@@ -139,13 +139,13 @@
             </a>
         </div>
         <div class="column">
-            <a th:href="@{/profile/{userid}/modifypw(userid=${session.userSession})}" class="center">
+            <a th:href="@{/profiles/{userid}/password(userid=${session.userSession})}" class="center">
                 <span class="material-symbols-outlined size">sync_lock</span>
                 <span>비밀번호 변경</span>
             </a>
         </div>
         <div class="column">
-            <a th:href="@{/profile/delete}" class="center">
+            <a th:href="@{/profiles/delete}" class="center">
                 <span class="material-symbols-outlined size">person_remove</span>
                 <span>회원탈퇴</span>
             </a>
@@ -201,7 +201,7 @@
                 data: JSON.stringify({
                     "password":userPw
                 }),
-                url: "/profile/checkpw",
+                url: "/profiles/checkpw",
                 dataType: "json",
                 contentType: "application/json; charset=UTF-8",
                 success: function (data) {
@@ -212,7 +212,7 @@
                     }else if(data==1){
                         alert("성공");
                         let form = document.createElement('form');
-                        form.setAttribute("action",'/profile/'+user);
+                        form.setAttribute("action",'/profiles/'+user);
                         form.setAttribute('method','post');
                         document.body.appendChild(form);
                         form.submit();

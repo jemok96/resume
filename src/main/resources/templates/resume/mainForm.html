@@ -10,7 +10,7 @@
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
   />
-  <title>Resume</title>
+  <title>selfintroduction</title>
   <link th:href="@{/css/main.css}" rel="stylesheet" />
   <script
           src="https://code.jquery.com/jquery-3.6.4.min.js"
@@ -170,7 +170,7 @@
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link js-scroll-trigger" href="/resume"
+          <a class="nav-link js-scroll-trigger" href="/selfintroduction"
           ><span class="font">자기소개서</span></a
           >
         </li>
@@ -186,7 +186,7 @@
       <div class="content__home bold"><a href="/main">Home</a></div>
       <div class="content__name bold">
         <a
-                th:href="@{/profile/{userid}(userid=${session.userSession})}"
+                th:href="@{/profiles/{userid}(userid=${session.userSession})}"
                 th:if="${session.userSession != null}"
                 th:text="${session.userSession}+|님|"
         ></a>
@@ -219,7 +219,7 @@
         th:text="|등록된 자기소개서가 없습니다 추가해주세요!|"
 ></div>
 <div class="btn-add">
-  <a href="/resume/add"
+  <a href="/selfintroduction/new"
   ><button type="button" class="add-btn">
     <span class="material-symbols-outlined"> add </span></button
   ><span class="text-add">항목추가</span></a
@@ -237,7 +237,7 @@
       />
 
       <div class="btn-group" role="group" aria-label="Basic example">
-        <a th:href="@{/resume/modify/{rno}(rno=${list.resumeno})}">
+        <a th:href="@{/selfintroduction/{rno}(rno=${list.resumeno})}">
           <button type="button" class="btn btn-light">수정</button>
         </a>
         <form id="form" action="">
@@ -270,11 +270,28 @@
   }
 
   function btn_delete(rno) {
-    if (!confirm("삭제하시겠습니까?")) return;
-    let form = $("#form");
-    form.attr("action", "/resume/delete/" + rno);
-    form.attr("method", "post");
-    form.submit();
+    if (!confirm("삭제하시겠습니까?")) {
+      return;
+    }
+    else{
+      $.ajax({
+        url: "/selfintroduction/"+rno,
+        type: 'DELETE',
+
+        success: function(response) {
+          if(response ===1){
+            alert('삭제 완료');
+            location.href = "/selfintroduction";
+          }
+
+          // 페이지 리로드 또는 필요한 동작 수행
+        },
+        error: function(xhr, status, error) {
+          alert('오류 발생');
+        }
+      });
+    }
+
   }
 </script>
 </body>
