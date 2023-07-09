@@ -180,7 +180,7 @@
     </script>
 
     <div style="text-align: right ;margin-top: 40px ">
-        <a th:href="@{/profile/{userid}(userid=${session.userSession})}"><button class="button" id="mypage">마이페이지</button></a>
+        <a th:href="@{/profiles/{userid}(userid=${session.userSession})}"><button class="button" id="mypage">마이페이지</button></a>
         <button class="button" id="logout">로그아웃</button>
     </div>
     
@@ -199,7 +199,7 @@
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">인적사항</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">경력기술서</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">스킬</a></li>
-                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/resume">자기소개서</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/selfintroduction">자기소개서</a></li>
                     <li class="nav-item"><a class="nav-link js-scroll-trigger" href="/">프로젝트</a></li>
                 </ul>
             </div>

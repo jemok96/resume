@@ -1,7 +1,7 @@
 package com.resume.controller;
 
-import com.resume.dto.ResumeDTO;
-import com.resume.service.ResumeService;
+import com.resume.dto.SelfIntroDTO;
+import com.resume.service.SelfIntroService;
 import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -14,16 +14,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
-public class ResumeController {
+public class SelfIntroController {
 
-    private final ResumeService service;
+    private final SelfIntroService service;
     private final UserImageService imageService;
-    public ResumeController(ResumeService service, UserImageService imageService) {
+    public SelfIntroController(SelfIntroService service, UserImageService imageService) {
         this.service = service;
         this.imageService = imageService;
     }
 
-    @GetMapping("/resume")
+    @GetMapping("/selfintroduction")
     public String main(@SessionAttribute(value = "userSession" ,required = false)String userId, Model model){
         if(userId !=null){
             model.addAttribute("resume",service.findResumeById(userId));
@@ -32,57 +32,55 @@ public class ResumeController {
         model.addAttribute("userImage",imageService.findImageById(userId));
         return "resume/mainForm";
     }
-    @GetMapping("/resume/add")
+    @GetMapping("/selfintroduction/new")
     public String mainAddForm(Model model, @SessionAttribute("userSession")String userId){
-        model.addAttribute("resume",new ResumeDTO());
+        model.addAttribute("resume",new SelfIntroDTO());
         model.addAttribute("userImage",imageService.findImageById(userId));
         return "resume/addForm";
     }
-    @PostMapping("/resume/add")
-    public String addCheck(@Validated @ModelAttribute("resume")ResumeDTO dto,
+    @PostMapping("/selfintroduction")
+    public String addCheck(@Validated @ModelAttribute("resume") SelfIntroDTO dto,
                            BindingResult bindingResult,@SessionAttribute(value = "userSession" ,required = false)String userid,
                            Model model){
         model.addAttribute("userImage",imageService.findImageById(userid));
         if(bindingResult.hasErrors()){
             return "resume/addForm";
         }
-        ResumeDTO userInput = ResumeDTO.builder()
+        SelfIntroDTO userInput = SelfIntroDTO.builder()
                         .userid(userid)
                         .title(dto.getTitle())
                         .contents(dto.getContents()).build();
         service.insertResume(userInput);
         model.addAttribute("resume",dto);
-        return "redirect:/resume";
+        return "redirect:/selfintroduction";
     }
-    @GetMapping("/resume/modify/{rno}")
+    @GetMapping("/selfintroduction/{rno}")
     public String modifyResume(@PathVariable Integer rno,Model model, @SessionAttribute(value = "userSession",required = true)String userId){
         model.addAttribute("resume",service.selectByNo(rno));
         model.addAttribute("userImage",imageService.findImageById(userId));
         return "resume/modifyForm";
     }
-    @PostMapping("/resume/modify/{rno}")
-    public String modifyCheck(@Validated @ModelAttribute("resume")ResumeDTO dto, BindingResult bindingResult,
-                              @PathVariable Integer rno, Model model, @SessionAttribute(value = "userSession",required = true)String userId,
-                              RedirectAttributes attr){
+    @PatchMapping("/selfintroduction/{rno}")
+    @ResponseBody
+    public int modifyCheck(@Validated @RequestBody SelfIntroDTO dto, BindingResult bindingResult,
+                           @PathVariable Integer rno, Model model, @SessionAttribute(value = "userSession",required = true)String userId,
+                           RedirectAttributes attr){
         model.addAttribute("userImage",imageService.findImageById(userId));
         if(bindingResult.hasErrors()){
-            return "resume/modifyForm";
+            return 400;
         }
-        ResumeDTO resume = ResumeDTO.builder()
+        SelfIntroDTO resume = SelfIntroDTO.builder()
                         .title(dto.getTitle())
                         .contents(dto.getContents())
                         .resumeno(rno)
                         .userid(userId).build();
-        service.updateResume(resume);
+        return service.updateResume(resume);
 
-        attr.addFlashAttribute("status","ok");
-        return "redirect:/resume/modify/{rno}";
     }
 
-    @PostMapping("/resume/delete/{rno}")
-    public String deleteResume(@PathVariable Integer rno,RedirectAttributes attr){
-        service.deleteOne(rno);
-        attr.addFlashAttribute("status","ok");
-        return "redirect:/resume";
+    @DeleteMapping("/selfintroduction/{rno}")
+    @ResponseBody
+    public Integer deleteResume(@PathVariable Integer rno){
+        return service.deleteOne(rno);
     }
 }

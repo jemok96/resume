@@ -30,33 +30,32 @@ public class MemberManageController {
         this.imageService = imageService;
     }
 
-    @GetMapping("/profile/{userId}")
+    @GetMapping("/profiles/{userId}")
     public String main(@PathVariable String userId,@SessionAttribute("userSession")String userSession, Model model){
         model.addAttribute("userId",userSession);
         return "management/mainForm";
     }
-    @PostMapping("/profile/{userId}")
+    @PostMapping("/profiles/{userId}")
     public String user(@PathVariable("userId") String userId,Model model,@SessionAttribute("userSession")
             String sessionId){
         model.addAttribute("userImage",imageService.findImageById(userId));
         return "management/modifyForm";
     }
-    @PostMapping("/profile/checkpw")
+    @PostMapping("/profiles/checkpw")
     @ResponseBody
     public Integer checkPw(@Validated @RequestBody UserDTO user, BindingResult bindingResult,@SessionAttribute("userSession")
                            String sessionId){
         if (bindingResult.hasErrors()){
             return 200;
         }
-        boolean status =service.checkPw(
+        return  service.checkPw(
                 UserDTO.builder().
                         password(user.getPassword())
                         .userid(sessionId)
                         .build());
-        if(status)return 1;
-        else return 300;
+
     }
-    @PostMapping("/profile/{userid}/modify")
+    @PostMapping("/profiles/{userid}/modify")
     public String userImageUpdate(@RequestParam MultipartFile file, Model model, RedirectAttributes attr, @PathVariable String userid) throws IOException {
 
         //user image table 저장하고, 수정 할 경우 aws내에서도 삭제하고 다시 저장하는 로직으로 변경해야함 (Transactional)
@@ -64,31 +63,32 @@ public class MemberManageController {
         userImage.setUserId(userid);
         imageService.updateImage(userImage);
         attr.addFlashAttribute("status","OK");
-        return "redirect:/profile/{userid}";
+        return "redirect:/profiles/{userid}";
     }
-    @GetMapping("/profile/{userId}/modifypw")
+    @GetMapping("/profiles/{userId}/password")
     public String modifyPassword(@PathVariable("userId") String userId,@SessionAttribute("userSession")String sessionId
     ,RedirectAttributes attr){
 
         if(!userId.equals(sessionId)){
             attr.addFlashAttribute("status","NO");
-            return "redirect:/profile/{userId}";
+            return "redirect:/profiles/{userId}";
         }
         return "management/modifyPasswordForm";
     }
 
-    @PostMapping("/profile/{userId}/modifypw")
+    @PostMapping("/profiles/{userId}/password")
     @ResponseBody
     public Integer modifyPasswordCheck(@PathVariable("userId") String userId, @SessionAttribute("userSession")String sessionId,
                                        @Validated @RequestBody UserPwDTO userPw,BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return 400;
         }
-
-        return service.changePw(userPw,sessionId);
+        int i = service.changePw(userPw, sessionId);
+        log.info("i={}",i);
+        return i;
     }
 
-    @GetMapping("/profile/delete")
+    @GetMapping("/profiles/delete")
     public String userDelete(){
 
         return "management/deleteForm";
