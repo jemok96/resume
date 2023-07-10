@@ -1,10 +1,8 @@
-package com.resume.dao;
+package com.resume.Repository;
 
 import com.resume.dto.RegisterDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 @Mapper

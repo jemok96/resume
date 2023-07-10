@@ -1,6 +1,6 @@
 package com.resume.service;
 
-import com.resume.dao.MainDAO;
+import com.resume.Repository.MainDAO;
 import com.resume.dto.ExperienceDTO;
 import com.resume.dto.RegisterDTO;
 import com.resume.dto.UserInfoDTO;

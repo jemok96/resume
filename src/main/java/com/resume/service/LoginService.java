@@ -1,13 +1,14 @@
 package com.resume.service;
 
 import com.resume.config.PasswordConfig;
-import com.resume.dao.LoginDAO;
+import com.resume.Repository.LoginDAO;
 import com.resume.dto.EmailCheckDTO;
 import com.resume.dto.LoginUserDTO;
 import com.resume.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Slf4j
@@ -39,7 +40,7 @@ public class LoginService {
             return false;
 
     }
-    public UserDTO findIdByEmail(String email){
+    public List<UserDTO> findIdByEmail(String email){
         return dao.findIdByEmail(email);
     }
 }

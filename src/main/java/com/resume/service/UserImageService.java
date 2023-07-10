@@ -1,6 +1,6 @@
 package com.resume.service;
 
-import com.resume.dao.UserImageDAO;
+import com.resume.Repository.UserImageDAO;
 import com.resume.dto.AwsS3;
 import com.resume.dto.UserImageDTO;
 import lombok.extern.slf4j.Slf4j;

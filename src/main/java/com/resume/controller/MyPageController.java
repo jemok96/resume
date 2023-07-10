@@ -19,12 +19,12 @@ import java.io.IOException;
 
 @Controller
 @Slf4j
-public class MemberManageController {
+public class MyPageController {
     private final ManageMentService service;
     private final S3UploadService s3Upload;
     private final UserImageService imageService;
 
-    public MemberManageController(ManageMentService service, S3UploadService s3Upload, UserImageService imageService) {
+    public MyPageController(ManageMentService service, S3UploadService s3Upload, UserImageService imageService) {
         this.service = service;
         this.s3Upload = s3Upload;
         this.imageService = imageService;

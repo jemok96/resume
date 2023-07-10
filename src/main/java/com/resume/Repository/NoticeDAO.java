@@ -1,4 +1,4 @@
-package com.resume.dao;
+package com.resume.Repository;
 
 import com.resume.dto.NoticeDTO;
 import com.resume.dto.SearchCondition;

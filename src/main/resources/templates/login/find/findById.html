@@ -80,7 +80,7 @@
         <div class="email__title">본인확인 이메일로 인증</div>
         <div class="email__text">본인확인 이메일 주소와 입력한 이메일 주소가 같아야 인증번호를 받을 수 있습니다.</div>
         <div class ="email__container">
-            <form th:action="@{/checkid}" th:method="POST" th:object="${email}" >
+            <form th:action="@{/login/search}" th:method="POST" th:object="${email}" >
                 <div class="email__column">
                     <div class="userName">이름</div>
                     <div class="user-input" ><input type="text" name="name" placeholder="name" th:field="*{name}"></div>
@@ -118,7 +118,7 @@
             success: function(response) {
                 if (response === 'success') {
                     alert("인증 성공");
-                    location.href="/findSuccess";
+                    location.href="/login/search/detail";
                 } else {
                     alert("다시 입력해주세요");
                 }

@@ -1,7 +1,6 @@
-package com.resume.dao;
+package com.resume.Repository;
 
 import com.resume.dto.UserDTO;
-import com.resume.dto.UserPwDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

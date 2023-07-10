@@ -1,7 +1,7 @@
 package com.resume.service;
 
 import com.resume.config.PasswordConfig;
-import com.resume.dao.RegisterDAO;
+import com.resume.Repository.RegisterDAO;
 import com.resume.dto.RegisterDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
