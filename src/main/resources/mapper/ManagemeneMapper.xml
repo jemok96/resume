@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.resume.dao.ManageMentDAO">
+<mapper namespace="com.resume.Repository.ManageMentDAO">
     <select id="checkPw" parameterType="UserDTO" resultType="int">
         select count(*) from user
         where userid= #{userid}

@@ -1,6 +1,6 @@
 package com.resume.service;
 
-import com.resume.dao.SelfIntroDAO;
+import com.resume.Repository.SelfIntroDAO;
 import com.resume.dto.SelfIntroDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

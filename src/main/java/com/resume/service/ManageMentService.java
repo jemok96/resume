@@ -1,12 +1,11 @@
 package com.resume.service;
 
 import com.resume.config.PasswordConfig;
-import com.resume.dao.LoginDAO;
-import com.resume.dao.ManageMentDAO;
+import com.resume.Repository.LoginDAO;
+import com.resume.Repository.ManageMentDAO;
 import com.resume.dto.UserDTO;
 import com.resume.dto.UserPwDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.jasypt.exceptions.EncryptionOperationNotPossibleException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

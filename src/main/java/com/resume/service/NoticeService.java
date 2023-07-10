@@ -1,6 +1,6 @@
 package com.resume.service;
 
-import com.resume.dao.NoticeDAO;
+import com.resume.Repository.NoticeDAO;
 import com.resume.dto.NoticeDTO;
 import com.resume.dto.SearchCondition;
 import org.springframework.stereotype.Service;

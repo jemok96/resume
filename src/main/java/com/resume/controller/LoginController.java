@@ -72,13 +72,13 @@ public class LoginController {
         return "redirect:/resume";
     }
 
-    @GetMapping("/findById")
+    @GetMapping("/login/search")
     public String findId(Model model) {
         model.addAttribute("email",new EmailCheckDTO());
         return "login/find/findById";
     }
 
-    @PostMapping("/checkid")
+    @PostMapping("/login/search")
     public String checkId(@Validated @ModelAttribute("email") EmailCheckDTO email, BindingResult bindingResult, Model model,
                           HttpSession session) {
         if (bindingResult.hasErrors()) {
@@ -109,7 +109,7 @@ public class LoginController {
 
 
     }
-    @GetMapping("/findSuccess")
+    @GetMapping("/login/search/detail")
     public String findByIdSuccess(@SessionAttribute(value = "email",required = false) String email,Model model){
         log.info("email={}",email);
         log.info("{userId={}}",loginService.findIdByEmail(email));
