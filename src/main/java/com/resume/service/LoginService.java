@@ -26,7 +26,7 @@ public class LoginService {
         String storedEncryptedPassword = findPw(userId); // 사용자가 입력한 아이디로 찾은 암호화값
 
         String pw = user.getPassword();// 사용자가 입력한 pw
-        return PasswordConfig.checkUserPw(userId, pw, storedEncryptedPassword);
+        return PasswordConfig.checkUserPw(pw, storedEncryptedPassword);
     }
 
 

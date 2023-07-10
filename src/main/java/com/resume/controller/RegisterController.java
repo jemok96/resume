@@ -46,7 +46,7 @@ public class RegisterController {
         registerService.saveImage(user.getUserid());
 
 
-        return "login/login";
+        return "redirect:/login";
 
     }
 
