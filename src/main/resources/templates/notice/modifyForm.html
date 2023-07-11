@@ -114,7 +114,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="/notice"
+                    <a class="nav-link js-scroll-trigger" href="/notices"
                     ><span class="font">공지사항</span></a
                     >
                 </li>
@@ -177,7 +177,7 @@
         </div>
     </div>
 </div>
-<form th:action="@{/notice/{num}/modify(num=${notice.num})}" th:method="POST" th:object="${notice}">
+<form th:action="@{/notices/{num}/(num=${notice.num})}"th:object="${notice}">
     <div class="resume-form">
         <div class="checker_spell">
             <div>
@@ -188,7 +188,7 @@
             <div>
             <textarea
                     name="contents"
-                    id="character_counter_content"
+                    id="contents"
                     cols="70"
                     rows="22"
                     class="checker_input"
@@ -212,15 +212,49 @@
 <script>
 
     document.addEventListener('DOMContentLoaded', function() {
-        var titleError = document.getElementsByClassName('title-error')[0];
-        var contentsError = document.getElementsByClassName('contents-error')[0];
+        $('#btn-add').click(function(e) {
+            e.preventDefault(); // 페이지 이동 방지
+            let userid = '[[${session.userSession}]]';
+            let title = $('#title').val();
+            let contents = $('#contents').val();
 
-        if (titleError && titleError.textContent.trim() !== '') {
-            alert('제목을 입력하세요');
-        }
-        if (contentsError && contentsError.textContent.trim() !== '') {
-            alert('내용을 입력하세요');
-        }
+            if (title.trim() === '' || contents.trim() === '') {
+                alert('제목과 내용을 입력하세요.');
+                return; // AJAX 요청 전송하지 않음
+            }
+
+            let form = $('#resumeForm');
+            let url = form.attr('action');
+            let jsonData = {
+                title: title,
+                contents: contents,
+                userid : userid,
+            };
+
+            $.ajax({
+                url: url,
+                type: 'PATCH',
+                dataType: 'json',
+                contentType: 'application/json; charset=UTF-8',
+                data: JSON.stringify(jsonData),
+                success: function(response) {
+                    if(response ===200){
+                        alert('수정 완료');
+                    }
+                    else if(response ===400){
+                        alert("제목과 본문을 입력하세요");
+                    }
+
+                    // 페이지 리로드 또는 필요한 동작 수행
+                },
+                error: function(xhr, status, error) {
+                    contents.log(xhr);
+                    contents.log(status);
+                    contents.log(error);
+                    alert('오류 발생');
+                }
+            });
+        });
     });
 </script>
 </body>

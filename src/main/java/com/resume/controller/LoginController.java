@@ -82,7 +82,6 @@ public class LoginController {
     public String checkId(@Validated @ModelAttribute("email") EmailCheckDTO email, BindingResult bindingResult, Model model,
                           HttpSession session) {
         if (bindingResult.hasErrors()) {
-            log.info("error={}", bindingResult);
             return "login/find/findById";
         }
 
@@ -111,8 +110,7 @@ public class LoginController {
     }
     @GetMapping("/login/search/detail")
     public String findByIdSuccess(@SessionAttribute(value = "email",required = false) String email,Model model){
-        log.info("email={}",email);
-        log.info("{userId={}}",loginService.findIdByEmail(email));
+
         model.addAttribute("user",loginService.findIdByEmail(email));
         return "login/find/findUserId";
     }

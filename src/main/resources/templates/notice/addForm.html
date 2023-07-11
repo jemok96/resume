@@ -114,7 +114,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="/notice"
+                    <a class="nav-link js-scroll-trigger" href="/notices"
                     ><span class="font">공지사항</span></a
                     >
                 </li>
@@ -177,7 +177,7 @@
         </div>
     </div>
 </div>
-<form th:action="@{/notice/write}" th:method="POST" th:object="${notice}">
+<form th:action="@{/notices/new}" th:method="POST" th:object="${notice}">
     <div class="resume-form">
         <div class="checker_spell">
             <div>

@@ -41,7 +41,16 @@ public class NoticeService {
     }
 
     public int updateNotice(NoticeDTO dto){
-        return dao.updateNotice(dto);
+        try {
+            int result = dao.updateNotice(dto);
+            if (result == 1) {
+                return 200;
+            } else {
+                return 500;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update resume", e);
+        }
     }
 
 }

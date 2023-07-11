@@ -147,7 +147,7 @@
     <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="/notice">공지사항</a>
+                <a class="nav-link js-scroll-trigger" href="/notices">공지사항</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="/board">게시판</a>
@@ -164,7 +164,7 @@
                 <a class="nav-link js-scroll-trigger" href="/main#skills">스킬</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="/resume">자기소개서</a>
+                <a class="nav-link js-scroll-trigger" href="/selfintroduction">자기소개서</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="/">프로젝트</a>
@@ -186,7 +186,7 @@
         <div class="notice__count">총 <span th:text="${totalCnt}">1500개</span>개</div>
     </div>
     <div class="notice__search">
-        <form action="/notice" method="GET">
+        <form action="/notices" method="GET">
             <div class="notice__right">
                 <div>
                     <select name="option" class="form-select option" aria-label="Default select example">
@@ -220,7 +220,7 @@
         </tr>
         <tr th:each="item : ${notice}" th:if="${item !=null}">
             <th scope="row" th:text="${item.userid}">작성자</th>
-            <td><a th:href="@{/notice/{num}(num=${item.num})}" th:text="${item.title}">제목</a></td>
+            <td><a th:href="@{/notices/detail/{num}(num=${item.num})}" th:text="${item.title}">제목</a></td>
             <td th:text="${#dates.format(item.regdate,'YYYY-MM-dd HH:mm')}">2023-06-30</td>
             <td class="hits-margin" th:text="${item.hits}">조회수</td>
         </tr>
@@ -234,14 +234,14 @@
         </div>
         <div class="paging-item" th:if="${totalCnt!=null && totalCnt!=0}">
             <div th:if="${ph.showPrev}">
-                <a class="page" th:href="@{/notice(page=${ph.sc.page-1}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}"><</a>
+                <a class="page" th:href="@{/notices(page=${ph.sc.page-1}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}"><</a>
 
             </div>
             <span th:each="i : ${#numbers.sequence(ph.beginPage, ph.endPage)}">
   <a th:class="${i == ph.sc.page} ? 'page paging-active' : 'page'" th:href="@{/notice(page=${i}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}" th:text="${i}"></a>
                 </span>
         <div th:if="ph.showNext">
-            <a class="page" th:href="@{/notice(page=${ph.sc.page+1}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}">> </a>
+            <a class="page" th:href="@{/notices(page=${ph.sc.page+1}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}">> </a>
 
         </div>
         </div>
@@ -268,7 +268,7 @@
         location.href = "/mypage";
     });
     document.getElementById("write").addEventListener("click",function (){
-        location.href = "/notice/write";
+        location.href = "/notices/new";
     })
 </script>
 </body>

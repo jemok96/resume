@@ -118,7 +118,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="/notice"
+                    <a class="nav-link js-scroll-trigger" href="/notices"
                     ><span class="font">공지사항</span></a
                     >
                 </li>
@@ -223,16 +223,27 @@
 <script>
     num = [[${notice.num}]];
     document.getElementById("btn-modify").addEventListener("click",function (){
-        location.href ="/notice/"+num+"/modify";
+        location.href ="/notices/"+num;
     })
     document.getElementById("btn-delete").addEventListener("click",function (){
         const bool = confirm("삭제하시겠습니까?");
         if(bool){
-            let form = document.createElement('form');
-            form.setAttribute("action",'/notice/'+num+'/delete');
-            form.setAttribute('method','post');
-            document.body.appendChild(form);
-            form.submit();
+            $.ajax({
+                url: "/notices/"+num,
+                type: 'DELETE',
+
+                success: function(response) {
+                    if(response ===1){
+                        alert('삭제 완료');
+                        location.href = "/notices";
+                    }
+
+                    // 페이지 리로드 또는 필요한 동작 수행
+                },
+                error: function(xhr, status, error) {
+                    alert('오류 발생');
+                }
+            });
         }
     })
 </script>

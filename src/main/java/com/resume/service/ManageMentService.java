@@ -35,13 +35,13 @@ public class ManageMentService {
         String newPassword = dto.getNewPassword();
         String nowPassword = dto.getNowPassword(); //현재 비밀번호
         String passwordCheck = dto.getPasswordCheck();
-        boolean check = PasswordConfig.checkUserPw(dto.getNowPassword(),loginDAO.findPw(userId));
+        boolean check = PasswordConfig.checkUserPw(nowPassword,loginDAO.findPw(userId));
         log.info("check={}",check);
         int value = 0;
         //입력한 pw값과 db에서조회한 값이 같고 변경할 비밀번호가 서로 같을 경우
         if(check && newPassword.equals(passwordCheck) ){
             Map map = new HashMap();
-            map.put("password",dto.getPasswordCheck());
+            map.put("password",PasswordConfig.encryptPassword(passwordCheck));
             map.put("userid",userId);
             value = manageMentDAO.changePw(map);
         }
