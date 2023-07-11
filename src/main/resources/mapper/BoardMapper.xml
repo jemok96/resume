@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.resume.Repository.BoardDAO">
+
+    <insert id="saveBoard" parameterType="BoardDTO">
+        insert into board(userid,title,contents)
+        values(#{userid} , #{title}, #{contents})
+    </insert>
+
+    <delete id="deleteBoard" parameterType="int">
+        delete from board
+        where boardno=#{boardno}
+    </delete>
+
+
+    <select id="findAll" resultType="BoardDTO" parameterType="map">
+        select  userid,title,contents,regdate from board
+        where title like CONCAT('%',#{value},'%')
+        order by regdate desc
+        LIMIT #{offset}, #{pageSize};
+    </select>
+    <select id="findByNum" parameterType="int" resultType="BoardDTO">
+        select boardno,userid,title,contents,hits,regdate,up_date from board
+        where boardno= #{boardno}
+    </select>
+
+    <sql id="searchCondition">
+        <choose>
+            <when test='option=="T"'>
+                AND title LIKE concat('%', #{keyword}, '%')
+            </when>
+            <when test='option=="C"'>
+                AND contents LIKE concat('%', #{keyword}, '%')
+            </when>
+        </choose>
+    </sql>
+
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDTO">
+        SELECT boardno, userid,title, contents, hits, regdate
+        FROM  board
+        WHERE true
+        <include refid="searchCondition"/>
+        ORDER BY regdate DESC, boardno DESC
+        LIMIT #{offset}, #{pageSize}
+    </select>
+
+    <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+        SELECT count(*)
+        FROM  board
+        WHERE true
+        <include refid="searchCondition"/>
+    </select>
+
+    <update id="updateNotice" parameterType="BoardDTO">
+        update board
+        set title = #{title}, contents =#{contents}, up_date=#{up_date}
+        where boardno = #{boardno};
+    </update>
+</mapper>
+
