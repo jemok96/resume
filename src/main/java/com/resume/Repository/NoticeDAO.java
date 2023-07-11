@@ -15,7 +15,7 @@ public interface NoticeDAO {
     int deleteNotice(int num);
     NoticeDTO findByNum(int num);
     List<NoticeDTO> findAll(Map map);
-    int noticeCount();
+
     int searchResultCnt(SearchCondition sc);
     List<NoticeDTO> searchSelectPage(SearchCondition sc);
     int updateNotice(NoticeDTO dto);

@@ -14,9 +14,7 @@
         where num=#{num}
     </delete>
 
-    <select id="noticeCount" resultType="int">
-        select count(title) from notice
-    </select>
+
     <select id="findAll" resultType="NoticeDTO" parameterType="map">
         select  userid,title,contents,regdate from notice
         where title like CONCAT('%',#{value},'%')

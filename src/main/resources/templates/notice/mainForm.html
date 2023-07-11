@@ -238,7 +238,7 @@
 
             </div>
             <span th:each="i : ${#numbers.sequence(ph.beginPage, ph.endPage)}">
-  <a th:class="${i == ph.sc.page} ? 'page paging-active' : 'page'" th:href="@{/notice(page=${i}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}" th:text="${i}"></a>
+  <a th:class="${i == ph.sc.page} ? 'page paging-active' : 'page'" th:href="@{/notices(page=${i}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}" th:text="${i}"></a>
                 </span>
         <div th:if="ph.showNext">
             <a class="page" th:href="@{/notices(page=${ph.sc.page+1}, pageSize=${ph.sc.pageSize}, option=${ph.sc.option}, keyword=${ph.sc.keyword})}">> </a>

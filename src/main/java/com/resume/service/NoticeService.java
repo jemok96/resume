@@ -30,9 +30,7 @@ public class NoticeService {
     public List<NoticeDTO> findAll(Map map){
         return dao.findAll(map);
     }
-    public int noticeCount() {
-        return dao.noticeCount();
-    }
+
     public int searchResultCnt(SearchCondition sc){
         return dao.searchResultCnt(sc);
     }
