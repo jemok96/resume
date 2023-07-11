@@ -6,7 +6,6 @@ import com.resume.dto.SearchCondition;
 import com.resume.service.NoticeService;
 import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,12 +13,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @Slf4j
 @Controller
@@ -33,8 +29,7 @@ public class NoticeController {
     }
 
     @GetMapping("/notices")
-    public String NoticeMain(@SessionAttribute(value = "userSession",required = false)String userId, Model model
-    ,  SearchCondition sc){
+    public String NoticeMain(@SessionAttribute(value = "userSession",required = false)String userId, Model model,SearchCondition sc){
         model.addAttribute("userImage",imageService.findImageById(userId));
 
          int totalCnt = noticeService.searchResultCnt(sc);
