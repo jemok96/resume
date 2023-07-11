@@ -6,6 +6,7 @@ import com.resume.dto.SearchCondition;
 import com.resume.service.NoticeService;
 import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,7 +32,7 @@ public class NoticeController {
         this.noticeService = noticeService;
     }
 
-    @GetMapping("/notice")
+    @GetMapping("/notices")
     public String NoticeMain(@SessionAttribute(value = "userSession",required = false)String userId, Model model
     ,  SearchCondition sc){
         model.addAttribute("userImage",imageService.findImageById(userId));
@@ -50,13 +51,13 @@ public class NoticeController {
     }
 
 
-    @GetMapping("/notice/write")
+    @GetMapping("/notices/new")
     public String NoticeWritePage(@SessionAttribute("userSession")String userId,Model model){
         model.addAttribute("userImage",imageService.findImageById(userId));
         model.addAttribute("notice", new NoticeDTO());
         return "notice/addForm";
     }
-    @PostMapping("/notice/write")
+    @PostMapping("/notices/new")
     public String NoticeWrite(@SessionAttribute("userSession")String userId, Model model,
                               @Validated @ModelAttribute("notice")NoticeDTO notice, BindingResult bindingResult){
         model.addAttribute("userImage",imageService.findImageById(userId));
@@ -65,42 +66,43 @@ public class NoticeController {
         }
         notice.setUserid(userId);
         noticeService.saveNotice(notice);
-        return "redirect:/notice";
+        return "redirect:/notices";
     }
-    @GetMapping("/notice/{num}")
+    @GetMapping("/notices/detail/{num}")
     public String NoticeDetail(@PathVariable Integer num,@SessionAttribute("userSession")String userId, Model model){
         model.addAttribute("notice",noticeService.findByNum(num));
         model.addAttribute("userImage",imageService.findImageById(userId));
         return "notice/detailForm";
     }
-    @GetMapping("/notice/{num}/modify")
+    @GetMapping("/notices/{num}")
     public String NoticeModifyMain(@PathVariable Integer num,@SessionAttribute("userSession")String userId, Model model){
         model.addAttribute("notice",noticeService.findByNum(num));
         model.addAttribute("userImage",imageService.findImageById(userId));
         return "notice/modifyForm";
     }
-    @PostMapping("/notice/{num}/modify")
-    public String NoticeModify(@PathVariable Integer num, @SessionAttribute("userSession")String userId, Model model
-    , @Validated NoticeDTO notice , BindingResult bindingResult, RedirectAttributes attr){
+    @PatchMapping("/notices/{num}")
+    @ResponseBody
+    public Integer NoticeModify(@PathVariable Integer num, @SessionAttribute("userSession")String userId, Model model
+    , @Validated @RequestBody NoticeDTO notice , BindingResult bindingResult){
         model.addAttribute("userImage",imageService.findImageById(userId));
 
-        if(bindingResult.hasErrors()){
-            model.addAttribute("notice",noticeService.findByNum(num));
-            return "notice/modifyForm";
-        }
         log.info("notice={}",notice);
-        noticeService.updateNotice(NoticeDTO.builder().
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("notice",notice);
+            return 400;
+        }
+        return noticeService.updateNotice(NoticeDTO.builder().
                 num(num)
                 .title(notice.getTitle())
                 .contents(notice.getContents())
                 .up_date(new Date()).build());
-        attr.addFlashAttribute("statusModify","OK");
-        return "redirect:/notice";
+
+
     }
-    @PostMapping("/notice/{num}/delete")
-    public String DeleteNotice(@PathVariable Integer num, @SessionAttribute("userSession")String userId,RedirectAttributes attr){
-        noticeService.deleteNotice(num);
-        attr.addFlashAttribute("statusDel","OK");
-        return "redirect:/notice";
+    @DeleteMapping("/notices/{num}")
+    @ResponseBody
+    public Integer DeleteNotice(@PathVariable Integer num, @SessionAttribute("userSession")String userId,RedirectAttributes attr){
+        return noticeService.deleteNotice(num);
     }
 }

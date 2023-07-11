@@ -28,26 +28,25 @@ public class SelfIntroController {
         if(userId !=null){
             model.addAttribute("resume",service.findResumeById(userId));
         }
-
-        model.addAttribute("userImage",imageService.findImageById(userId));
-        return "resume/mainForm";
+        setUserImage(userId,model);
+        return "selfintroduction/mainForm";
     }
     @GetMapping("/selfintroduction/new")
     public String mainAddForm(Model model, @SessionAttribute("userSession")String userId){
         model.addAttribute("resume",new SelfIntroDTO());
-        model.addAttribute("userImage",imageService.findImageById(userId));
-        return "resume/addForm";
+        setUserImage(userId,model);
+        return "selfintroduction/addForm";
     }
     @PostMapping("/selfintroduction")
     public String addCheck(@Validated @ModelAttribute("resume") SelfIntroDTO dto,
-                           BindingResult bindingResult,@SessionAttribute(value = "userSession" ,required = false)String userid,
+                           BindingResult bindingResult,@SessionAttribute(value = "userSession")String userId,
                            Model model){
-        model.addAttribute("userImage",imageService.findImageById(userid));
+        setUserImage(userId,model);
         if(bindingResult.hasErrors()){
-            return "resume/addForm";
+            return "selfintroduction/addForm";
         }
         SelfIntroDTO userInput = SelfIntroDTO.builder()
-                        .userid(userid)
+                        .userid(userId)
                         .title(dto.getTitle())
                         .contents(dto.getContents()).build();
         service.insertResume(userInput);
@@ -55,17 +54,17 @@ public class SelfIntroController {
         return "redirect:/selfintroduction";
     }
     @GetMapping("/selfintroduction/{rno}")
-    public String modifyResume(@PathVariable Integer rno,Model model, @SessionAttribute(value = "userSession",required = true)String userId){
+    public String modifyResume(@PathVariable Integer rno,Model model, @SessionAttribute(value = "userSession")String userId){
         model.addAttribute("resume",service.selectByNo(rno));
-        model.addAttribute("userImage",imageService.findImageById(userId));
-        return "resume/modifyForm";
+        setUserImage(userId,model);
+        return "selfintroduction/modifyForm";
     }
     @PatchMapping("/selfintroduction/{rno}")
     @ResponseBody
     public int modifyCheck(@Validated @RequestBody SelfIntroDTO dto, BindingResult bindingResult,
-                           @PathVariable Integer rno, Model model, @SessionAttribute(value = "userSession",required = true)String userId,
+                           @PathVariable Integer rno, Model model, @SessionAttribute(value = "userSession")String userId,
                            RedirectAttributes attr){
-        model.addAttribute("userImage",imageService.findImageById(userId));
+        setUserImage(userId,model);
         if(bindingResult.hasErrors()){
             return 400;
         }
@@ -82,5 +81,8 @@ public class SelfIntroController {
     @ResponseBody
     public Integer deleteResume(@PathVariable Integer rno){
         return service.deleteOne(rno);
+    }
+    private void setUserImage(String userId, Model model) {
+        model.addAttribute("userImage", imageService.findImageById(userId));
     }
 }

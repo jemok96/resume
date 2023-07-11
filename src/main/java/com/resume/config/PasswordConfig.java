@@ -17,9 +17,6 @@ public class PasswordConfig {
         BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
         return passwordEncryptor.checkPassword(password, encryptedPassword);
     }
-    public static boolean checkUserPw(String userId, String pw,String encPw){
-        return checkMethod(pw, encPw);
-    }
     public static boolean checkUserPw(String pw,String encPw){
         return checkMethod(pw, encPw);
     }

@@ -83,9 +83,8 @@ public class MyPageController {
         if (bindingResult.hasErrors()){
             return 400;
         }
-        int i = service.changePw(userPw, sessionId);
-        log.info("i={}",i);
-        return i;
+
+        return service.changePw(userPw, sessionId);
     }
 
     @GetMapping("/profiles/delete")
