@@ -12,8 +12,8 @@ import java.util.Map;
 @Repository
 @Mapper
 public interface BoardDAO {
-    int saveNotice(BoardDTO dto);
-    int deleteNotice(int num);
+    int saveBoard(BoardDTO dto);
+    int deleteBoard(int num);
     BoardDTO findByNum(int num);
     List<BoardDTO> findAll(Map map);
     

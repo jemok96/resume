@@ -10,9 +10,11 @@ import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -42,5 +44,60 @@ public class BoardController {
         model.addAttribute("ph", pageHandler);
 
         return "board/mainForm";
+    }
+    @GetMapping("/board/new")
+    public String NoticeWritePage(@SessionAttribute("userSession")String userId,Model model){
+        model.addAttribute("userImage",imageService.findImageById(userId));
+        model.addAttribute("board", new BoardDTO());
+        return "board/addForm";
+    }
+    @PostMapping("/board/new")
+    public String NoticeWrite(@SessionAttribute("userSession")String userId, Model model,
+                              @Validated @ModelAttribute("board")BoardDTO board, BindingResult bindingResult){
+        model.addAttribute("userImage",imageService.findImageById(userId));
+        if(bindingResult.hasErrors()){
+            return "board/addForm";
+        }
+        board.setUserid(userId);
+        boardService.saveBoard(board);
+        return "redirect:/board";
+    }
+    @GetMapping("/board/detail/{num}")
+    public String NoticeDetail(@PathVariable Integer num,@SessionAttribute("userSession")String userId, Model model){
+        model.addAttribute("board",boardService.findByNum(num));
+        model.addAttribute("userImage",imageService.findImageById(userId));
+        return "board/detailForm";
+    }
+
+    @GetMapping("/board/{num}")
+    public String NoticeModifyMain(@PathVariable Integer num,@SessionAttribute("userSession")String userId, Model model){
+        model.addAttribute("board",boardService.findByNum(num));
+        model.addAttribute("userImage",imageService.findImageById(userId));
+        return "board/modifyForm";
+    }
+    @PatchMapping("/board/{num}")
+    @ResponseBody
+    public Integer NoticeModify(@PathVariable Integer num, @SessionAttribute("userSession")String userId, Model model
+            , @Validated @RequestBody BoardDTO board , BindingResult bindingResult){
+        model.addAttribute("userImage",imageService.findImageById(userId));
+
+        log.info("board={}",board);
+
+        if(bindingResult.hasErrors()){
+            model.addAttribute("board",board);
+            return 400;
+        }
+        return boardService.updateBoard(BoardDTO.builder().
+                boardno(num)
+                .title(board.getTitle())
+                .contents(board.getContents())
+                .up_date(new Date()).build());
+
+
+    }
+    @DeleteMapping("/board/{num}")
+    @ResponseBody
+    public Integer DeleteNotice(@PathVariable Integer num, @SessionAttribute("userSession")String userId){
+        return boardService.deleteBoard(num);
     }
 }

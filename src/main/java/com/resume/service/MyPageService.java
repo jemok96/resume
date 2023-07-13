@@ -2,7 +2,7 @@ package com.resume.service;
 
 import com.resume.config.PasswordConfig;
 import com.resume.Repository.LoginDAO;
-import com.resume.Repository.ManageMentDAO;
+import com.resume.Repository.MyPageDAO;
 import com.resume.dto.UserDTO;
 import com.resume.dto.UserPwDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +13,11 @@ import java.util.Map;
 
 @Service
 @Slf4j
-public class ManageMentService {
-    private final ManageMentDAO manageMentDAO;
+public class MyPageService {
+    private final MyPageDAO manageMentDAO;
     private final LoginDAO loginDAO;
 
-    public ManageMentService(ManageMentDAO dao, LoginDAO loginDAO) {
+    public MyPageService(MyPageDAO dao, LoginDAO loginDAO) {
         this.manageMentDAO = dao;
         this.loginDAO = loginDAO;
     }
@@ -60,6 +60,16 @@ public class ManageMentService {
     public String getPassword(String userId){
         return manageMentDAO.getPassword(userId);
 
+    }
+    public int deleteUser(String userId,String password){
+
+        boolean b = PasswordConfig.checkPassword(password, loginDAO.findPw(userId));
+        log.info("b={}",b);
+
+        if(b){
+            return manageMentDAO.deleteUser(userId);
+        }
+        return 500;
     }
 
 }

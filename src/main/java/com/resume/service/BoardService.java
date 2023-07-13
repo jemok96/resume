@@ -18,12 +18,12 @@ public class BoardService {
         this.dao = dao;
     }
 
-    public int saveNotice(BoardDTO dto) {
-        return dao.saveNotice(dto);
+    public int saveBoard(BoardDTO dto) {
+        return dao.saveBoard(dto);
     }
 
-    public int deleteNotice(int num){
-        return dao.deleteNotice(num);
+    public int deleteBoard(int num){
+        return dao.deleteBoard(num);
     }
     public BoardDTO findByNum(int num){
         return dao.findByNum(num);
@@ -40,7 +40,7 @@ public class BoardService {
         return dao.searchSelectPage(sc);
     }
 
-    public int updateNotice(BoardDTO dto){
+    public int updateBoard(BoardDTO dto){
         try {
             int result = dao.updateBoard(dto);
             if (result == 1) {

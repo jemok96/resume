@@ -8,8 +8,9 @@ import java.util.Map;
 
 @Repository
 @Mapper
-public interface ManageMentDAO {
+public interface MyPageDAO {
     int checkPw(UserDTO dto);
     String getPassword(String userId);
     int changePw(Map map);
+    int deleteUser(String id);
 }

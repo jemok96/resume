@@ -97,7 +97,7 @@ public class NoticeController {
     }
     @DeleteMapping("/notices/{num}")
     @ResponseBody
-    public Integer DeleteNotice(@PathVariable Integer num, @SessionAttribute("userSession")String userId,RedirectAttributes attr){
+    public Integer DeleteNotice(@PathVariable Integer num, @SessionAttribute("userSession")String userId){
         return noticeService.deleteNotice(num);
     }
 }

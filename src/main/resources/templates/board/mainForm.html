@@ -99,6 +99,10 @@
     span{
         margin-right: 8px;
     }
+    .font {
+        font-weight: 900;
+        color: white;
+    }
     .paging-active {
         background-color: rgb(216, 216, 216);
         border-radius: 5px;
@@ -150,7 +154,7 @@
                 <a class="nav-link js-scroll-trigger" href="/notices">공지사항</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link js-scroll-trigger" href="/board">게시판</a>
+                <a class="nav-link js-scroll-trigger" href="/board"><span class="font">게시판</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link js-scroll-trigger" href="/main#about">인적사항</a>
@@ -178,7 +182,7 @@
 
 <div class="notice__column">
     <div class="notice__left">
-        <div class="btn-write" th:if="${session.userSession =='admin'}">
+        <div class="btn-write">
             <button type="button" class="btn btn-outline-secondary search write" id="write">
                 글쓰기
             </button>

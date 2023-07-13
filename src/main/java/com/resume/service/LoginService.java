@@ -23,6 +23,7 @@ public class LoginService {
         return dao.findPw(userId);
     }
     public Boolean checkUser(LoginUserDTO user) {
+        log.info("dao={}",dao.getClass());
         String userId = user.getUserid(); //사용자가 입력한 아이디
         String storedEncryptedPassword = findPw(userId); // 사용자가 입력한 아이디로 찾은 암호화값
 

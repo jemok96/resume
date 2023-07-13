@@ -75,7 +75,7 @@
         margin-top: 20px;
         margin-right: 300px;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        border-top: 3px solid  #40a1ff;
+        border-top: 3px solid #40a1ff;
     }
     .column__userInput {
         display: flex;
@@ -111,6 +111,9 @@
         color: white;
         cursor: pointer;
     }
+    #userId{
+        color: #40A1FF;
+    }
     #main-btn:hover {
         font-size: 30px;
         font-weight: 900;
@@ -139,7 +142,7 @@
             </a>
         </div>
         <div class="column">
-            <a th:href="@{/profiles/{userid}/password(userid=${session.userSession})}" class="center">
+            <a  th:href="@{/profiles/{userid}/password(userid=${session.userSession})}" class="center">
                 <span class="material-symbols-outlined size">sync_lock</span>
                 <span>비밀번호 변경</span>
             </a>
@@ -157,15 +160,13 @@
 <div class="contents">
     <div class="wrapped">
         <div>
-            <div class="check-pw">비밀번호 변경</div>
+            <div class="check-pw">회원 탈퇴</div>
             <div>
-                안전한 비밀번호로 내정보를 보호하세요
-                <div>
-                    <ul>
-                        <li>다른 아이디/사이트에서 사용한 적 없는 비밀번호</li>
-                        <li>이전에 사용한 적 없는 비밀번호가 안전합니다.</li>
-                    </ul>
-                </div>
+                사용하고 계신 아이디(<span th:text="${session.userSession}" id="userId"></span>)는 탈퇴할 경우 복구가 불가능합니다.
+                <br>
+                탈퇴한 아이디는 본인과 타인 모두 재사용 및 복구가 불가하오니 신중하게 선택하시기 바랍니다.
+                <br>
+                탈퇴 후 작성한 게시물이 모두 삭제됩니다.
             </div>
             <div>
 
@@ -177,75 +178,57 @@
     </div>
 </div>
 
-<form class="form" id="form" onsubmit="return false">
+<form class="form" id="form" >
     <div class="contents__userInput">
         <div class="column__userInput">
             <div class="text__">아이디</div>
             <div class="user__" th:text="${session.userSession}">userId</div>
         </div>
         <div class="column__userInput">
-            <div class="text__">현재 비밀번호</div>
-            <div class="user__"><input type="password" id="nowPassword" /></div>
+            <div class="text__">비밀번호</div>
+            <div class="user__"><input type="password" id="password" /></div>
         </div>
-        <div class="column__userInput">
-            <div class="text__">새 비밀번호</div>
-            <div class="user__"><input type="password" id="newPassword" /></div>
-        </div>
-        <div class="column__userInput">
-            <div class="text__">새 비밀번호 확인</div>
-            <div class="user__"><input type="password" id="passwordCheck" /></div>
-        </div>
+
     </div>
     <div class="column__userInput__flex">
-        <input type="submit" id="pwCheck" onclick="check()">
+        <input type="submit" id="btn-delete" value="탈퇴">
     </div>
 </form>
 
 <script>
-    const userId = '[[${session.userSession}]]';
-    console.log(userId);
+    $('#btn-delete').click(function(e) {
+        e.preventDefault(); // 페이지 이동 방지
+        let userid = '[[${session.userSession}]]';
+        let password = $('#password').val();
 
-    function check() {
+        if (password.trim() === '') {
+            alert('비밀번호를 입력하세요.');
+            return; // AJAX 요청 전송하지 않음
+        }
 
-        const nowPassword = $("#nowPassword").val();
-        const newPassword = $("#newPassword").val();
-        const passwordCheck = $("#passwordCheck").val();
-        console.log(nowPassword);
+        let url = "/profiles/"+userid;
+        let data = {
+            password: password
+        };
         $.ajax({
-            async: true,
-            type: 'POST',
-            data: JSON.stringify({
-                "nowPassword":nowPassword,
-                "newPassword":newPassword,
-                "passwordCheck":passwordCheck
-            }),
-            url: "/profiles/"+userId+"/password",
-            dataType: "json",
-            contentType: "application/json; charset=UTF-8",
-            success: function (data) {
-                console.log(data);
-                if (data == 1){
-                    alert("변경 성공")
-                    document.location.href = document.location.href;
-                    document.location.reload();
-                    history.go(0);
+            url: url,
+            type: 'DELETE',
+            data: data,
+            success: function(response) {
+                if(response ===1){
+                    alert('삭제 완료');
                 }
-                else if(data ==200){
-                    alert("현재 비밀번호가 다릅니다.")
-                }
-                else if (data==300){
-                    alert("비밀번호 확인이 다릅니다.")
-                }
-                else{
-                    alert("비밀번호를 입력해주세요.")
+                else if(response ===400){
+                    alert("제목과 본문을 입력하세요");
                 }
 
+                // 페이지 리로드 또는 필요한 동작 수행
             },
-            error: function (error) {
-                alert("error : " + error);
+            error: function(xhr, status, error) {
+                alert('오류 발생');
             }
         });
-    }
+    });
 
     document
         .getElementById("main-btn")

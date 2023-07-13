@@ -53,7 +53,7 @@
         <include refid="searchCondition"/>
     </select>
 
-    <update id="updateNotice" parameterType="BoardDTO">
+    <update id="updateBoard" parameterType="BoardDTO">
         update board
         set title = #{title}, contents =#{contents}, up_date=#{up_date}
         where boardno = #{boardno};
