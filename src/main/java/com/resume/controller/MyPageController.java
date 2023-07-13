@@ -3,7 +3,7 @@ package com.resume.controller;
 import com.resume.dto.UserDTO;
 import com.resume.dto.AwsS3;
 import com.resume.dto.UserPwDTO;
-import com.resume.service.ManageMentService;
+import com.resume.service.MyPageService;
 import com.resume.service.S3UploadService;
 import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,16 +15,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
 @Slf4j
 public class MyPageController {
-    private final ManageMentService service;
+    private final MyPageService service;
     private final S3UploadService s3Upload;
     private final UserImageService imageService;
 
-    public MyPageController(ManageMentService service, S3UploadService s3Upload, UserImageService imageService) {
+    public MyPageController(MyPageService service, S3UploadService s3Upload, UserImageService imageService) {
         this.service = service;
         this.s3Upload = s3Upload;
         this.imageService = imageService;
@@ -33,13 +34,13 @@ public class MyPageController {
     @GetMapping("/profiles/{userId}")
     public String main(@PathVariable String userId,@SessionAttribute("userSession")String userSession, Model model){
         model.addAttribute("userId",userSession);
-        return "management/mainForm";
+        return "mypage/mainForm";
     }
     @PostMapping("/profiles/{userId}")
     public String user(@PathVariable("userId") String userId,Model model,@SessionAttribute("userSession")
             String sessionId){
         model.addAttribute("userImage",imageService.findImageById(userId));
-        return "management/modifyForm";
+        return "mypage/modifyForm";
     }
     @PostMapping("/profiles/checkpw")
     @ResponseBody
@@ -73,10 +74,10 @@ public class MyPageController {
             attr.addFlashAttribute("status","NO");
             return "redirect:/profiles/{userId}";
         }
-        return "management/modifyPasswordForm";
+        return "mypage/modifyPasswordForm";
     }
 
-    @PostMapping("/profiles/{userId}/password")
+    @PatchMapping("/profiles/{userId}/password")
     @ResponseBody
     public Integer modifyPasswordCheck(@PathVariable("userId") String userId, @SessionAttribute("userSession")String sessionId,
                                        @Validated @RequestBody UserPwDTO userPw,BindingResult bindingResult){
@@ -89,8 +90,20 @@ public class MyPageController {
 
     @GetMapping("/profiles/delete")
     public String userDelete(){
+        return "mypage/deleteForm";
+    }
+    @DeleteMapping("/profiles/{userid}")
+    @ResponseBody
+    public Integer userDeleteOk(@PathVariable String userid,@RequestParam("password")String password,HttpSession session){
 
-        return "management/deleteForm";
+        log.info("pw={}",password);
+        int x = service.deleteUser(userid,password);
+        if (x == 1) {
+            // 세션 값 제거
+            session.invalidate();
+        }
+        log.info("x={}",x);
+        return x;
     }
 
 }
