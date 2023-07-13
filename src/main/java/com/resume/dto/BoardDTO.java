@@ -20,7 +20,7 @@ public class BoardDTO {
     private Date regdate;
     private Date up_date;
     private Integer hits;
-    BoardDTO(){}
+    public BoardDTO(){}
 
     @Builder
     public BoardDTO(Integer boardno, String userid, String title, String contents, Date regdate, Date up_date, Integer hits) {

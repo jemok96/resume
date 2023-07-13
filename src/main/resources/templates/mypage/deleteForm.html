@@ -178,7 +178,7 @@
     </div>
 </div>
 
-<form class="form" id="form" onsubmit="return false">
+<form class="form" id="form" >
     <div class="contents__userInput">
         <div class="column__userInput">
             <div class="text__">아이디</div>
@@ -186,17 +186,49 @@
         </div>
         <div class="column__userInput">
             <div class="text__">비밀번호</div>
-            <div class="user__"><input type="password" id="nowPassword" /></div>
+            <div class="user__"><input type="password" id="password" /></div>
         </div>
 
     </div>
     <div class="column__userInput__flex">
-        <input type="submit" id="delete" value="탈퇴">
+        <input type="submit" id="btn-delete" value="탈퇴">
     </div>
 </form>
 
 <script>
+    $('#btn-delete').click(function(e) {
+        e.preventDefault(); // 페이지 이동 방지
+        let userid = '[[${session.userSession}]]';
+        let password = $('#password').val();
 
+        if (password.trim() === '') {
+            alert('비밀번호를 입력하세요.');
+            return; // AJAX 요청 전송하지 않음
+        }
+
+        let url = "/profiles/"+userid;
+        let data = {
+            password: password
+        };
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+            data: data,
+            success: function(response) {
+                if(response ===1){
+                    alert('삭제 완료');
+                }
+                else if(response ===400){
+                    alert("제목과 본문을 입력하세요");
+                }
+
+                // 페이지 리로드 또는 필요한 동작 수행
+            },
+            error: function(xhr, status, error) {
+                alert('오류 발생');
+            }
+        });
+    });
 
     document
         .getElementById("main-btn")
