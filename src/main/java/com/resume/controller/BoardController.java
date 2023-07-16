@@ -120,4 +120,11 @@ public class BoardController {
         boardService.insertComment(dto);
         return 1;
     }
+    @DeleteMapping("/comments/{commentNo}")
+    @ResponseBody
+    public Integer InsertComments(@PathVariable Integer commentNo, @SessionAttribute("userSession")String userId){
+
+        log.info("commentNo ={}",commentNo);
+        return boardService.deleteComment(commentNo);
+    }
 }

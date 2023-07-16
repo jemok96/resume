@@ -93,11 +93,16 @@
     .margin {
         margin: 40px 0px 30px 0px;
     }
+    .comment_content{
+        margin: 10px 30px 20px 30px;
+    }
     .input-group {
         display: flex;
         justify-content: center;
     }
-
+    .input-group-btn{
+        margin-top: 10px;
+    }
     .input-group__column {
         width: 90%;
         margin-left: 15px;
@@ -273,8 +278,9 @@
 
 </div>
 
-<script>
-    num = '[[${board.boardno}]]';
+<script th:inline="javascript">
+    const num = '[[${board.boardno}]]';
+    const sessionUser = [[${session.userSession}]];
     let modify_btn = document.getElementById("btn-modify");
     let delete_btn = document.getElementById("btn-delete");
     if(modify_btn !=null){
@@ -307,17 +313,29 @@
 
     $(document).ready(function () {
         getCommentList();
+
     });
 
     function getCommentList() {
         $.ajax({
             type: "GET",
             url: "/comments/"+num,
-            dataType: "text"
+            dataType: "json"
         })
-            .done(function (result) {
+            .done(function (comments) {
+                let commentListHtml = "";
+                for (let i = 0; i < comments.length; i++) {
+                    const comment = comments[i];
+                    commentListHtml += "<div class='comment_content' data-commentno='" + comment.commentno + "'>";
+                    commentListHtml += "  <div>작성자: " + comment.writer + "</div>";
 
-                console.log(result)
+                    commentListHtml += "  <div>내용: " + comment.contents + "</div>";
+                    if (comment.writer.trim() ==sessionUser.trim()) {
+                        commentListHtml += "<div><button class='delete-button'>삭제</button></div>";
+                    }
+                    commentListHtml += "</div>";
+                }
+                $("#memberListContent").html(commentListHtml)
 
             })
             .fail(function(jqXHR) {
@@ -343,6 +361,30 @@
             })
 
     }
+    $(document).on("click", ".delete-button", function(){
+        let check  =confirm("삭제하시겠습니까?");
+        console.log(check)
+
+        if(check){
+            const commentNo = $(this).closest(".comment_content").data("commentno");
+            console.log(commentNo);
+
+            $.ajax({
+                type: "DELETE",
+                url: "/comments/"+commentNo
+            })
+                .done(function (result) {
+                    console.log(result);
+                    if(result ==1){
+                        alert("삭제성공");
+                        location.reload();
+                    }
+                })
+                .fail(function(jqXHR) {
+                    console.log(jqXHR);
+                })
+        }
+    })
 </script>
 </body>
 </html>

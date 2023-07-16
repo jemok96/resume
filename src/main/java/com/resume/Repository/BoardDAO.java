@@ -23,4 +23,5 @@ public interface BoardDAO {
     int updateBoard(BoardDTO dto);
     int insertComment(CommentDTO dto);
     List<CommentDTO> getComments(int boardno);
+    int deleteComment(int commentno);
 }

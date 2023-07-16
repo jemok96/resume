@@ -59,5 +59,8 @@ public class BoardService {
     public List<CommentDTO> getComments(int boardno){
         return dao.getComments(boardno);
     }
+    public int deleteComment(int commentno){
+        return dao.deleteComment(commentno);
+    }
 
 }

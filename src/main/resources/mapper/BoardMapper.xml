@@ -67,5 +67,9 @@
         select * from comments
         where boardno= #{boardno}
     </select>
+    <delete id="deleteComment" parameterType="Integer">
+        delete from comments
+        where commentno = #{commentno}
+    </delete>
 </mapper>
 
