@@ -70,10 +70,11 @@
         margin-bottom: 10px;
         padding-bottom: 10px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    }.font {
-         font-weight: 900;
-         color: white;
-     }
+    }
+    .font {
+        font-weight: 900;
+        color: white;
+    }
     input {
         margin-top: 10px;
     }
@@ -89,8 +90,22 @@
     .side__column {
         display: flex;
     }
-    .margin{
+    .margin {
         margin: 40px 0px 30px 0px;
+    }
+    .comment_content{
+        margin: 10px 30px 20px 30px;
+    }
+    .input-group {
+        display: flex;
+        justify-content: center;
+    }
+    .input-group-btn{
+        margin-top: 10px;
+    }
+    .input-group__column {
+        width: 90%;
+        margin-left: 15px;
     }
 </style>
 <body id="page-top">
@@ -124,7 +139,9 @@
                     <a class="nav-link js-scroll-trigger" href="/notices">공지사항</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link js-scroll-trigger" href="/board"><span class="font">게시판</span></a>
+                    <a class="nav-link js-scroll-trigger" href="/board"
+                    ><span class="font">게시판</span></a
+                    >
                 </li>
                 <li class="nav-item">
                     <a class="nav-link js-scroll-trigger" href="/main">인적사항</a>
@@ -182,21 +199,32 @@
         </div>
     </div>
 </div>
-<div th:if="${session.userSession == 'admin'}"> <!--설계 에러,, 관리자가 여러명일 수 있는데 아이디값으로 하는건 옳지 않음..user테이블에 권한정보를 부여해야할듯 -->
+<div>
 
     <div class="side">
-    <div class="side__column">
-        <div class="modify" th:if="${session.userSession == board.userid}">
-            <button type="submit" class="btn btn-outline-secondary" id="btn-modify">수정</button>
-        </div>
-        <div class="delete" th:if="${session.userSession == board.userid}">
-            <button type="submit" class="btn btn-outline-secondary" id="btn-delete">삭제</button>
+        <div class="side__column">
+            <div class="modify" th:if="${session.userSession == board.userid}">
+                <button
+                        type="submit"
+                        class="btn btn-outline-secondary"
+                        id="btn-modify"
+                >
+                    수정
+                </button>
+            </div>
+            <div class="delete" th:if="${session.userSession == board.userid}">
+                <button
+                        type="submit"
+                        class="btn btn-outline-secondary"
+                        id="btn-delete"
+                >
+                    삭제
+                </button>
+            </div>
         </div>
     </div>
 </div>
-</div>
-<div th:if="${session.userSession != 'admin'}" class="margin">
-</div>
+
 <div>
     <div class="resume-form">
         <div class="checker_spell">
@@ -211,41 +239,150 @@
             </div>
 
             <div>
-            <div
-                    class="contents__text"
-                    name="contents"
-
-                    th:text="${board.contents}"
-            ></div>
+                <div
+                        class="contents__text"
+                        name="contents"
+                        th:text="${board.contents}"
+                ></div>
             </div>
         </div>
     </div>
 </div>
+<div class="comments">
+    <form name="commentInsertForm">
+        <div class="input-group">
+            <div class="input-group__column">
+                <input
+                        type="text"
+                        class="form-control"
+                        id="cmcontent"
+                        name="cmcontent"
+                        placeholder="내용을 입력하세요."
+                />
+            </div>
+            <div class="input-group-btn">
+                <button
+                        onclick="insertComment()"
+                        class="btn btn-default"
+                        type="button"
+                >
+                    등록
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="memberListContent">
+    <!-- Page Marker -->
 
-<script>
-    num = [[${board.boardno}]];
-    document.getElementById("btn-modify").addEventListener("click",function (){
-        location.href ="/board/"+num;
-    })
-    document.getElementById("btn-delete").addEventListener("click",function (){
-        const bool = confirm("삭제하시겠습니까?");
-        if(bool){
-            $.ajax({
-                url: "/board/"+num,
-                type: 'DELETE',
 
-                success: function(response) {
-                    if(response ===1){
-                        alert('삭제 완료');
-                        location.href = "/board";
+</div>
+
+<script th:inline="javascript">
+    const num = '[[${board.boardno}]]';
+    const sessionUser = [[${session.userSession}]];
+    let modify_btn = document.getElementById("btn-modify");
+    let delete_btn = document.getElementById("btn-delete");
+    if(modify_btn !=null){
+        modify_btn.addEventListener("click",function (){
+            location.href ="/board/"+num;
+        })
+    }
+    if(delete_btn !=null){
+        delete_btn.addEventListener("click",function (){
+            const bool = confirm("삭제하시겠습니까?");
+            if(bool){
+                $.ajax({
+                    url: "/board/"+num,
+                    type: 'DELETE',
+                    success: function(response) {
+                        if(response ===1){
+                            alert('삭제 완료');
+                            location.href = "/board";
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        alert('오류 발생');
                     }
+                });
+            }
+        });
 
-                    // 페이지 리로드 또는 필요한 동작 수행
-                },
-                error: function(xhr, status, error) {
-                    alert('오류 발생');
+    }
+
+
+    $(document).ready(function () {
+        getCommentList();
+
+    });
+
+    function getCommentList() {
+        $.ajax({
+            type: "GET",
+            url: "/comments/"+num,
+            dataType: "json"
+        })
+            .done(function (comments) {
+                let commentListHtml = "";
+                for (let i = 0; i < comments.length; i++) {
+                    const comment = comments[i];
+                    commentListHtml += "<div class='comment_content' data-commentno='" + comment.commentno + "'>";
+                    commentListHtml += "  <div>작성자: " + comment.writer + "</div>";
+
+                    commentListHtml += "  <div>내용: " + comment.contents + "</div>";
+                    if (comment.writer.trim() ==sessionUser.trim()) {
+                        commentListHtml += "<div><button class='delete-button'>삭제</button></div>";
+                    }
+                    commentListHtml += "</div>";
                 }
-            });
+                $("#memberListContent").html(commentListHtml)
+
+            })
+            .fail(function(jqXHR) {
+                console.log(jqXHR);
+            })
+    }
+    //댓글 추가 후 페이지 reload
+    function insertComment() {
+        var content =$('#cmcontent').val();
+
+        $.ajax({
+            type: "POST",
+            url: "/comments/"+num,
+            data: {'cmcontent':content},
+            dataType: "text"
+        })
+            .done(function (result) {
+                console.log(content);
+                location.reload();
+            })
+            .fail(function(jqXHR) {
+                console.log(jqXHR);
+            })
+
+    }
+    $(document).on("click", ".delete-button", function(){
+        let check  =confirm("삭제하시겠습니까?");
+        console.log(check)
+
+        if(check){
+            const commentNo = $(this).closest(".comment_content").data("commentno");
+            console.log(commentNo);
+
+            $.ajax({
+                type: "DELETE",
+                url: "/comments/"+commentNo
+            })
+                .done(function (result) {
+                    console.log(result);
+                    if(result ==1){
+                        alert("삭제성공");
+                        location.reload();
+                    }
+                })
+                .fail(function(jqXHR) {
+                    console.log(jqXHR);
+                })
         }
     })
 </script>

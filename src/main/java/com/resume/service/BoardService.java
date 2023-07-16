@@ -3,6 +3,7 @@ package com.resume.service;
 import com.resume.Repository.BoardDAO;
 import com.resume.Repository.NoticeDAO;
 import com.resume.dto.BoardDTO;
+import com.resume.dto.CommentDTO;
 import com.resume.dto.NoticeDTO;
 import com.resume.dto.SearchCondition;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,15 @@ public class BoardService {
         } catch (Exception e) {
             throw new RuntimeException("Failed to update resume", e);
         }
+    }
+    public int insertComment(CommentDTO dto){
+        return dao.insertComment(dto);
+    }
+    public List<CommentDTO> getComments(int boardno){
+        return dao.getComments(boardno);
+    }
+    public int deleteComment(int commentno){
+        return dao.deleteComment(commentno);
     }
 
 }

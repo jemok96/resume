@@ -1,10 +1,7 @@
 package com.resume.controller;
 
 import com.resume.Repository.BoardDAO;
-import com.resume.dto.BoardDTO;
-import com.resume.dto.NoticeDTO;
-import com.resume.dto.PageHandler;
-import com.resume.dto.SearchCondition;
+import com.resume.dto.*;
 import com.resume.service.BoardService;
 import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
@@ -99,5 +96,35 @@ public class BoardController {
     @ResponseBody
     public Integer DeleteNotice(@PathVariable Integer num, @SessionAttribute("userSession")String userId){
         return boardService.deleteBoard(num);
+    }
+
+    @GetMapping("/comments/{num}")
+    @ResponseBody
+    public List<CommentDTO> getComments(@PathVariable Integer num, @SessionAttribute("userSession")String userId){
+        List<CommentDTO> comments = boardService.getComments(num);
+        log.info("num = {}",num);
+        log.info("comments={}",comments);
+        return comments;
+    }
+
+
+    @PostMapping("/comments/{num}")
+    @ResponseBody
+    public Integer InsertComments(@PathVariable Integer num, @SessionAttribute("userSession")String userId
+    ,@RequestParam("cmcontent") String contents){
+        CommentDTO dto = CommentDTO.builder()
+                .boardno(num)
+                .writer(userId)
+                .contents(contents)
+                .build();
+        boardService.insertComment(dto);
+        return 1;
+    }
+    @DeleteMapping("/comments/{commentNo}")
+    @ResponseBody
+    public Integer InsertComments(@PathVariable Integer commentNo, @SessionAttribute("userSession")String userId){
+
+        log.info("commentNo ={}",commentNo);
+        return boardService.deleteComment(commentNo);
     }
 }
