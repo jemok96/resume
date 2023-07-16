@@ -23,15 +23,12 @@ class NoticeServiceTest {
                 .title("안녕하세요")
                         .contents("공지사항입니다.").build();
         Assertions.assertThat(noticeService.saveNotice(notice) ==1);
-        //deleteTest
-//        int num = noticeService.selectNoticeOne(notice);
-//        log.info("num={}",num);
-//        Assertions.assertThat(noticeService.deleteNotice(num)==1);
+
     }
     @Test
-    void pagingCountTest() throws Exception{
+    void cacheDataaAdd() throws Exception{
         //given
-        NoticeDTO[] dto = new NoticeDTO[110];
+        NoticeDTO[] dto = new NoticeDTO[150000];
         for(int i =0; i<dto.length; i++){
             dto[i] = new NoticeDTO();
             dto[i].setUserid("admin");
@@ -39,9 +36,7 @@ class NoticeServiceTest {
             dto[i].setContents("testContents"+i);
             noticeService.saveNotice(dto[i]);
         }
-        //when
 
-        //then
 
     }
 }
