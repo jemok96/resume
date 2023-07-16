@@ -58,5 +58,14 @@
         set title = #{title}, contents =#{contents}, up_date=#{up_date}
         where boardno = #{boardno};
     </update>
+    <insert id="insertComment" parameterType="CommentDTO">
+        insert into comments(boardno,writer,contents) values(#{boardno},#{writer},#{contents});
+
+    </insert>
+
+    <select id="getComments" parameterType="Integer" resultType="CommentDTO">
+        select * from comments
+        where boardno= #{boardno}
+    </select>
 </mapper>
 
