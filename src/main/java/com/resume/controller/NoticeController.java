@@ -31,7 +31,6 @@ public class NoticeController {
     @GetMapping("/notices")
     public String NoticeMain(@SessionAttribute(value = "userSession",required = false)String userId, Model model,SearchCondition sc){
         model.addAttribute("userImage",imageService.findImageById(userId));
-
          int totalCnt = noticeService.searchResultCnt(sc);
         model.addAttribute("totalCnt", totalCnt);
 

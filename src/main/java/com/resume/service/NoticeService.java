@@ -3,16 +3,22 @@ package com.resume.service;
 import com.resume.Repository.NoticeDAO;
 import com.resume.dto.NoticeDTO;
 import com.resume.dto.SearchCondition;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
 public class NoticeService {
+    private final CacheManager cacheManager;
     private final NoticeDAO dao;
 
-    public NoticeService(NoticeDAO dao) {
+    public NoticeService(CacheManager cacheManager, NoticeDAO dao) {
+        this.cacheManager = cacheManager;
         this.dao = dao;
     }
 
@@ -34,8 +40,11 @@ public class NoticeService {
     public int searchResultCnt(SearchCondition sc){
         return dao.searchResultCnt(sc);
     }
+    @Cacheable("postComments")
     public List<NoticeDTO>searchSelectPage(SearchCondition sc){
-        return dao.searchSelectPage(sc);
+        List<NoticeDTO> result = dao.searchSelectPage(sc);
+        log.info("searchSelectPage 호출");
+        return result;
     }
 
     public int updateNotice(NoticeDTO dto){
