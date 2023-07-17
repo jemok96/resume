@@ -2,6 +2,8 @@ package com.resume.dto;
 
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Objects;
+
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static java.util.Objects.requireNonNullElse;
@@ -81,6 +83,19 @@ public class SearchCondition {
 
     public Integer getOffset() {
         return Math.max((page - 1) * pageSize, 0);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SearchCondition that = (SearchCondition) o;
+        return Objects.equals(page, that.page) && Objects.equals(pageSize, that.pageSize) && Objects.equals(option, that.option) && Objects.equals(keyword, that.keyword) && Objects.equals(offset, that.offset);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(page, pageSize, option, keyword, offset);
     }
 
     @Override
