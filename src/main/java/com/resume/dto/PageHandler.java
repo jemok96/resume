@@ -131,6 +131,19 @@ public class PageHandler {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PageHandler that = (PageHandler) o;
+        return NAV_SIZE == that.NAV_SIZE && totalCnt == that.totalCnt && totalPage == that.totalPage && beginPage == that.beginPage && endPage == that.endPage && showNext == that.showNext && showPrev == that.showPrev && Objects.equals(sc, that.sc);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sc, NAV_SIZE, totalCnt, totalPage, beginPage, endPage, showNext, showPrev);
+    }
+
+    @Override
     public String toString() {
         return "PageHandler{" +
                 "sc=" + sc +

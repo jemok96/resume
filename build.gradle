@@ -29,11 +29,9 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     //cache
     implementation 'org.springframework.boot:spring-boot-starter-cache'
-    implementation 'org.ehcache:ehcache:3.10.0'
+    implementation 'com.github.ben-manes.caffeine:caffeine'
 
 
-    // JSR-107 API를 사용하기 위함
-    implementation 'javax.cache:cache-api:1.1.1'
 
     // https://mvnrepository.com/artifact/com.github.ulisesbocchio/jasypt-spring-boot-starter
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
