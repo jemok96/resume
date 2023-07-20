@@ -1,6 +1,6 @@
 package com.resume.controller;
 
-import com.resume.dto.NoticeDTO;
+import com.resume.dto.NoticeDto;
 import com.resume.dto.PageHandler;
 import com.resume.dto.SearchCondition;
 import com.resume.service.NoticeService;
@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
@@ -36,8 +35,7 @@ public class NoticeController {
 
         PageHandler pageHandler = new PageHandler(totalCnt, sc);
 
-        List<NoticeDTO> notice = noticeService.searchSelectPage(sc);
-
+        List<NoticeDto> notice = noticeService.searchSelectPage(sc);
 
         model.addAttribute("notice", notice);
         model.addAttribute("ph", pageHandler);
@@ -48,12 +46,12 @@ public class NoticeController {
     @GetMapping("/notices/new")
     public String NoticeWritePage(@SessionAttribute("userSession")String userId,Model model){
         model.addAttribute("userImage",imageService.findImageById(userId));
-        model.addAttribute("notice", new NoticeDTO());
+        model.addAttribute("notice", new NoticeDto());
         return "notice/addForm";
     }
     @PostMapping("/notices/new")
     public String NoticeWrite(@SessionAttribute("userSession")String userId, Model model,
-                              @Validated @ModelAttribute("notice")NoticeDTO notice, BindingResult bindingResult){
+                              @Validated @ModelAttribute("notice") NoticeDto notice, BindingResult bindingResult){
         model.addAttribute("userImage",imageService.findImageById(userId));
         if(bindingResult.hasErrors()){
             return "notice/addForm";
@@ -77,7 +75,7 @@ public class NoticeController {
     @PatchMapping("/notices/{num}")
     @ResponseBody
     public Integer NoticeModify(@PathVariable Integer num, @SessionAttribute("userSession")String userId, Model model
-    , @Validated @RequestBody NoticeDTO notice , BindingResult bindingResult){
+    , @Validated @RequestBody NoticeDto notice , BindingResult bindingResult){
         model.addAttribute("userImage",imageService.findImageById(userId));
 
         log.info("notice={}",notice);
@@ -86,7 +84,7 @@ public class NoticeController {
             model.addAttribute("notice",notice);
             return 400;
         }
-        return noticeService.updateNotice(NoticeDTO.builder().
+        return noticeService.updateNotice(NoticeDto.builder().
                 num(num)
                 .title(notice.getTitle())
                 .contents(notice.getContents())

@@ -1,8 +1,8 @@
 package com.resume.controller;
 
-import com.resume.dto.ExperienceDTO;
-import com.resume.dto.RegisterDTO;
-import com.resume.dto.UserInfoDTO;
+import com.resume.dto.ExperienceDto;
+import com.resume.dto.RegisterDto;
+import com.resume.dto.UserInfoDto;
 import com.resume.service.MainService;
 import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,9 +36,9 @@ public class MainController {
     public ModelAndView mainPage(HttpSession session , ModelAndView mv ){
 
         String sessionid = (String) session.getAttribute("userSession");
-        RegisterDTO userinfo = null;
-        UserInfoDTO usersubinfo = null;
-        List<ExperienceDTO> experienceinfo = null;
+        RegisterDto userinfo = null;
+        UserInfoDto usersubinfo = null;
+        List<ExperienceDto> experienceinfo = null;
 
         //유저 개인정보
         userinfo =  mainService.userInfo(sessionid);
@@ -67,7 +67,7 @@ public class MainController {
 
         String sessionid = (String) session.getAttribute("userSession");
 
-        UserInfoDTO usersubinfo = null;
+        UserInfoDto usersubinfo = null;
         usersubinfo = mainService.usersubinfo(sessionid);
 
         mv.addObject("usersubinfo" ,usersubinfo);
@@ -84,7 +84,7 @@ public class MainController {
         String sessionid = (String) session.getAttribute("userSession");
 
 
-        UserInfoDTO usersubinfo = null;
+        UserInfoDto usersubinfo = null;
         usersubinfo = mainService.usersubinfo(sessionid);
 
         String blog = request.getParameter("blogurl");
@@ -113,7 +113,7 @@ public class MainController {
     }
 
     @PostMapping("/main/experienceAdd/save")
-    public String experienceAdd(HttpSession session , ExperienceDTO experidto) {
+    public String experienceAdd(HttpSession session , ExperienceDto experidto) {
 
         Map map = new HashMap();
         String sessionid = (String) session.getAttribute("userSession");
@@ -139,7 +139,7 @@ public class MainController {
             return mv;
         }else{
 
-            ExperienceDTO experienceinfo = null;
+            ExperienceDto experienceinfo = null;
 
             experienceinfo = mainService.experienceInfo2(seqno1);
 
@@ -154,7 +154,7 @@ public class MainController {
     }
 
     @PostMapping("/main/experienceModify")
-    public String experienceModify( ExperienceDTO experidto) {
+    public String experienceModify( ExperienceDto experidto) {
 
         mainService.experienceModify(experidto);
 

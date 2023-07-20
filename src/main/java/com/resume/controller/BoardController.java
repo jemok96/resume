@@ -1,6 +1,5 @@
 package com.resume.controller;
 
-import com.resume.Repository.BoardDAO;
 import com.resume.dto.*;
 import com.resume.service.BoardService;
 import com.resume.service.UserImageService;
@@ -34,7 +33,7 @@ public class BoardController {
 
         PageHandler pageHandler = new PageHandler(totalCnt, sc);
 
-        List<BoardDTO> board = boardService.searchSelectPage(sc);
+        List<BoardDto> board = boardService.searchSelectPage(sc);
 
 
         model.addAttribute("board", board);
@@ -45,12 +44,12 @@ public class BoardController {
     @GetMapping("/board/new")
     public String NoticeWritePage(@SessionAttribute("userSession")String userId,Model model){
         model.addAttribute("userImage",imageService.findImageById(userId));
-        model.addAttribute("board", new BoardDTO());
+        model.addAttribute("board", new BoardDto());
         return "board/addForm";
     }
     @PostMapping("/board/new")
     public String NoticeWrite(@SessionAttribute("userSession")String userId, Model model,
-                              @Validated @ModelAttribute("board")BoardDTO board, BindingResult bindingResult){
+                              @Validated @ModelAttribute("board") BoardDto board, BindingResult bindingResult){
         model.addAttribute("userImage",imageService.findImageById(userId));
         if(bindingResult.hasErrors()){
             return "board/addForm";
@@ -75,7 +74,7 @@ public class BoardController {
     @PatchMapping("/board/{num}")
     @ResponseBody
     public Integer NoticeModify(@PathVariable Integer num, @SessionAttribute("userSession")String userId, Model model
-            , @Validated @RequestBody BoardDTO board , BindingResult bindingResult){
+            , @Validated @RequestBody BoardDto board , BindingResult bindingResult){
         model.addAttribute("userImage",imageService.findImageById(userId));
 
         log.info("board={}",board);
@@ -84,7 +83,7 @@ public class BoardController {
             model.addAttribute("board",board);
             return 400;
         }
-        return boardService.updateBoard(BoardDTO.builder().
+        return boardService.updateBoard(BoardDto.builder().
                 boardno(num)
                 .title(board.getTitle())
                 .contents(board.getContents())
@@ -100,8 +99,8 @@ public class BoardController {
 
     @GetMapping("/comments/{num}")
     @ResponseBody
-    public List<CommentDTO> getComments(@PathVariable Integer num, @SessionAttribute("userSession")String userId){
-        List<CommentDTO> comments = boardService.getComments(num);
+    public List<CommentDto> getComments(@PathVariable Integer num, @SessionAttribute("userSession")String userId){
+        List<CommentDto> comments = boardService.getComments(num);
         log.info("num = {}",num);
         log.info("comments={}",comments);
         return comments;
@@ -112,7 +111,7 @@ public class BoardController {
     @ResponseBody
     public Integer InsertComments(@PathVariable Integer num, @SessionAttribute("userSession")String userId
     ,@RequestParam("cmcontent") String contents){
-        CommentDTO dto = CommentDTO.builder()
+        CommentDto dto = CommentDto.builder()
                 .boardno(num)
                 .writer(userId)
                 .contents(contents)

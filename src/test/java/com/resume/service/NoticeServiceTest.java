@@ -1,16 +1,12 @@
 package com.resume.service;
 
-import com.resume.dto.NoticeDTO;
-import com.resume.dto.SearchCondition;
+import com.resume.dto.NoticeDto;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @SpringBootTest
@@ -23,7 +19,7 @@ class NoticeServiceTest {
     @Test
     void crudTest() throws Exception{
         //saveTest
-        NoticeDTO notice = NoticeDTO.builder()
+        NoticeDto notice = NoticeDto.builder()
                 .userid("admin")
                 .title("안녕하세요")
                         .contents("공지사항입니다.").build();
@@ -33,9 +29,9 @@ class NoticeServiceTest {
     @Test
     void cacheDataaAdd() throws Exception{
         //given
-        NoticeDTO[] dto = new NoticeDTO[150000];
+        NoticeDto[] dto = new NoticeDto[150000];
         for(int i =0; i<dto.length; i++){
-            dto[i] = new NoticeDTO();
+            dto[i] = new NoticeDto();
             dto[i].setUserid("admin");
             dto[i].setTitle("test"+i);
             dto[i].setContents("testContents"+i);

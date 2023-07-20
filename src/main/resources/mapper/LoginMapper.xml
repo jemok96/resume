@@ -3,8 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.resume.Repository.LoginDAO">
-    <select id="checkUser" parameterType="LoginUserDTO" resultType="LoginUserDTO">
+<mapper namespace="com.resume.Repository.LoginDao">
+    <select id="checkUser" parameterType="LoginUserDto" resultType="LoginUserDto">
         select userid from user
         where userid = #{userid}
     </select>
@@ -13,12 +13,12 @@
         where userid = #{userid}
     </select>
 
-    <select id="checkEmail" parameterType="EmailCheckDTO" resultType="EmailCheckDTO">
+    <select id="checkEmail" parameterType="EmailCheckDto" resultType="EmailCheckDto">
         select name,email from user
         where name = #{name} and email = #{email}
     </select>
 
-    <select id="findIdByEmail" parameterType="String" resultType="UserDTO">
+    <select id="findIdByEmail" parameterType="String" resultType="UserDto">
         select userid,regdate  from user
         where email =#{email};
     </select>

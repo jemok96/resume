@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.resume.Repository.MyPageDAO">
-    <select id="checkPw" parameterType="UserDTO" resultType="int">
+<mapper namespace="com.resume.Repository.MyPageDao">
+    <select id="checkPw" parameterType="UserDto" resultType="int">
         select count(*) from user
         where userid= #{userid}
         and password = #{password}

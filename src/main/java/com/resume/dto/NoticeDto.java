@@ -10,21 +10,20 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class BoardDTO {
-    private Integer boardno;
+public class NoticeDto {
+    private int num;
     private String userid;
-    @NotBlank
+    @NotBlank(message = "제목은 필수입니다.")
     private String title;
-    @NotBlank
+    @NotBlank(message = "내용을 입력해주세요")
     private String contents;
     private Date regdate;
     private Date up_date;
-    private Integer hits;
-    public BoardDTO(){}
+    private int hits;
 
     @Builder
-    public BoardDTO(Integer boardno, String userid, String title, String contents, Date regdate, Date up_date, Integer hits) {
-        this.boardno = boardno;
+    public NoticeDto(int num, String userid, String title, String contents, Date regdate, Date up_date, int hits) {
+        this.num = num;
         this.userid = userid;
         this.title = title;
         this.contents = contents;
@@ -33,23 +32,27 @@ public class BoardDTO {
         this.hits = hits;
     }
 
+    public NoticeDto() {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BoardDTO boardDTO = (BoardDTO) o;
-        return Objects.equals(boardno, boardDTO.boardno) && Objects.equals(userid, boardDTO.userid) && Objects.equals(title, boardDTO.title) && Objects.equals(contents, boardDTO.contents) && Objects.equals(regdate, boardDTO.regdate) && Objects.equals(up_date, boardDTO.up_date) && Objects.equals(hits, boardDTO.hits);
+        NoticeDto noticeDTO = (NoticeDto) o;
+        return num == noticeDTO.num && hits == noticeDTO.hits && Objects.equals(userid, noticeDTO.userid) && Objects.equals(title, noticeDTO.title) && Objects.equals(contents, noticeDTO.contents) && Objects.equals(regdate, noticeDTO.regdate) && Objects.equals(up_date, noticeDTO.up_date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(boardno, userid, title, contents, regdate, up_date, hits);
+        return Objects.hash(num, userid, title, contents, regdate, up_date, hits);
     }
 
     @Override
     public String toString() {
-        return "BoardDTO{" +
-                "boardno=" + boardno +
+        return "NoticeDTO{" +
+                "num=" + num +
                 ", userid='" + userid + '\'' +
                 ", title='" + title + '\'' +
                 ", contents='" + contents + '\'' +

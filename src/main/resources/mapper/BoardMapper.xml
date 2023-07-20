@@ -2,9 +2,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.resume.Repository.BoardDAO">
+<mapper namespace="com.resume.Repository.BoardDao">
 
-    <insert id="saveBoard" parameterType="BoardDTO">
+    <insert id="saveBoard" parameterType="BoardDto">
         insert into board(userid,title,contents)
         values(#{userid} , #{title}, #{contents})
     </insert>
@@ -15,13 +15,13 @@
     </delete>
 
 
-    <select id="findAll" resultType="BoardDTO" parameterType="map">
+    <select id="findAll" resultType="BoardDto" parameterType="map">
         select  userid,title,contents,regdate from board
         where title like CONCAT('%',#{value},'%')
         order by regdate desc
         LIMIT #{offset}, #{pageSize};
     </select>
-    <select id="findByNum" parameterType="int" resultType="BoardDTO">
+    <select id="findByNum" parameterType="int" resultType="BoardDto">
         select boardno,userid,title,contents,hits,regdate,up_date from board
         where boardno= #{boardno}
     </select>
@@ -37,7 +37,7 @@
         </choose>
     </sql>
 
-    <select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDTO">
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDto">
         SELECT boardno, userid,title, contents, hits, regdate
         FROM  board
         WHERE true
@@ -53,17 +53,17 @@
         <include refid="searchCondition"/>
     </select>
 
-    <update id="updateBoard" parameterType="BoardDTO">
+    <update id="updateBoard" parameterType="BoardDto">
         update board
         set title = #{title}, contents =#{contents}, up_date=#{up_date}
         where boardno = #{boardno};
     </update>
-    <insert id="insertComment" parameterType="CommentDTO">
+    <insert id="insertComment" parameterType="CommentDto">
         insert into comments(boardno,writer,contents) values(#{boardno},#{writer},#{contents});
 
     </insert>
 
-    <select id="getComments" parameterType="Integer" resultType="CommentDTO">
+    <select id="getComments" parameterType="Integer" resultType="CommentDto">
         select * from comments
         where boardno= #{boardno}
     </select>

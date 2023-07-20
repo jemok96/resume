@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ExperienceDTO {
+public class ExperienceDto {
 
     private String userid;
 

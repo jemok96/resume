@@ -1,8 +1,8 @@
 package com.resume.controller;
 
-import com.resume.dto.UserDTO;
-import com.resume.dto.AwsS3;
-import com.resume.dto.UserPwDTO;
+import com.resume.dto.UserDto;
+import com.resume.dto.AwsS3Dto;
+import com.resume.dto.UserPwDto;
 import com.resume.service.MyPageService;
 import com.resume.service.S3UploadService;
 import com.resume.service.UserImageService;
@@ -44,13 +44,13 @@ public class MyPageController {
     }
     @PostMapping("/profiles/checkpw")
     @ResponseBody
-    public Integer checkPw(@Validated @RequestBody UserDTO user, BindingResult bindingResult,@SessionAttribute("userSession")
+    public Integer checkPw(@Validated @RequestBody UserDto user, BindingResult bindingResult, @SessionAttribute("userSession")
                            String sessionId){
         if (bindingResult.hasErrors()){
             return 200;
         }
         return  service.checkPw(
-                UserDTO.builder().
+                UserDto.builder().
                         password(user.getPassword())
                         .userid(sessionId)
                         .build());
@@ -60,7 +60,7 @@ public class MyPageController {
     public String userImageUpdate(@RequestParam MultipartFile file, Model model, RedirectAttributes attr, @PathVariable String userid) throws IOException {
 
         //user image table 저장하고, 수정 할 경우 aws내에서도 삭제하고 다시 저장하는 로직으로 변경해야함 (Transactional)
-        AwsS3 userImage = s3Upload.upload(file, "userImage"); //
+        AwsS3Dto userImage = s3Upload.upload(file, "userImage"); //
         userImage.setUserId(userid);
         imageService.updateImage(userImage);
         attr.addFlashAttribute("status","OK");
@@ -80,7 +80,7 @@ public class MyPageController {
     @PatchMapping("/profiles/{userId}/password")
     @ResponseBody
     public Integer modifyPasswordCheck(@PathVariable("userId") String userId, @SessionAttribute("userSession")String sessionId,
-                                       @Validated @RequestBody UserPwDTO userPw,BindingResult bindingResult){
+                                       @Validated @RequestBody UserPwDto userPw, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             return 400;
         }

@@ -1,6 +1,6 @@
 package com.resume.Repository;
 
-import com.resume.dto.NoticeDTO;
+import com.resume.dto.NoticeDto;
 import com.resume.dto.SearchCondition;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -10,13 +10,13 @@ import java.util.Map;
 
 @Repository
 @Mapper
-public interface NoticeDAO {
-    int saveNotice(NoticeDTO dto);
+public interface NoticeDao {
+    int saveNotice(NoticeDto dto);
     int deleteNotice(int num);
-    NoticeDTO findByNum(int num);
-    List<NoticeDTO> findAll(Map map);
+    NoticeDto findByNum(int num);
+    List<NoticeDto> findAll(Map map);
 
     int searchResultCnt(SearchCondition sc);
-    List<NoticeDTO> searchSelectPage(SearchCondition sc);
-    int updateNotice(NoticeDTO dto);
+    List<NoticeDto> searchSelectPage(SearchCondition sc);
+    int updateNotice(NoticeDto dto);
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UserDTO {
+public class UserDto {
     private String userid;
     @NotEmpty
     private String password;
@@ -21,11 +21,11 @@ public class UserDTO {
     private Date regdate;
     private Date up_date;
 
-    public UserDTO() {
+    public UserDto() {
     }
 
     @Builder
-    public UserDTO(String userid, String password, String email, String gender, String phone, String birth, String name, Date regdate, Date up_date) {
+    public UserDto(String userid, String password, String email, String gender, String phone, String birth, String name, Date regdate, Date up_date) {
         this.userid = userid;
         this.password = password;
         this.email = email;

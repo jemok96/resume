@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UserImageDTO {
+public class UserImageDto {
     private Integer imageno;
     private String userid;
     private String keyvalue;
@@ -18,10 +18,10 @@ public class UserImageDTO {
     private Date up_date;
 
 
-    public UserImageDTO() {}
+    public UserImageDto() {}
 
     @Builder
-    public UserImageDTO(Integer imageno, String userid, String keyvalue, String url, String realname, Date regdate, Date up_date) {
+    public UserImageDto(Integer imageno, String userid, String keyvalue, String url, String realname, Date regdate, Date up_date) {
         this.imageno = imageno;
         this.userid = userid;
         this.keyvalue = keyvalue;

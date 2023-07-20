@@ -1,24 +1,24 @@
 package com.resume.service;
 
-import com.resume.Repository.UserImageDAO;
-import com.resume.dto.AwsS3;
-import com.resume.dto.UserImageDTO;
+import com.resume.Repository.UserImageDao;
+import com.resume.dto.AwsS3Dto;
+import com.resume.dto.UserImageDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
 public class UserImageService {
-    private UserImageDAO dao;
+    private UserImageDao dao;
 
-    public UserImageService(UserImageDAO dao) {
+    public UserImageService(UserImageDao dao) {
         this.dao = dao;
     }
 
-    public void updateImage(AwsS3 dto){
+    public void updateImage(AwsS3Dto dto){
         dao.updateImage(dto);
     }
-    public UserImageDTO findImageById(String userid){
+    public UserImageDto findImageById(String userid){
         return dao.findImageById(userid);
     }
 }

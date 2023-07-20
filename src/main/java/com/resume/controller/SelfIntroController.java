@@ -1,6 +1,6 @@
 package com.resume.controller;
 
-import com.resume.dto.SelfIntroDTO;
+import com.resume.dto.SelfIntroDto;
 import com.resume.service.SelfIntroService;
 import com.resume.service.UserImageService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,19 +33,19 @@ public class SelfIntroController {
     }
     @GetMapping("/selfintroduction/new")
     public String mainAddForm(Model model, @SessionAttribute("userSession")String userId){
-        model.addAttribute("resume",new SelfIntroDTO());
+        model.addAttribute("resume",new SelfIntroDto());
         setUserImage(userId,model);
         return "selfintroduction/addForm";
     }
     @PostMapping("/selfintroduction")
-    public String addCheck(@Validated @ModelAttribute("resume") SelfIntroDTO dto,
+    public String addCheck(@Validated @ModelAttribute("resume") SelfIntroDto dto,
                            BindingResult bindingResult,@SessionAttribute(value = "userSession")String userId,
                            Model model){
         setUserImage(userId,model);
         if(bindingResult.hasErrors()){
             return "selfintroduction/addForm";
         }
-        SelfIntroDTO userInput = SelfIntroDTO.builder()
+        SelfIntroDto userInput = SelfIntroDto.builder()
                         .userid(userId)
                         .title(dto.getTitle())
                         .contents(dto.getContents()).build();
@@ -61,14 +61,14 @@ public class SelfIntroController {
     }
     @PatchMapping("/selfintroduction/{rno}")
     @ResponseBody
-    public int modifyCheck(@Validated @RequestBody SelfIntroDTO dto, BindingResult bindingResult,
+    public int modifyCheck(@Validated @RequestBody SelfIntroDto dto, BindingResult bindingResult,
                            @PathVariable Integer rno, Model model, @SessionAttribute(value = "userSession")String userId,
                            RedirectAttributes attr){
         setUserImage(userId,model);
         if(bindingResult.hasErrors()){
             return 400;
         }
-        SelfIntroDTO resume = SelfIntroDTO.builder()
+        SelfIntroDto resume = SelfIntroDto.builder()
                         .title(dto.getTitle())
                         .contents(dto.getContents())
                         .resumeno(rno)
