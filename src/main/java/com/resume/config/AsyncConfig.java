@@ -39,6 +39,7 @@ public class AsyncConfig extends AsyncConfigurerSupport {
         simpleMailMessage.setTo(email);
         simpleMailMessage.setSubject("이메일 인증");
         simpleMailMessage.setText(randomNum);
+        log.info("::::::Thread Name : " + Thread.currentThread().getName());
         javaMailSender.send(simpleMailMessage);
     }
 }

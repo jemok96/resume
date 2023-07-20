@@ -5,10 +5,11 @@ import lombok.Setter;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.Objects;
 
 @Getter
 @Setter
-public class EmailCheckDTO {
+public class EmailCheckDto {
     @NotBlank(message = "이름을 입력해주세요")
     private String name;
 
@@ -17,12 +18,25 @@ public class EmailCheckDTO {
     private String email;
 
 
-    public EmailCheckDTO(){}
+    public EmailCheckDto(){}
     @Override
     public String toString() {
         return "EmailCheckDTO{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmailCheckDto that = (EmailCheckDto) o;
+        return Objects.equals(name, that.name) && Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, email);
     }
 }

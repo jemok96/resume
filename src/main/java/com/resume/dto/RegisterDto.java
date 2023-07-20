@@ -3,11 +3,9 @@ package com.resume.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-
 @Getter
 @Setter
-public class RegisterDTO {
+public class RegisterDto {
 
 
     private String userid;

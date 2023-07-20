@@ -1,10 +1,10 @@
 package com.resume.service;
 
 import com.resume.config.PasswordConfig;
-import com.resume.Repository.LoginDAO;
-import com.resume.Repository.MyPageDAO;
-import com.resume.dto.UserDTO;
-import com.resume.dto.UserPwDTO;
+import com.resume.Repository.LoginDao;
+import com.resume.Repository.MyPageDao;
+import com.resume.dto.UserDto;
+import com.resume.dto.UserPwDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +14,15 @@ import java.util.Map;
 @Service
 @Slf4j
 public class MyPageService {
-    private final MyPageDAO manageMentDAO;
-    private final LoginDAO loginDAO;
+    private final MyPageDao manageMentDAO;
+    private final LoginDao loginDAO;
 
-    public MyPageService(MyPageDAO dao, LoginDAO loginDAO) {
+    public MyPageService(MyPageDao dao, LoginDao loginDAO) {
         this.manageMentDAO = dao;
         this.loginDAO = loginDAO;
     }
 
-    public Integer checkPw(UserDTO dto){
+    public Integer checkPw(UserDto dto){
         String encPw = loginDAO.findPw(dto.getUserid());
         String pw = dto.getPassword();
         boolean check = PasswordConfig.checkUserPw(pw, encPw);
@@ -31,7 +31,7 @@ public class MyPageService {
         }
         return 400;
     }
-    public int changePw(UserPwDTO dto,String userId){
+    public int changePw(UserPwDto dto, String userId){
         String newPassword = dto.getNewPassword();
         String nowPassword = dto.getNowPassword(); //현재 비밀번호
         String passwordCheck = dto.getPasswordCheck();

@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.resume.dto.AwsS3;
+import com.resume.dto.AwsS3Dto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,19 +33,19 @@ public class S3UploadService {
         return amazonS3.getUrl(bucket,path).toString();
     }
 
-    public AwsS3 upload(MultipartFile multipartFile, String dirName) throws IOException {
+    public AwsS3Dto upload(MultipartFile multipartFile, String dirName) throws IOException {
         File file = convertMultipartFileToFile(multipartFile)
                 .orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File convert fail"));
 
         return upload(file, dirName);
     }
 
-    private AwsS3 upload(File file, String dirName) {
+    private AwsS3Dto upload(File file, String dirName) {
         String key = randomFileName(file, dirName);
         String path = putS3(file, key);
         removeFile(file);
 
-        return AwsS3
+        return AwsS3Dto
                 .builder()
                 .keyvalue(key)
                 .url(path)
@@ -83,7 +83,7 @@ public class S3UploadService {
         return Optional.empty();
     }
 
-    public void remove(AwsS3 awsS3) {
+    public void remove(AwsS3Dto awsS3) {
         if (!amazonS3.doesObjectExist(bucket, awsS3.getKeyvalue())) {
             throw new AmazonS3Exception("Object " +awsS3.getKeyvalue()+ " does not exist!");
         }

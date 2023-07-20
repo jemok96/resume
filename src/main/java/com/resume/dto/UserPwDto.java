@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Setter
 @Getter
-public class UserPwDTO {
+public class UserPwDto {
     @NotEmpty
     private String nowPassword;
     @NotEmpty
@@ -17,10 +17,10 @@ public class UserPwDTO {
     @NotEmpty
     private String passwordCheck;
 
-    public UserPwDTO(){}
+    public UserPwDto(){}
 
     @Builder
-    public UserPwDTO(String nowPassword, String newPassword, String passwordCheck) {
+    public UserPwDto(String nowPassword, String newPassword, String passwordCheck) {
         this.nowPassword = nowPassword;
         this.newPassword = newPassword;
         this.passwordCheck = passwordCheck;
@@ -30,7 +30,7 @@ public class UserPwDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserPwDTO userPwDTO = (UserPwDTO) o;
+        UserPwDto userPwDTO = (UserPwDto) o;
         return Objects.equals(nowPassword, userPwDTO.nowPassword) && Objects.equals(newPassword, userPwDTO.newPassword) && Objects.equals(passwordCheck, userPwDTO.passwordCheck);
     }
 

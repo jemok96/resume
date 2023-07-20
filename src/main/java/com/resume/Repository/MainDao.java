@@ -1,8 +1,8 @@
 package com.resume.Repository;
 
-import com.resume.dto.ExperienceDTO;
-import com.resume.dto.RegisterDTO;
-import com.resume.dto.UserInfoDTO;
+import com.resume.dto.ExperienceDto;
+import com.resume.dto.RegisterDto;
+import com.resume.dto.UserInfoDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -11,24 +11,24 @@ import java.util.Map;
 
 @Repository
 @Mapper
-public interface MainDAO {
-    RegisterDTO userInfo(String sessionid);
+public interface MainDao {
+    RegisterDto userInfo(String sessionid);
 
-    UserInfoDTO usersubinfo(String sessionid);
+    UserInfoDto usersubinfo(String sessionid);
 
     void infoupdate(Map map);
 
     void infoinsert(String sessionid);
 
-    List<ExperienceDTO> experienceinfo(String sessionid);
+    List<ExperienceDto> experienceinfo(String sessionid);
 
-    void experienceAdd(ExperienceDTO experidto);
+    void experienceAdd(ExperienceDto experidto);
 
     void experienceDelete(String seqno1);
 
-    ExperienceDTO experienceInfo2(String seqno1);
+    ExperienceDto experienceInfo2(String seqno1);
 
-    void experienceModify(ExperienceDTO experidto);
+    void experienceModify(ExperienceDto experidto);
 
     void skillSave(Map map);
 

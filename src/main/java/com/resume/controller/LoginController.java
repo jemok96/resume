@@ -3,14 +3,11 @@ package com.resume.controller;
 
 
 import com.resume.config.AsyncConfig;
-import com.resume.dto.EmailCheckDTO;
-import com.resume.dto.LoginUserDTO;
-import com.resume.dto.UserDTO;
+import com.resume.dto.EmailCheckDto;
+import com.resume.dto.LoginUserDto;
 import com.resume.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -39,7 +36,7 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model,@SessionAttribute(value = "userSession",required = false)String session) {
-        model.addAttribute("user", new LoginUserDTO());
+        model.addAttribute("user", new LoginUserDto());
         if(session !=null){
             return "redirect:/main";
         }
@@ -47,7 +44,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String loginCheck(@Validated @ModelAttribute("user") LoginUserDTO user, BindingResult bindingResult,
+    public String loginCheck(@Validated @ModelAttribute("user") LoginUserDto user, BindingResult bindingResult,
                              Model model, HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "login/login";
@@ -74,12 +71,12 @@ public class LoginController {
 
     @GetMapping("/login/search")
     public String findId(Model model) {
-        model.addAttribute("email",new EmailCheckDTO());
+        model.addAttribute("email",new EmailCheckDto());
         return "login/find/findById";
     }
 
     @PostMapping("/login/search")
-    public String checkId(@Validated @ModelAttribute("email") EmailCheckDTO email, BindingResult bindingResult, Model model,
+    public String checkId(@Validated @ModelAttribute("email") EmailCheckDto email, BindingResult bindingResult, Model model,
                           HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "login/find/findById";

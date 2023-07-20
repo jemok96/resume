@@ -1,9 +1,9 @@
 package com.resume.service;
 
-import com.resume.Repository.MainDAO;
-import com.resume.dto.ExperienceDTO;
-import com.resume.dto.RegisterDTO;
-import com.resume.dto.UserInfoDTO;
+import com.resume.Repository.MainDao;
+import com.resume.dto.ExperienceDto;
+import com.resume.dto.RegisterDto;
+import com.resume.dto.UserInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -14,18 +14,18 @@ import java.util.Map;
 @Slf4j
 public class MainService {
 
-    private final MainDAO dao;
+    private final MainDao dao;
 
-    public MainService(MainDAO dao) {
+    public MainService(MainDao dao) {
         this.dao = dao;
     }
 
 
-    public RegisterDTO userInfo(String sessionid) {
+    public RegisterDto userInfo(String sessionid) {
         return dao.userInfo(sessionid);
     }
 
-    public UserInfoDTO usersubinfo(String sessionid) {
+    public UserInfoDto usersubinfo(String sessionid) {
         return dao.usersubinfo(sessionid);
     }
 
@@ -37,11 +37,11 @@ public class MainService {
          dao.infoinsert(sessionid);
     }
 
-    public List<ExperienceDTO> experienceinfo(String sessionid) {
+    public List<ExperienceDto> experienceinfo(String sessionid) {
        return dao.experienceinfo(sessionid);
     }
 
-    public void experienceAdd(ExperienceDTO experidto) {
+    public void experienceAdd(ExperienceDto experidto) {
         dao.experienceAdd(experidto);
     }
 
@@ -49,11 +49,11 @@ public class MainService {
         dao.experienceDelete(seqno1);
     }
 
-    public ExperienceDTO experienceInfo2(String seqno1) {
+    public ExperienceDto experienceInfo2(String seqno1) {
         return dao.experienceInfo2(seqno1);
     }
 
-    public void experienceModify(ExperienceDTO experidto) {
+    public void experienceModify(ExperienceDto experidto) {
          dao.experienceModify(experidto);
     }
 

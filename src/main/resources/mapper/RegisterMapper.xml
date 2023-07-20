@@ -3,8 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.resume.Repository.RegisterDAO">
-    <insert id="saveuser" parameterType="LoginUserDTO" >
+<mapper namespace="com.resume.Repository.RegisterDao">
+    <insert id="saveuser" parameterType="LoginUserDto" >
         insert into user (userid, password , name , email ,birth, gender , phone
         )
         values(#{userid}, #{password} , #{name} , #{email} , #{birth} , #{gender},
@@ -19,7 +19,7 @@
         userid = #{userid}
     </select>
 
-    <select id="userInfo" parameterType="String" resultType="RegisterDTO">
+    <select id="userInfo" parameterType="String" resultType="RegisterDto">
         select name, email,birth ,gender ,phone  from user where userid = #{sessionid}
     </select>
 

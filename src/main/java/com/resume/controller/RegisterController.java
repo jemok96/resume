@@ -1,21 +1,15 @@
 package com.resume.controller;
 
-import com.resume.dto.RegisterDTO;
+import com.resume.dto.RegisterDto;
 import com.resume.service.RegisterService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -39,7 +33,7 @@ public class RegisterController {
 
     //회원가입 저장
     @PostMapping("/register/save")
-    public String signupsave( @ModelAttribute("user") RegisterDTO user, BindingResult bindingResult,
+    public String signupsave(@ModelAttribute("user") RegisterDto user, BindingResult bindingResult,
                              RedirectAttributes redirectAttributes, ModelAndView mv) {
         int result = registerService.saveuser(user);
 

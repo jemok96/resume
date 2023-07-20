@@ -8,16 +8,16 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class AwsS3 {
+public class AwsS3Dto {
     private String keyvalue;
     private String url;
     private String userId;
-    public AwsS3() {
+    public AwsS3Dto() {
 
     }
 
     @Builder
-    public AwsS3(String keyvalue, String url,String userId) {
+    public AwsS3Dto(String keyvalue, String url, String userId) {
         this.keyvalue = keyvalue;
         this.url = url;
         this.userId = userId;
@@ -27,7 +27,7 @@ public class AwsS3 {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AwsS3 awsS3 = (AwsS3) o;
+        AwsS3Dto awsS3 = (AwsS3Dto) o;
         return Objects.equals(keyvalue, awsS3.keyvalue) && Objects.equals(url, awsS3.url) && Objects.equals(userId, awsS3.userId);
     }
 

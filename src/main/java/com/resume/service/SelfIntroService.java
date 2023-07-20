@@ -1,7 +1,7 @@
 package com.resume.service;
 
-import com.resume.Repository.SelfIntroDAO;
-import com.resume.dto.SelfIntroDTO;
+import com.resume.Repository.SelfIntroDao;
+import com.resume.dto.SelfIntroDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -10,22 +10,22 @@ import java.util.List;
 @Service
 @Slf4j
 public class SelfIntroService {
-    private final SelfIntroDAO dao;
+    private final SelfIntroDao dao;
 
-    public SelfIntroService(SelfIntroDAO dao) {
+    public SelfIntroService(SelfIntroDao dao) {
         this.dao = dao;
     }
 
-    public int insertResume(SelfIntroDTO dto){
+    public int insertResume(SelfIntroDto dto){
         return dao.insertResume(dto);
     }
-    public List<SelfIntroDTO> findResumeById(String userid){
+    public List<SelfIntroDto> findResumeById(String userid){
         return dao.findResumeById(userid);
     }
     public void deleteAll(){
         dao.deleteAll();
     }
-    public int updateResume(SelfIntroDTO dto){
+    public int updateResume(SelfIntroDto dto){
         try {
             int result = dao.updateResume(dto);
             if (result == 1) {
@@ -40,12 +40,12 @@ public class SelfIntroService {
     public int deleteOne(Integer rno){
         return dao.deleteOne(rno);
     }
-    public SelfIntroDTO selectByNo(Integer rno){
+    public SelfIntroDto selectByNo(Integer rno){
         return dao.selectByNo(rno);
     }
 
 
-    public SelfIntroDTO testCode(SelfIntroDTO dto){
+    public SelfIntroDto testCode(SelfIntroDto dto){
         return dao.testCode(dto);
     }
 }

@@ -8,16 +8,16 @@ import java.util.Objects;
 
 @Getter
 @Setter
-public class CommentDTO {
+public class CommentDto {
     private Integer commentno;
     private Integer boardno;
     private String writer;
     private String contents;
-    public CommentDTO(){}
+    public CommentDto(){}
 
 
     @Builder
-    public CommentDTO(Integer commentno, Integer boardno, String writer, String contents) {
+    public CommentDto(Integer commentno, Integer boardno, String writer, String contents) {
         this.commentno = commentno;
         this.boardno = boardno;
         this.writer = writer;
@@ -39,7 +39,7 @@ public class CommentDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CommentDTO that = (CommentDTO) o;
+        CommentDto that = (CommentDto) o;
         return Objects.equals(commentno, that.commentno) && Objects.equals(boardno, that.boardno) && Objects.equals(writer, that.writer) && Objects.equals(contents, that.contents);
     }
 
