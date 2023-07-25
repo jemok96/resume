@@ -158,7 +158,7 @@ docker commit web09 web : 위 설정으로 만든거를 image로 만들어줌
 
 docker build -t newweb[내가만든 image이름] -f Dockerfile.txt . :  다른거 다 안 되고  이거로해야됨
 
-docker login -i jemok96 + rudwpahr96!@
+docker login -i [id] + [pw]
 
 먼저 docker hub가서 repository 만든 후에  docker build -t [image이름] dockerfile.txt .  : image이름은 내 hub repository image이름임
 docker image tag [image이름] jemok96/mynewos:1.0 : tag지정하기
