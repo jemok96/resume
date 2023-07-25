@@ -112,3 +112,69 @@
     | POST | /comments/{num} | 게시판 번호에 해당하는 게시글에 댓글 추가 | {num,userId,contents} |
     | DELETE | /commnets/{commentNo} | 댓글 번호에 해당하는 댓글 삭제 | {commentNo} |
     -
+## Docker 하면서 배운 점
+docker images : 이미지 확인
+docker ps  : 실행중인 container 확인
+docker ps -a : 죽었던애들까지도 확인가능
+
+docker  create -it --name mycon1 centos : docker 컨테이너안에 centos라는 운영체제를 독립적으로 생성
+docker container[생략가능] start -ai mycon1 : mycon1컨테이너 실행해라 , -ai container안으로 들어가는거
+ctrl + p +q 컨테이너에서 빠져나오기
+docker container[생략가능] stop mycon1 : mycon1 중지
+docker run -d --name mytomcat[name] tomcat[image] : 생성 image가 없다면 pull까지해옴
+=>여기서 -d만붙였을때는 centos가 켜지자마자 죽어버리는데  -itd붙이면 안죽음
+docker exec -it boring_goldwasser[containerName] /bin/bash : 실행중인 container로 들어가기
+
+docker run -it --name myCentos --env DB_NAME=mydb centos
+env : 환경변수 확인
+echo $DB_NAME
+
+docker run -it --name MyCentos3 --env-file env.file centos : env.file에 저장된 값으로 환경변수 설정
+
+docker run -itd --name web01 -p 8001:80 nginx : port지정
+docker run -dit --name mysql01 -e MYSQL_ROOT_PASSWORD=tiger -p 3306:3306 mysql : mysql은 -e rootpw필요함
+mysql -u root -p : root로 로그인하기 비번은 위에서 설정한 tiger
+
+docker cp web03.war web05:/usr/local/tomcat/webapps : dev폴더가서 실행하면 복사됨 신기하노
+docker network create wp_net01 : 새로운 network 생성
+docker network ls :목록
+
+docker run --name mysql03 -d --net=wp_net01 --env-file db.txt mysql : --network 사용 하겠다
+docker run --name wp01 -d --net=wp_net01 -p 8001:80 --env-file wp.txt wordpress
+
+docker cp index.html apa01:/usr/local/apache2/htdocs/  : 현재 폴더에서 저 폴더로 복사
+docker cp apa01:/usr/local/apache2/htdocs/index.html test.html : 저폴더에서 local(현재폴더)로 복사
+
+docker volume ls
+docker volume create dbfile
+
+docker run --name mysql03 -d --net=wp_net01 -v dbfile:/var/lib/mysql --env-file db.txt mysql
+
+docker run --name web09 -d -p 8010:80 httpd
+docker commit web09 web : 위 설정으로 만든거를 image로 만들어줌
+
+docker build -t newweb[내가만든 image이름] -f Dockerfile.txt . :  다른거 다 안 되고  이거로해야됨
+
+docker login -i jemok96 + rudwpahr96!@
+
+먼저 docker hub가서 repository 만든 후에  docker build -t [image이름] dockerfile.txt .  : image이름은 내 hub repository image이름임
+docker image tag [image이름] jemok96/mynewos:1.0 : tag지정하기
+
+docker push jemok96/mynewos:1.0 : docker hub에 push하기
+
+docker export myos01 > myos.tar : container 압축하기
+
+docker compse : 시스템 구축과 관련된 명령어를 하나의 텍스트파일(정의파일)에 기재해 명령어 한번에 시스템 전체를 실행, 종료, 폐기까지 한번에
+하도록 도와주는 도구 (JSON , YAML)으로 설정
+
+docker-compose와 dockerfile의 차이점?
+dockerfile : 이미지만 생성가능
+docker-compose : docker run +network, volume 까지 가능
+
+명령어
+docker-compose up
+docker-compose down
+docker-compose up -d --scale www1=5  : 5개 띄움
+
+docker-compose -f [파일이름] up -d  : -f는 yaml이 여러개 있을 때 파일이름 지정하려고 사용
+docker compose -f [파일이름] down : 종료할 떄
