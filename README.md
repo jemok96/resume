@@ -1,15 +1,25 @@
 수정 중 <br>
 ## 자신의 이력서 작성기능과 공유하며 피드백 받을 수 있는 사이트<br>
 
+# **[프로젝트 개요]**
+
+| 항목  | 내용 |
+| --- | --- |
+| 프로젝트 소개 | 자신의 이력서를 작성하고 공유할 수 있는 웹 어플리케이션 |
+| 개발 인원 | 총 2명(백엔드 2명) |
+| 담당 역할 | 로그인,이메일 인증, 자기소개서, 공지사항, 자유게시판, 마이페이지 개발,  AWS RDS 및 S3 세팅, EC2 서버와 Docker를 통한 서버 배포  |
+
+
 ## 개발인원 <br>
 총 2명(백엔드)<br>
 
 
-## ERD
-<img width="900" alt="DB table" src="https://github.com/jemok96/resume/assets/91232870/1b2f91f4-e543-446f-a20e-9de20b3dbe5c">
-## 사용 기술
-**1) 사용 기술**
 
+
+## ERD
+<img width="900" alt="DB table" src="https://github.com/jemok96/resume/assets/91232870/1b2f91f4-e543-446f-a20e-9de20b3dbe5c"><br>
+
+## 기술 
 ---
 **Frontend** `jquery` `Bootstrap` `Thyme-leaf`
 
@@ -30,6 +40,7 @@
 **Test**  `PostMan` `Apache-jmeter` `Junit5`
 
 ---
+## API
 - **공지사항**
     
     
