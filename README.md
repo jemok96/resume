@@ -116,6 +116,41 @@
     | DELETE | /commnets/{commentNo} | 댓글 번호에 해당하는 댓글 삭제 | {commentNo} |
     -
 ## Docker 하면서 배운 점
+
+## DOcker Install  -- Ubuntu version
+
+EC2에서 실행환경 구축<br>
+# EC2 인스턴스<br>
+$ sudo apt-get update<br>
+$ sudo apt-get install openjdk-11-jdk<br>
+
+java -jar snapshot name..<br>
+## 여기 까지는  spring jar파일을 가져와서 단순 실행 가능합니다.<br>
+
+
+docker 설치 <br>
+sudo apt update<br>
+sudo apt-get install apt-transport-https ca-certificates curl gnupg-agent software-properties-common<br>
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -<br>
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"<br>
+sudo apt update<br>
+
+# sudo 없이 docker 사용<br>
+sudo apt install docker-ce<br>
+docker --version<br>
+sudo systemctl restart docke<br>
+<br>
+## 도커 설치시 에러<br>
+The repository 'https://download.docker.com/linux/ubuntu jammy InRelease' is not signed.<br>
+이런 내용이 뜨면 이렇게 해결 했습니다 <br>
+sudo mkdir -p /etc/apt/keyrings<br>
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg<br>
+
+PUBKEY 키 추가 방법<br>
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys <PUBKEY><br>
+
+
 # 잘못된 내용이 많을 수도 있습니다.
 docker images : 이미지 확인<br>
 docker ps  : 실행중인 container 확인<br>
