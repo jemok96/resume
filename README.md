@@ -1,7 +1,8 @@
-## 자신의 이력서 작성기능과 공유하며 피드백 받을 수 있는 사이트
+수정 중 <br>
+## 자신의 이력서 작성기능과 공유하며 피드백 받을 수 있는 사이트<br>
 
-## 개발인원 
-총 2명(백엔드)
+## 개발인원 <br>
+총 2명(백엔드)<br>
 
 ## ERD
 <img width="900" alt="DB table" src="https://github.com/jemok96/resume/assets/91232870/1b2f91f4-e543-446f-a20e-9de20b3dbe5c">
