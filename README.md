@@ -4,14 +4,13 @@
 ## 개발인원 <br>
 총 2명(백엔드)<br>
 
+
 ## ERD
 <img width="900" alt="DB table" src="https://github.com/jemok96/resume/assets/91232870/1b2f91f4-e543-446f-a20e-9de20b3dbe5c">
-
 ## 사용 기술
 **1) 사용 기술**
 
 ---
-
 **Frontend** `jquery` `Bootstrap` `Thyme-leaf`
 
 ---
@@ -24,16 +23,13 @@
 
 ---
 
-**Deploy**  `AWS EC2` `AWS RDS` 
+**Deploy**  `AWS EC2` `AWS RDS`  `Docker`
 
 ---
 
 **Test**  `PostMan` `Apache-jmeter` `Junit5`
 
 ---
-
-**2) 배포링크**
-
 - **공지사항**
     
     
