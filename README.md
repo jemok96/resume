@@ -13,6 +13,9 @@
 ## 개발인원 <br>
 총 2명(백엔드)<br>
 
+## 아키텍쳐
+<img  width=900 src=https://github.com/jemok96/resume/assets/91232870/49753c39-b96f-428b-98c5-2dc700ea4efd ><br>
+
 
 
 
