@@ -1,14 +1,17 @@
 package com.resume.config;
 
+import com.resume.exception.ExceptionResolver;
+import com.resume.exception.PostNotFountException;
 import com.resume.interceptor.LogInCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
-public class LoginConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LogInCheckInterceptor())
@@ -16,7 +19,12 @@ public class LoginConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/css/**","/error","/login","/js/**"
                         ,"/register/**","/login/search","/verify",
-                        "/findSuccess/**","/findUserId/**","/notices");
+                        "/login/search/detail","/notices/**","/board/**");
 
+    }
+
+    @Override
+    public void extendHandlerExceptionResolvers(List<HandlerExceptionResolver> resolvers) {
+        resolvers.add(new ExceptionResolver());
     }
 }
