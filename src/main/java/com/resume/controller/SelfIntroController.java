@@ -55,7 +55,7 @@ public class SelfIntroController {
     }
     @GetMapping("/selfintroduction/{rno}")
     public String modifyResume(@PathVariable Integer rno,Model model, @SessionAttribute(value = "userSession")String userId){
-        model.addAttribute("resume",service.selectByNo(rno));
+        model.addAttribute("resume",service.selectByNo(rno,userId));
         setUserImage(userId,model);
         return "selfintroduction/modifyForm";
     }

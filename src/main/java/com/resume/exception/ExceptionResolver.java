@@ -18,6 +18,11 @@ public class ExceptionResolver implements HandlerExceptionResolver {
                 response.sendRedirect("/error/404.html");
                 return new ModelAndView();
             }
+            if(ex instanceof PostAccessDenyException){
+                log.info("PostAccessDeny resolver to 400");
+                response.sendRedirect("/selfintroduction");
+                return new ModelAndView();
+            }
         }catch (IOException e){
             log.error("resolver ex",e);
         }
