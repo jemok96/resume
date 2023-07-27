@@ -2,6 +2,7 @@ package com.resume.controller;
 
 import com.resume.dto.UserDto;
 import com.resume.dto.AwsS3Dto;
+import com.resume.dto.UserImageDto;
 import com.resume.dto.UserPwDto;
 import com.resume.service.MyPageService;
 import com.resume.service.S3UploadService;
@@ -57,10 +58,10 @@ public class MyPageController {
 
     }
     @PostMapping("/profiles/{userid}/modify")
-    public String userImageUpdate(@RequestParam MultipartFile file, Model model, RedirectAttributes attr, @PathVariable String userid) throws IOException {
+    public String userImageUpdate(@RequestParam MultipartFile file, RedirectAttributes attr, @PathVariable String userid) throws IOException {
 
         //user image table 저장하고, 수정 할 경우 aws내에서도 삭제하고 다시 저장하는 로직으로 변경해야함 (Transactional)
-        AwsS3Dto userImage = s3Upload.upload(file, "userImage"); //
+        AwsS3Dto userImage = s3Upload.upload(file, "userImage",userid); //
         userImage.setUserId(userid);
         imageService.updateImage(userImage);
         attr.addFlashAttribute("status","OK");
@@ -96,14 +97,13 @@ public class MyPageController {
     @ResponseBody
     public Integer userDeleteOk(@PathVariable String userid,@RequestParam("password")String password,HttpSession session){
 
-        log.info("pw={}",password);
-        int x = service.deleteUser(userid,password);
-        if (x == 1) {
+        int result = service.deleteUser(userid,password);
+        if (result == 1) {
             // 세션 값 제거
             session.invalidate();
+
         }
-        log.info("x={}",x);
-        return x;
+        return result;
     }
 
 }

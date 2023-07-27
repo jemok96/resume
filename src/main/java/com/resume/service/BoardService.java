@@ -4,6 +4,7 @@ import com.resume.Repository.BoardDao;
 import com.resume.dto.BoardDto;
 import com.resume.dto.CommentDto;
 import com.resume.dto.SearchCondition;
+import com.resume.exception.PostNotFountException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,15 +23,16 @@ public class BoardService {
     }
 
     public int deleteBoard(int num){
+        BoardDto findBoard = dao.findByNum(num);
+        if(findBoard == null){
+            throw new PostNotFountException("존재하지 않는 게시글입니다.");
+        }
         return dao.deleteBoard(num);
     }
     public BoardDto findByNum(int num){
         return dao.findByNum(num);
     }
 
-    public List<BoardDto> findAll(Map map){
-        return dao.findAll(map);
-    }
 
     public int searchResultCnt(SearchCondition sc){
         return dao.searchResultCnt(sc);

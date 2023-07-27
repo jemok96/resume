@@ -78,7 +78,6 @@ public class NoticeController {
     , @Validated @RequestBody NoticeDto notice , BindingResult bindingResult){
         model.addAttribute("userImage",imageService.findImageById(userId));
 
-        log.info("notice={}",notice);
 
         if(bindingResult.hasErrors()){
             model.addAttribute("notice",notice);

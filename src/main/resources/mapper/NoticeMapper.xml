@@ -15,12 +15,6 @@
     </delete>
 
 
-    <select id="findAll" resultType="NoticeDto" parameterType="map">
-        select  userid,title,contents,regdate from notice
-        where title like CONCAT('%',#{value},'%')
-        order by regdate desc
-        LIMIT #{offset}, #{pageSize};
-    </select>
     <select id="findByNum" parameterType="int" resultType="NoticeDto">
         select num,userid,title,contents,hits,regdate,up_date from notice
         where num= #{num}

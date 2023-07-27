@@ -217,6 +217,7 @@
             success: function(response) {
                 if(response ===1){
                     alert('삭제 완료');
+                    location.reload();
                 }
                 else if(response ===400){
                     alert("제목과 본문을 입력하세요");
@@ -225,7 +226,6 @@
                 // 페이지 리로드 또는 필요한 동작 수행
             },
             error: function(xhr, status, error) {
-                alert('오류 발생');
             }
         });
     });
