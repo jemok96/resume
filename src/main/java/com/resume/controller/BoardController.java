@@ -97,33 +97,5 @@ public class BoardController {
         return boardService.deleteBoard(num);
     }
 
-    @GetMapping("/comments/{num}")
-    @ResponseBody
-    public List<CommentDto> getComments(@PathVariable Integer num, @SessionAttribute("userSession")String userId){
-        List<CommentDto> comments = boardService.getComments(num);
-        log.info("num = {}",num);
-        log.info("comments={}",comments);
-        return comments;
-    }
 
-
-    @PostMapping("/comments/{num}")
-    @ResponseBody
-    public Integer InsertComments(@PathVariable Integer num, @SessionAttribute("userSession")String userId
-    ,@RequestParam("cmcontent") String contents){
-        CommentDto dto = CommentDto.builder()
-                .boardno(num)
-                .writer(userId)
-                .contents(contents)
-                .build();
-        boardService.insertComment(dto);
-        return 1;
-    }
-    @DeleteMapping("/comments/{commentNo}")
-    @ResponseBody
-    public Integer InsertComments(@PathVariable Integer commentNo, @SessionAttribute("userSession")String userId){
-
-        log.info("commentNo ={}",commentNo);
-        return boardService.deleteComment(commentNo);
-    }
 }
