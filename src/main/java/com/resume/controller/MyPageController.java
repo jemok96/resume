@@ -98,9 +98,11 @@ public class MyPageController {
     public Integer userDeleteOk(@PathVariable String userid,@RequestParam("password")String password,HttpSession session){
 
         int result = service.deleteUser(userid,password);
+        log.info("delete result={}",result);
         if (result == 1) {
             // 세션 값 제거
             session.invalidate();
+
         }
         return result;
     }
