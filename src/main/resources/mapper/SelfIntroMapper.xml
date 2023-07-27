@@ -13,6 +13,10 @@
         from resume
         where userid = #{userid}
     </select>
+    <select id="findWriterUser" parameterType="Integer" resultType="String">
+        select userid from resume
+        where resumeno = #{resumeno}
+    </select>
 
     <select id="selectByNo" parameterType="Integer" resultType="SelfIntroDto">
         select title,contents,resumeno,userid
