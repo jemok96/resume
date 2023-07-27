@@ -82,6 +82,8 @@ public class SelfIntroController {
     public Integer deleteResume(@PathVariable Integer rno){
         return service.deleteOne(rno);
     }
+
+
     private void setUserImage(String userId, Model model) {
         model.addAttribute("userImage", imageService.findImageById(userId));
     }
