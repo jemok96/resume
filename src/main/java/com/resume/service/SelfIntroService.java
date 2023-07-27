@@ -40,6 +40,7 @@ public class SelfIntroService {
         }
     }
     public int deleteOne(Integer rno){
+
         return dao.deleteOne(rno);
     }
     public SelfIntroDto selectByNo(Integer rno,String userId){
@@ -64,6 +65,12 @@ public class SelfIntroService {
         return dao.findWriterUser(rno);
 
     }
+
+
+
+
+
+
     public SelfIntroDto testCode(SelfIntroDto dto){
 
         return dao.testCode(dto);
