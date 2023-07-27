@@ -63,13 +63,13 @@ public class MyPageService {
     }
     public int deleteUser(String userId,String password){
 
-        boolean b = PasswordConfig.checkPassword(password, loginDAO.findPw(userId));
-        log.info("b={}",b);
-
-        if(b){
+        boolean check = PasswordConfig.checkPassword(password, loginDAO.findPw(userId));
+        if(check){
             return manageMentDAO.deleteUser(userId);
         }
-        return 500;
+        else{
+            throw new RuntimeException();
+        }
     }
 
 }

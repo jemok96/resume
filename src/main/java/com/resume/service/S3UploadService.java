@@ -40,6 +40,7 @@ public class S3UploadService {
         return upload(multipartFile.getInputStream(), dirName, userId, multipartFile.getOriginalFilename());
     }
 
+    //트랜잭션 테스트....
     @Transactional
     public AwsS3Dto upload(InputStream inputStream, String dirName, String userId, String originalFilename) {
         String key = randomFileName(dirName, originalFilename);
